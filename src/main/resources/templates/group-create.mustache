@@ -1,0 +1,58 @@
+{{>fragments/header}}
+<body>
+<div>
+    {{>fragments/navigationbar}}
+    {{>fragments/sidebar}}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <div class="container">
+                <h2 id="pageTitle">그룹 만들기</h2>
+                <form id="groupForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="title">그룹 이름</label>
+                            <input type="text" maxlength="30" class="form-control" id="title"  placeholder="그룹 이름">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="totalNum">참여인원</label>
+                            <input type="number" class="form-control" id="totalNum"  name="totalNum" placeholder="참여인원">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="description">그룹 설명</label>
+                            <input type="text" maxlength="250" class="form-control" id="description"  placeholder="그룹 설명">
+                        </div>
+                    </div>
+                    <div class="form-row" id="passwordGroup" style="display:none">
+                        <div class="form-group  col-md-8" >
+                            <label for="password">비밀번호</label>
+                            <input type="password" maxlength="128" class="form-control" id="password"  name="password" placeholder="비밀번호 입력">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-check form-check-inline passwordCheckboxForm">
+                            <input class="form-check-input" type="checkbox" id="passwordCheck">
+                            <label class="form-check-label" for="passwordCheck">그룹 참여에 비밀번호를 설정 하시겠습니까?</label>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="groupThumbnail">그룹 섬네일</label>
+                            <input type="file"  id="groupThumbnail" name="file" placeholder="첨부파일">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btn-create">등록</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{>fragments/script}}
+</body>
+</html>
+
+

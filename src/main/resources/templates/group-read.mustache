@@ -1,0 +1,67 @@
+{{>fragments/header}}
+<body>
+<div>
+    {{>fragments/navigationbar}}
+    {{>fragments/sidebar}}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            {{#group}}
+            <div class="card w-75 text-left group-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <span>{{currentNum}}명</span>/<span>{{totalNum}}명</span>
+                    <a href="#" class="btn btn-primary group-join">그룹 참여</a>
+                </div>
+            </div>
+            {{/group}}
+            <nav>
+                <div class="nav nav-tabs w-75" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-noti-tab" data-toggle="tab" href="#nav-noti" role="tab" aria-controls="nav-noti" aria-selected="true">공자사항</a>
+                    <a class="nav-item nav-link" id="nav-member-tab" data-toggle="tab" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">구성원</a>
+                    <a class="nav-item nav-link" id="nav-board-tab" data-toggle="tab" href="#nav-board" role="tab" aria-controls="nav-board" aria-selected="false">게시글</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-noti" role="tabpanel" aria-labelledby="nav-noti-tab">안녕하세요</div>
+                <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">구성원소개란입니다</div>
+                <div class="tab-pane fade" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
+                    <br/>
+                    <div class="board-header">
+                        <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                    </div>
+                    <br/>
+                    <div class="board-body">
+                        <table class="table w-75 table-horizontal table-bordered">
+                            <thead class="thead-strong">
+                            <tr>
+                                <th style="width:10%">게시글</th>
+                                <th style="width:70%">제목</th>
+                                <th style="width:10%">작성자</th>
+                                <th style="width:10%">최종 수정일</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            <tr>
+                                <td style="width:10%">1</td>
+                                <td style="width:70%"><a href="/posts/read/{{id}}">질문 있습니다</a></td>
+                                <td style="width:10%">홍길동</td>
+                                <td style="width:10%">2020-05-16</td>
+                            </tr>
+                            <tr>
+                                <td style="width:10%">2</td>
+                                <td style="width:70%"><a href="/posts/read/{{id}}">c언어 오류 질문입니다</a></td>
+                                <td style="width:10%">민수</td>
+                                <td style="width:10%">2020-05-17</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>fragments/script}}
+</body>
+</html>
