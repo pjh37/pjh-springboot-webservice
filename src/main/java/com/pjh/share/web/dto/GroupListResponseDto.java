@@ -1,7 +1,9 @@
 package com.pjh.share.web.dto;
 
 import com.pjh.share.domain.group.Group;
+import lombok.Getter;
 
+@Getter
 public class GroupListResponseDto {
     private Long id;
     private String title;

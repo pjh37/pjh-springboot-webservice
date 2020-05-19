@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="navFragment">
+
+    <nav class="navbar navbar-dark bg-dark topbar">
+        <h3><a href="/">Developer </a><span>PJ</span></h3>
+        <ul th:if="${userName==null}"class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="modal" data-target="#joinModal" data-whatever="@getbootstrap" href="#">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">로그인</a>
+            </li>
+        </ul>
+        <ul th:if="${userName!=null}"class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="/login" th:text="${userName}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">로그아웃</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- 모달-->
+    <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="joinModalLabel">계정 생성</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name" class="col-form-label font-weight-bold">닉네임</label>
+                            <input type="text" class="form-control" id="name" minlength="3" maxlength="20" placeholder="닉네임">
+                            <small id="nameHelp" class="form-text text-muted">공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label font-weight-bold">이메일</label>
+                            <input type="email" class="form-control" id="email" placeholder="이메일">
+                            <small id="emailHelp" class="form-text text-muted">이메일은 타인에게 공개하지 않습니다.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-form-label font-weight-bold">비밀번호</label>
+                            <input type="password" class="form-control" id="password" minlength="8" maxlength="50" placeholder="비밀번호">
+                            <small id="passwordHelp" class="form-text text-muted">8자 이상 50자 이내로 입력하세요. 영문자, 숫자, 특수기호를 사용할 수 있으며 공백은 사용할 수 없습니다.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="btn-join">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>

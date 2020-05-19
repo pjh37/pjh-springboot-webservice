@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+    <h2>왜 안되냐고 그룹매니저인데</h2>
+</div>
+
+<!--
+<th:block layout:fragment="script">
+    <script src="/js/app/group.js"></script>
+    <script src="/js/app/join.js"></script>
+</th:block>
+-->
+</html>

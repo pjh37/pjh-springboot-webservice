@@ -1,8 +1,17 @@
-{{>fragments/header}}
-<body>
-<div>
-    {{>fragments/navigationbar}}
-    {{>fragments/sidebar}}
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+    <div th:replace="fragments/nav :: navFragment"></div>
+    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
     <div id="content-wrapper">
         <div class="container-fluid">
             <div class="container">
@@ -50,9 +59,11 @@
             </div>
         </div>
     </div>
+    <th:block layout:fragment="script">
+        <script src="/js/app/group.js"></script>
+    </th:block>
 </div>
-{{>fragments/script}}
-</body>
+
+
+
 </html>
-
-
