@@ -2,6 +2,8 @@ package com.pjh.share.web;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.Role;
+import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.web.dto.GroupListResponseDto;
 import com.pjh.share.web.dto.GroupResponseDto;
@@ -17,7 +19,7 @@ import java.util.List;
 @Controller
 public class IndexController {
     private final GroupService groupService;
-
+    private final AccountService accountService;
     @GetMapping("/")
     public String index(Model model, @CurrentUser Account account){
         if(account!=null){
@@ -26,6 +28,12 @@ public class IndexController {
         List<GroupListResponseDto> groupListResponseDtos=groupService.findAll();
         model.addAttribute("groups",groupListResponseDtos);
         return "index";
+    }
+    @GetMapping("/email/auth/{auth}")
+    public String emailAuth(@PathVariable String auth){
+        String userEmail=accountService.findByAuth(auth);
+        accountService.setRole(userEmail, Role.USER);
+        return "welcome";
     }
     @GetMapping("/group-manage")
     public String group_manage(Model model, @CurrentUser Account account){

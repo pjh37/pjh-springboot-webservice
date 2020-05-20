@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+
+    <div th:replace="fragments/nav :: navFragment"></div>
+    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <h3>정회원이 되신것을 환영합니다.</h3>
+
+        </div>
+    </div>
+    <script src="/js/app/group.js"></script>
+    <script src="/js/app/join.js"></script>
+</div>
+
+
+</html>

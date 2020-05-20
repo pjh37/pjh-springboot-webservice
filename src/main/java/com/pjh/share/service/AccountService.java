@@ -37,4 +37,16 @@ public class AccountService implements UserDetailsService {
         //requestDto.setRole(Role.USER);
         return accountRepository.save(requestDto.toEntity()).getId();
     }
+
+    @Transactional
+    public String findByAuth(String authString){
+        Account account=accountRepository.findByAuthString(authString);
+        return account==null ? null : account.getEmail();
+    }
+
+    @Transactional
+    public void setRole(String email,Role role){
+        Account account=accountRepository.findByEmail(email);
+        account.setRole(role);
+    }
 }

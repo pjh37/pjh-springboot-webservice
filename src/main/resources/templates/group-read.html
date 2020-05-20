@@ -1,20 +1,29 @@
-{{>fragments/header}}
-<body>
-<div>
-    {{>fragments/navigationbar}}
-    {{>fragments/sidebar}}
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+    <div th:replace="fragments/nav :: navFragment"></div>
+    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
     <div id="content-wrapper">
         <div class="container-fluid">
-            {{#group}}
+
             <div class="card w-75 text-left group-card">
                 <div class="card-body">
-                    <h5 class="card-title">{{title}}</h5>
-                    <p class="card-text">{{description}}</p>
-                    <span>{{currentNum}}명</span>/<span>{{totalNum}}명</span>
+                    <h5 class="card-title" th:text="${group.title}"></h5>
+                    <p class="card-text"  th:text="${group.description}"></p>
+                    <span th:text="${group.currentNum+'명'}"></span>/<span th:text="${group.totalNum+'명'}"></span>
                     <a href="#" class="btn btn-primary group-join">그룹 참여</a>
                 </div>
             </div>
-            {{/group}}
+
             <nav>
                 <div class="nav nav-tabs w-75" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-noti-tab" data-toggle="tab" href="#nav-noti" role="tab" aria-controls="nav-noti" aria-selected="true">공자사항</a>
@@ -61,7 +70,14 @@
             </div>
         </div>
     </div>
+    <script src="/js/app/group.js"></script>
+    <script src="/js/app/join.js"></script>
 </div>
-{{>fragments/script}}
-</body>
+
+<!--
+<th:block layout:fragment="script">
+    <script src="/js/app/group.js"></script>
+    <script src="/js/app/join.js"></script>
+</th:block>
+-->
 </html>

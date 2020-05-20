@@ -13,13 +13,15 @@ public class AccountCreateRequestDto {
     private String name;
     private String email;
     private String password;
+    private String authString;
     private Role role;
     public Account toEntity(){
         return Account.builder()
                 .name(name)
                 .email(email)
                 .password(password)
-                .role(Role.USER)
+                .authString(authString)
+                .role(Role.GUEST)
                 .build();
     }
 
