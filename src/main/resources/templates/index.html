@@ -15,8 +15,8 @@
     <div th:replace="fragments/sidebar :: sidebarFragment"></div>
     <div id="content-wrapper">
         <div class="container-fluid">
-            <div class="row" th:each="group:${groups}">
-                <div class="group-item" th:onclick="|window.location.href='@{${'group/'+group.id}}'|">
+            <div class="row">
+                <div class="group-item" th:each="group:${groups}" th:onclick="|window.location.href='@{${'group/'+group.id}}'|">
                     <div>
                         <div class="image-container">
                             <img class="thumbnail" th:src="@{${'file/'+group.thumbnail}}"/>
@@ -31,8 +31,12 @@
 
         </div>
     </div>
+    <div id="loading">
+        <img src="images/loading.gif"/>
+    </div>
     <script src="/js/app/group.js"></script>
     <script src="/js/app/join.js"></script>
+    <script src="/js/app/default.js"></script>
 </div>
 
 <!--

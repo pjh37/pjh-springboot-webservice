@@ -5,7 +5,7 @@
 
     <nav class="navbar navbar-dark bg-dark topbar">
         <h3><a href="/">Developer </a><span>PJ</span></h3>
-        <ul th:if="${userName==null}"class="nav justify-content-end">
+        <ul th:if="${name==null}"class="nav justify-content-end">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="modal" data-target="#joinModal" data-whatever="@getbootstrap" href="#">회원가입</a>
             </li>
@@ -13,9 +13,9 @@
                 <a class="nav-link" href="/login">로그인</a>
             </li>
         </ul>
-        <ul th:if="${userName!=null}"class="nav justify-content-end">
+        <ul th:if="${name!=null}"class="nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link" href="/login" th:text="${userName}"></a>
+                <a class="nav-link" href="/login" th:text="${name}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/login">로그아웃</a>

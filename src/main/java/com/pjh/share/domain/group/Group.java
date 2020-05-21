@@ -1,7 +1,7 @@
 package com.pjh.share.domain.group;
 
 import com.pjh.share.domain.BaseTimeEntity;
-import com.pjh.share.domain.post.Post;
+import com.pjh.share.domain.post.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +16,14 @@ import java.util.List;
 @Table(name="groups")
 public class Group extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "GROUPS_ID")
     private Long id;
 
     private String thumbnail;
 
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts=new ArrayList<>();
+    private List<Posts> posts=new ArrayList<>();
 
     @Column(length = 500,nullable = false)
     private String title;

@@ -37,7 +37,7 @@
                 <div class="tab-pane fade" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
                     <br/>
                     <div class="board-header">
-                        <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                        <a th:href="@{'/post/save/'+${group.id}}" role="button" class="btn btn-primary">글 등록</a>
                     </div>
                     <br/>
                     <div class="board-body">
@@ -50,18 +50,12 @@
                                 <th style="width:10%">최종 수정일</th>
                             </tr>
                             </thead>
-                            <tbody id="tbody">
+                            <tbody id="tbody" th:each="post:${posts}">
                             <tr>
-                                <td style="width:10%">1</td>
-                                <td style="width:70%"><a href="/posts/read/{{id}}">질문 있습니다</a></td>
-                                <td style="width:10%">홍길동</td>
-                                <td style="width:10%">2020-05-16</td>
-                            </tr>
-                            <tr>
-                                <td style="width:10%">2</td>
-                                <td style="width:70%"><a href="/posts/read/{{id}}">c언어 오류 질문입니다</a></td>
-                                <td style="width:10%">민수</td>
-                                <td style="width:10%">2020-05-17</td>
+                                <td style="width:10%" th:text="${post.id}"></td>
+                                <td style="width:70%" ><a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a></td>
+                                <td style="width:10%" th:text="${post.name}"></td>
+                                <td style="width:10%" th:text="${post.modifiedDate}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -69,6 +63,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="loading">
+        <img src="images/loading.gif"/>
     </div>
     <script src="/js/app/group.js"></script>
     <script src="/js/app/join.js"></script>

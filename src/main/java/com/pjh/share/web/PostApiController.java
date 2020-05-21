@@ -1,11 +1,12 @@
 package com.pjh.share.web;
 
 import com.pjh.share.service.PostService;
+import com.pjh.share.web.dto.PostsResponseDto;
+import com.pjh.share.web.dto.PostsSaveRequestDto;
+import com.pjh.share.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -13,9 +14,25 @@ public class PostApiController {
 
     private final PostService postService;
 
-    @PostMapping("/api/posts")
-    public Long save(){
+    @GetMapping("/api/post/{id}")
+    public PostsResponseDto findById(@PathVariable Long id){
+        return postService.findById(id);
+    }
 
-        return 1L;
+    @PostMapping("/api/post")
+    public Long save(@RequestBody PostsSaveRequestDto requestDto){
+        System.out.println("name : "+requestDto.getName());
+        return postService.save(requestDto);
+    }
+
+    @PutMapping("/api/post/{id}")
+    public Long update(@PathVariable Long id,@RequestBody PostsUpdateRequestDto requestDto){
+        return postService.update(id,requestDto);
+    }
+
+    @DeleteMapping("/api/post/{id}")
+    public Long delete(@PathVariable Long id){
+        postService.delete(id);
+        return id;
     }
 }

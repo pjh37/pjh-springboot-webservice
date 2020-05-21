@@ -11,13 +11,13 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Post extends BaseTimeEntity {
+public class Posts extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="groups_id")
+    @JoinColumn(name="GROUPS_ID")
     private Group group;
 
     @Column(length = 500,nullable = false)
@@ -30,10 +30,16 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @Builder
-    public Post(String name,String title,String content){
+    public Posts(Long groupId, String name, String title, String content){
         this.name=name;
         this.title=title;
         this.content=content;
     }
-
+    public void update(String title,String content){
+        this.title=title;
+        this.content=content;
+    }
+    public void setGroup(Group group){
+        this.group=group;
+    }
 }

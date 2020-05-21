@@ -129,9 +129,26 @@
       margin-left: 5px;
       bottom: 0;
   }
-  .group-join{
+.group-join{
     float:right;
-  }
-  .group-card{
+}
+.group-card{
     margin-top:10px;
-  }
+}
+#content{
+    min-height:500px;
+}
+.comment-writing{
+    margin-top:20px;
+}
+#loading{
+    z-index:10000
+    position:fixed;
+    left:50%;
+    top:50%;
+    background:#fff;
+}
+#loading img{
+    width:50px;
+    height:50px;
+}

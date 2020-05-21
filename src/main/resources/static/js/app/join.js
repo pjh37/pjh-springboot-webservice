@@ -1,3 +1,4 @@
+
 var authString;
 var join={
     init:function(){

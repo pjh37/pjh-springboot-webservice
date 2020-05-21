@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+
+    <div th:replace="fragments/nav :: navFragment"></div>
+    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <form class="posts-save">
+                <div class="form-group w-75">
+                    <label for="title" th:text="${group.title}"></label>
+                    <input type="hidden" class="form-control" id="groupId" th:value="${group.id}">
+                </div>
+                <div class="form-group w-75">
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+                </div>
+                <div class="form-group w-75">
+                    <label for="userName">작성자</label>
+                    <input type="text" class="form-control" id="userName" th:value="${name}" readonly>
+                </div>
+                <div class="form-group w-75">
+                    <label for="content">내용</label>
+                    <textarea  class="form-control" id="content" placeholder="내용을 입력하세요"></textarea>
+                </div>
+            </form>
+            <a th:href="@{'/group/'+{group.id}}" role="button" class="btn btn-secondary">취소</a>
+            <button type="button" class="btn btn-primary" id="btn-update">등록</button>
+
+        </div>
+    </div>
+    <script src="/js/app/group.js"></script>
+    <script src="/js/app/post.js"></script>
+    <script src="/js/app/default.js"></script>
+</div>
+</html>
