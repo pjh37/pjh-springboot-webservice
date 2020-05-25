@@ -16,6 +16,7 @@
     <div id="content-wrapper">
         <div class="container-fluid">
             <form class="posts-save">
+                <input type="hidden" class="form-control" id="groupId" th:value="${groupId}">
                 <input type="hidden" class="form-control" id="postId" th:value="${post.id}">
                 <div class="form-group w-75">
                     <label for="title">제목</label>
@@ -47,14 +48,48 @@
             </div>
             <div class="comment-wrapper">
                 <div class="comment-writing">
-                    <textarea class="form-control" placeholder="댓글"></textarea>
+                    <textarea class="form-control" id="comment-content" placeholder="댓글" maxlength="10000"></textarea>
+                    <button type="button" class="btn btn-primary" id="btn-comment-save">등록</button>
                 </div>
+                <div class="comment-list">
+                    <th:block th:each="comment:${comments}">
+                        <div class="comment-item">
+                            <input type="hidden" class="form-control" id="commentId" th:value="${comment.id}">
+                            <div class="comment-header">
+                                <!-- 유저 닉네임, 날짜 -->
+                                <span class="userName" th:text="${comment.name}"></span>
+                                <span class="modifiedDate" th:text="${comment.modifiedDate}"></span>
+                            </div>
+                            <div class="comment-body">
+                                <!-- 댓글내용 -->
+                                <p th:text="${comment.content}"></p>
+                            </div>
+                            <div class="comment-footer">
+                                <!-- 좋아요/싫어요, 답글 -->
+                                <button type="button" class="btn-like">
+                                    <img src="/images/like.png">
+                                    <span th:text="${comment.likeCount}"></span>
+                                </button>
+                                <button type="button" class="btn-dislike">
+                                    <img src="/images/dislike.png">
+                                    <span th:text="${comment.dislikeCount}"></span>
+                                </button>
+                                <a href="#" th:onclick="|commentView('${comment.id}')|">답글</a>
+                                <div class="re-comment" th:id="${'comment_'+comment.id}">
+                                    <textarea class="form-control" placeholder="답글" maxlength="10000"></textarea>
+                                    <button type="button" class="btn btn-secondary">취소</button>
+                                    <button type="button" class="btn btn-primary">등록</button>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
 
+                </div>
             </div>
         </div>
     </div>
     <script src="/js/app/group.js"></script>
     <script src="/js/app/post.js"></script>
-
+    <script src="/js/app/comment.js"></script>
 </div>
 </html>

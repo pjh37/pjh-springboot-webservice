@@ -11,12 +11,13 @@ var post={
         $('#btn-delete').on('click',function(){
             _this.delete();
         });
+
     },
     save:function(){
         var data={
             groupId:$('#groupId').val(),
             title:$('#title').val(),
-            name:$('#userName').val(),
+            name:$('#name').val(),
             content:$('#content').val()
         }
 
@@ -67,4 +68,5 @@ var post={
         });
     }
 }
+
 post.init();

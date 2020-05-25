@@ -14,9 +14,9 @@ var join={
     },
     create:function(){
         var data={
-            name:$('#name').val(),
+            name:$('#nicName').val(),
             email:$('#email').val(),
-            password:$('#password').val()
+            password:$('#pw').val()
         }
         $.ajax({
             type:'POST',

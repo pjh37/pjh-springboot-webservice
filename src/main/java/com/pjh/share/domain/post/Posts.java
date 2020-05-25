@@ -1,12 +1,15 @@
 package com.pjh.share.domain.post;
 
 import com.pjh.share.domain.BaseTimeEntity;
+import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.group.Group;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -19,6 +22,9 @@ public class Posts extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name="GROUPS_ID")
     private Group group;
+
+    @OneToMany(mappedBy = "posts",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments=new ArrayList<>();
 
     @Column(length = 500,nullable = false)
     private String name;

@@ -152,3 +152,17 @@
     width:50px;
     height:50px;
 }
+.re-comment{
+    display:none;
+}
+#btn-comment-save{
+    margin-top:20px;
+}
+.btn-like,btn-dislike{
+    border: 0;
+    outline: 0;
+    background: #fff;
+}
+.btn-like,btn-dislike>img{
+    width:24px;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/default.css">
+</th:block>
+
+<div layout:fragment="content">
+
+    <div th:replace="fragments/nav :: navFragment"></div>
+    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <video oncontextmenu="return false;" id="myVideo" width="640" controls autoplay="autoplay">
+                <source src="http://localhost:8080/watch/test" type="video/mp4">
+            </video>
+
+        </div>
+    </div>
+
+
+    <script src="/js/app/join.js"></script>
+    <script src="/js/app/default.js"></script>
+</div>
+</html>
