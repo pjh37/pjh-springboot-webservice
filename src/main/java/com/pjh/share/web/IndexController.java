@@ -6,6 +6,7 @@ import com.pjh.share.domain.account.Role;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
+import com.pjh.share.service.VideoService;
 import com.pjh.share.web.dto.GroupListResponseDto;
 import com.pjh.share.web.dto.GroupResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class IndexController {
     private final PostService postService;
     private final GroupService groupService;
     private final AccountService accountService;
+    private final VideoService videoService;
     @GetMapping("/")
     public String index(Model model, @CurrentUser Account account){
         if(account!=null){
@@ -57,6 +59,7 @@ public class IndexController {
         if(account!=null){
             model.addAttribute("name",account.getName());
         }
+        model.addAttribute("videos",videoService.findAllDesc(id));
         model.addAttribute("group",groupService.findById(id));
         model.addAttribute("posts",postService.findAllDesc(0));
         return "group-read";

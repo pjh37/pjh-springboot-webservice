@@ -2,6 +2,7 @@ package com.pjh.share.domain.group;
 
 import com.pjh.share.domain.BaseTimeEntity;
 import com.pjh.share.domain.post.Posts;
+import com.pjh.share.domain.video.Video;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class Group extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Posts> posts=new ArrayList<>();
+
+    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Video> videos=new ArrayList<>();
 
     @Column(length = 500,nullable = false)
     private String title;

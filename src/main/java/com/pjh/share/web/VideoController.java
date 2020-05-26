@@ -2,19 +2,25 @@ package com.pjh.share.web;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.service.VideoService;
+import com.pjh.share.web.dto.VideoUploadRequestDto;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.result.Output;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
+@RequiredArgsConstructor
 public class VideoController {
-
+    private final VideoService videoService;
     @GetMapping("/watch")
     public String video(Model model,@CurrentUser Account account){
         if(account!=null){
@@ -22,6 +28,15 @@ public class VideoController {
         }
         return "watch";
     }
+
+    @PostMapping("/api/video")
+    @ResponseBody
+    public Long videoUpload(VideoUploadRequestDto requestDto)throws Exception{
+        return videoService.save(requestDto);
+    }
+
+
+
 
     @GetMapping("/watch/{video_name}")
     public void videoStream(@PathVariable("video_name") String videoName, HttpServletRequest request, HttpServletResponse response) throws Exception{

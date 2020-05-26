@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
    $('#loading').hide();
 })
 .ajaxStart(function(){

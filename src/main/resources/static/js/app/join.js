@@ -25,6 +25,7 @@ var join={
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function(){
+            $('#loading').hide();
             alert('회원가입 완료. 이메일 인증시 정회원으로 전환됩니다.');
              window.location.href='/login';
         }).fail(function(error){

@@ -142,10 +142,7 @@
     margin-top:20px;
 }
 #loading{
-    z-index:10000
-    position:fixed;
-    left:50%;
-    top:50%;
+    margin: auto;
     background:#fff;
 }
 #loading img{
@@ -165,4 +162,8 @@
 }
 .btn-like,btn-dislike>img{
     width:24px;
+}
+.videos{
+    width:400px;
+    height:260px;
 }

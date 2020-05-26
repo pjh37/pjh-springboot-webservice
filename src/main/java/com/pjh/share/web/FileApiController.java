@@ -11,11 +11,11 @@ import java.io.*;
 @RequiredArgsConstructor
 @RestController
 public class FileApiController {
-    @GetMapping("/file/{id}")
-    public void getImage(HttpServletResponse response, @PathVariable String id)throws Exception{
+    @GetMapping("/file/{fileName}")
+    public void getImage(HttpServletResponse response, @PathVariable String fileName)throws Exception{
         int len;
         int bufferSize=1024;
-        String fullPath="C:"+File.separator+"uploads"+File.separator+id+".jpg";
+        String fullPath="C:"+File.separator+"uploads"+File.separator+fileName+".jpg";
         BufferedOutputStream out=null;
         InputStream in=null;
         try{
