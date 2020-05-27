@@ -22,6 +22,8 @@ public class Video extends BaseTimeEntity {
     @JoinColumn(name="GROUPS_ID")
     private Group group;
 
+    private String name;
+
     private String title;
 
     @Column(length = 500,columnDefinition = "TEXT",nullable = false)

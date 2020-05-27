@@ -1,22 +1,21 @@
 package com.pjh.share.web.dto;
 
+
 import com.pjh.share.domain.video.Video;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class VideoListResponseDto {
+public class VideoResponseDto {
     private Long id;
     private Long clickCount;
     private String name;
     private String title;
     private String fileName;
     private LocalDateTime modifiedDate;
-
-    public VideoListResponseDto(Video entity){
+    public VideoResponseDto(Video entity){
         this.id=entity.getId();
         this.name=entity.getName();
         this.clickCount=entity.getClickCount();

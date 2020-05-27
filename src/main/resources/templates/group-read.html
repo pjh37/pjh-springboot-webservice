@@ -46,18 +46,21 @@
 
                     <div class="row">
                         <th:block th:each="video:${videos}">
-                            <div class="video-item" th:onclick="|window.location.href='@{${'watch/'+video.id}}'|">
-                                <div class="video-container">
-                                    <video oncontextmenu="return false;" class="videos" controls>
-                                        <source th:src="@{'/watch/'+${video.fileName}+'#t=0.5'}" type="video/mp4">
-                                    </video>
+                            <div class="video-item col-3" th:onclick="|window.location.href='@{${'../watch/v/'+video.id}}'|">
+                                <video oncontextmenu="return false;" class="col">
+                                    <source th:src="@{'/watch/'+${video.fileName}+'#t=2.5'}" type="video/mp4">
+                                </video>
+                                <div class="video-title col">
+                                    <p th:text="${video.title}"></p>
                                 </div>
-                                <div class="video-title">
-                                    <h3 class="group-title" th:text="${video.title}"></h3>
+                                <div class="video-author col">
+                                    <span th:text="${video.name}"></span>
                                 </div>
-                                <div class="video-click">
-                                    <span class="video-clickCount" th:text="${video.clickCount}"></span>
+                                <div class="video-footer col ">
+                                    <span th:text="${'조회수 '+video.clickCount+'회'}"></span>
+                                    <span th:text="${video.modifiedDate}"></span>
                                 </div>
+
                             </div>
                         </th:block>
                     </div>

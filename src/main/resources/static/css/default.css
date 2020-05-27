@@ -163,7 +163,30 @@
 .btn-like,btn-dislike>img{
     width:24px;
 }
-.videos{
-    width:400px;
-    height:260px;
-}
+.video-title>p{
+      color:#000;
+      font-weight:bold;
+      font-size: 14px;
+      margin:0px;
+  }
+  .video-author>span{
+      color:#606060;
+      font-size: 14px;
+  }
+  .video-footer>span{
+      color:#606060;
+      font-size: 14px;
+  }
+ .row .col{
+      padding-left: 4px;
+      padding-right: 4px;
+  }
+  .video-item{
+        cursor: pointer;
+    }
+
+ #myVideo{
+    margin:30px;
+    width:640px;
+    height:360px;
+ }

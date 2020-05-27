@@ -1,3 +1,5 @@
+
+
 var video={
     init:function(){
         var _this=this;
@@ -5,6 +7,7 @@ var video={
         $('#btn-video-upload').on('click',function(){
             _this.upload();
         });
+
     },
     upload:function(){
         var form=$("#videoForm")[0];

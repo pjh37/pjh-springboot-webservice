@@ -16,7 +16,8 @@ public class VideoUploadRequestDto {
 
     public Video toEntity(){
         String fileName= UUID.randomUUID().toString();
-        return Video.builder().title(title)
+        return Video.builder()
+                .title(title)
                 .fileName(fileName)
                 .fileOriginalName(file.getOriginalFilename())
                 .build();

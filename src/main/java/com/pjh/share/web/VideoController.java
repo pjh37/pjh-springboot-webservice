@@ -2,7 +2,9 @@ package com.pjh.share.web;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.video.Video;
 import com.pjh.share.service.VideoService;
+import com.pjh.share.web.dto.VideoResponseDto;
 import com.pjh.share.web.dto.VideoUploadRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.result.Output;
@@ -21,21 +23,22 @@ import java.io.*;
 @RequiredArgsConstructor
 public class VideoController {
     private final VideoService videoService;
-    @GetMapping("/watch")
-    public String video(Model model,@CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("name",account.getName());
-        }
-        return "watch";
-    }
 
     @PostMapping("/api/video")
     @ResponseBody
-    public Long videoUpload(VideoUploadRequestDto requestDto)throws Exception{
-        return videoService.save(requestDto);
+    public Long videoUpload(VideoUploadRequestDto requestDto,@CurrentUser Account account)throws Exception{
+        return videoService.save(requestDto,account.getName());
     }
 
-
+    @GetMapping("/watch/v/{id}")
+    public String video(Model model,@PathVariable Long id,@CurrentUser Account account){
+        VideoResponseDto videoResponse =videoService.findById(id);
+        if(account!=null){
+            model.addAttribute("name",account.getName());
+        }
+        model.addAttribute("video",videoResponse);
+        return "watch";
+    }
 
 
     @GetMapping("/watch/{video_name}")

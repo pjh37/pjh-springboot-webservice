@@ -15,9 +15,12 @@
     <div th:replace="fragments/sidebar :: sidebarFragment"></div>
     <div id="content-wrapper">
         <div class="container-fluid">
-            <video oncontextmenu="return false;" id="myVideo" width="640" preload="metadata" controls>
-                <source src="/watch/test#t=0.5" type="video/mp4">
-            </video>
+            <div class="row">
+                <video oncontextmenu="return false;" id="myVideo" width="640" preload="metadata" controls>
+                    <source th:src="@{'/watch/'+${video.fileName}+'#t=2.5'}" type="video/mp4">
+                </video>
+            </div>
+
 
         </div>
     </div>
