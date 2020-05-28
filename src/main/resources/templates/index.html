@@ -16,22 +16,50 @@
     <div id="content-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="group-item" th:each="group:${groups}" th:onclick="|window.location.href='@{${'group/'+group.id}}'|">
-                    <div>
-                        <div class="image-container">
+                <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
+                <th:block th:each="group:${groups}">
+                    <div class="group-item col-3" th:onclick="|javascript:group.groupIn('${group.id}','${group.isSecretRoom}')|">
+                        <div class="image-container col">
                             <img class="thumbnail" th:src="@{${'file/'+group.thumbnail}}"/>
                         </div>
-                        <h3 class="group-title" th:text="${group.title}"></h3>
-                        <p class="group-description" th:text="${group.description}">
-                        </p>
-                        <span class="group-totalNum" th:text="${group.totalNum+'명'}"></span>
+                        <div class="group-mid col">
+                            <h3 class="group-title" th:text="${group.title}"></h3>
+                            <p class="group-description" th:text="${group.description}">
+                            </p>
+                        </div>
+                        <div class="col">
+                            <span class="group-totalNum" th:text="${group.totalNum+'명'}"></span>
+                            <th:block th:if="${group.isSecretRoom}==true">
+                                <span><img class="group-option" src="/images/key.png"></span>
+                            </th:block>
+                        </div>
                     </div>
-                </div>
+                </th:block>
+
             </div>
 
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">그룹 비밀번호 확인</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="password" class="form-control" id="groupPassword">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="btn-passwordCheck">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/js/app/group.js"></script>
     <script src="/js/app/join.js"></script>
     <script src="/js/app/default.js"></script>

@@ -1,4 +1,4 @@
-
+var selectGroupId;
 var group={
     init:function(){
         var _this=this;
@@ -12,13 +12,20 @@ var group={
         $('#btn-create').on('click',function(){
             _this.create();
         });
+       $('#btn-passwordCheck').on('click',function(){
+            _this.passwordCheck();
+       });
     },
     create:function(){
+
         var form=$("#groupForm")[0];
         var formData=new FormData(form);
         formData.append("title",$('#title').val());
         formData.append("description",$('#description').val());
-        formData.append("password",$('#password').val());
+        if($('#password').val().length!=0){
+            formData.append("password",$('#password').val());
+        }
+
         formData.append("currentNum",0);
         formData.append("totalNum",$('#totalNum').val());
         formData.append("file",$("#groupThumbnail")[0].files[0]);
@@ -37,6 +44,37 @@ var group={
              }).fail(function(error){
                  alert(JSON.stringify(error));
              });
+    },
+    groupIn:function(groupId,isSecretRoom){
+            selectGroupId=groupId;
+          if(isSecretRoom==true){
+                $('#passwordModal').modal('show');
+          }else{
+                window.location.href='/group/'+groupId;
+          }
+
+    },
+    passwordCheck:function(){
+        var data={
+            id:selectGroupId*1,
+            password:$('#groupPassword').val()
+        }
+
+        $.ajax({
+             type:'POST',
+             url:'/api/group/check/p',
+             dataType:'json',
+             contentType:'application/json; charset=utf-8',
+             data: JSON.stringify(data),
+             success:function(isRight){
+
+                if(isRight){
+                    window.location.href='/group/'+selectGroupId;
+                }else{
+                    alert('비밀번호가 틀렸습니다.');
+                }
+             }
+        });
     }
 }
 group.init();

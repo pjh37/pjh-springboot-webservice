@@ -7,6 +7,7 @@ import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.util.FileUtil;
 import com.pjh.share.web.dto.GroupCreateRequestDto;
 import com.pjh.share.web.dto.GroupListResponseDto;
+import com.pjh.share.web.dto.GroupPwCheckRequestDto;
 import com.pjh.share.web.dto.GroupResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,12 @@ public class GroupService {
         Group entity=groupRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당그룹이 없습니다"));
         return new GroupResponseDto(entity);
+    }
+
+    @Transactional
+    public boolean groupPwCheck(GroupPwCheckRequestDto requestDto){
+        Group entity=groupRepository.findById(requestDto.getId())
+                .orElseThrow(()->new IllegalArgumentException("해당그룹이 없습니다"));
+        return entity.getPassword().equals(requestDto.getPassword());
     }
 }
