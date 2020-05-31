@@ -1,5 +1,7 @@
 package com.pjh.share.web;
 
+import com.pjh.share.common.CurrentUser;
+import com.pjh.share.domain.account.Account;
 import com.pjh.share.service.CommentService;
 import com.pjh.share.web.dto.CommentSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentApiController {
     private final CommentService commentService;
     @PostMapping("/api/comment")
-    public Long save(@RequestBody CommentSaveRequestDto requestDto) throws Exception{
-        System.out.println("CommentApiController : "+requestDto.getContent());
-        return commentService.save(requestDto);
+    public Long save(@RequestBody CommentSaveRequestDto requestDto, @CurrentUser Account account) throws Exception{
+        return commentService.save(requestDto,account);
     }
 }

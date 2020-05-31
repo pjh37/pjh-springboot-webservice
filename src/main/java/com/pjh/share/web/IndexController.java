@@ -3,6 +3,7 @@ package com.pjh.share.web;
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.Role;
+import com.pjh.share.domain.group.Group;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
@@ -27,7 +28,8 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @CurrentUser Account account){
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
+
         }
         List<GroupListResponseDto> groupListResponseDtos=groupService.findAll();
         model.addAttribute("groups",groupListResponseDtos);
@@ -42,14 +44,14 @@ public class IndexController {
     @GetMapping("/group-manage")
     public String group_manage(Model model, @CurrentUser Account account){
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         return "group-manage";
     }
     @GetMapping("/group-create")
     public String group_create(Model model, @CurrentUser Account account){
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         return "group-create";
     }
@@ -57,7 +59,7 @@ public class IndexController {
     @GetMapping("/group/{id}")
     public String group_read(Model model,@PathVariable Long id,@CurrentUser Account account){
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         model.addAttribute("videos",videoService.findAllDesc(id));
         model.addAttribute("group",groupService.findById(id));
@@ -65,5 +67,13 @@ public class IndexController {
         return "group-read";
     }
 
-
+    @GetMapping("/myGroups")
+    public String myGroups(Model model,@CurrentUser Account account){
+        List<GroupListResponseDto> myGroups=groupService.findAllMyGroup(account.getId());
+        if(account!=null){
+            model.addAttribute("account",account);
+        }
+        model.addAttribute("myGroups",myGroups);
+        return "myGroups";
+    }
 }

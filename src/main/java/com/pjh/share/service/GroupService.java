@@ -1,14 +1,15 @@
 package com.pjh.share.service;
 
+import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.file.File;
 import com.pjh.share.domain.file.FileRepository;
 import com.pjh.share.domain.group.Group;
 import com.pjh.share.domain.group.GroupRepository;
+import com.pjh.share.domain.groupaccount.GroupAccount;
+import com.pjh.share.domain.groupaccount.GroupAccountRepository;
 import com.pjh.share.util.FileUtil;
-import com.pjh.share.web.dto.GroupCreateRequestDto;
-import com.pjh.share.web.dto.GroupListResponseDto;
-import com.pjh.share.web.dto.GroupPwCheckRequestDto;
-import com.pjh.share.web.dto.GroupResponseDto;
+import com.pjh.share.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,30 +20,54 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class GroupService {
+    private final GroupAccountRepository groupAccountRepository;
     private final GroupRepository groupRepository;
     private final FileRepository fileRepository;
     @Transactional
-    public Long save(GroupCreateRequestDto dto)throws Exception{
+    public Long save(GroupCreateRequestDto dto,Account account)throws Exception{
         Group group=groupRepository.save(dto.toEntity());
         File file=dto.toFileEntity();
         group.thumbnailUpdate(file.getFileName());
+        group.setAccount(account);
         fileRepository.save(file).groupIdUpdate(group.getId());
         FileUtil.upload(dto.getFile(),file.getFileName());
         return group.getId();
     }
 
     @Transactional
+    public Long join(GroupJoinRequestDto requestDto,Account account){
+        Group group=groupRepository.findById(requestDto.getGroupId()).orElseThrow(()->new IllegalArgumentException("없는 그룹입니다."));
+        GroupAccount groupAccount=new GroupAccount(account,group);
+        return groupAccountRepository.save(groupAccount).getId();
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GroupListResponseDto> findAllGroup(Long id){
+        return groupRepository.findAllGroup(id).stream().map(GroupListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
     public List<GroupListResponseDto> findAll(){
         return groupRepository.findAll().stream().map(GroupListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public GroupResponseDto findById(Long id){
         Group entity=groupRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당그룹이 없습니다"));
         return new GroupResponseDto(entity);
     }
+
+    @Transactional(readOnly = true)
+    public List<GroupListResponseDto> findAllMyGroup(Long id){
+        return groupAccountRepository.findAllMyGroup(id)
+                .stream()
+                .map(GroupListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
 
     @Transactional
     public boolean groupPwCheck(GroupPwCheckRequestDto requestDto){

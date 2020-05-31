@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.Cookie;
+
 @RequiredArgsConstructor
 @Controller
 public class PostController {
@@ -21,7 +23,7 @@ public class PostController {
     @GetMapping("/post/save/{groupId}")
     public String postSave(Model model, @PathVariable Long groupId, @CurrentUser Account account){
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         model.addAttribute("group",groupService.findById(groupId));
         return "post-save";
@@ -33,7 +35,7 @@ public class PostController {
         model.addAttribute("post",postService.findById(postId));
         model.addAttribute("comments",commentService.findAllDesc(firstPage,postId));
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         return "post-read";
     }

@@ -18,7 +18,6 @@ public class PostsSaveRequestDto {
         return Posts.builder()
                 .groupId(groupId)
                 .title(title)
-                .name(name)
                 .content(content)
                 .build();
     }

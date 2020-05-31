@@ -8,7 +8,6 @@ var comment={
     save:function(){
         var data={
             postId:$('#postId').val(),
-            name:$('#name').val(),
             content:$('#comment-content').val()
         }
        $.ajax({

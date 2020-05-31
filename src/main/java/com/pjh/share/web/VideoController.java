@@ -34,7 +34,7 @@ public class VideoController {
     public String video(Model model,@PathVariable Long id,@CurrentUser Account account){
         VideoResponseDto videoResponse =videoService.findById(id);
         if(account!=null){
-            model.addAttribute("name",account.getName());
+            model.addAttribute("account",account);
         }
         model.addAttribute("video",videoResponse);
         return "watch";

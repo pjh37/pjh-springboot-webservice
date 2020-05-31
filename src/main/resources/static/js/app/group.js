@@ -9,9 +9,15 @@ var group={
                    $('#passwordGroup').hide();
             }
         });
+
         $('#btn-create').on('click',function(){
             _this.create();
         });
+
+        $('#btn-groupJoin').on('click',function(){
+             _this.groupJoin();
+        });
+
        $('#btn-passwordCheck').on('click',function(){
             _this.passwordCheck();
        });
@@ -75,6 +81,27 @@ var group={
                 }
              }
         });
+    },
+    groupJoinModal:function(groupId){
+        $('#groupJoinModal').modal('show');
+        $('#groupJoinId').val(groupId);
+    },
+    groupJoin:function(){
+         var data={
+              groupId: $('#groupJoinId').val()
+         }
+         $.ajax({
+              type:'POST',
+              url:' /api/group/join',
+              dataType:'json',
+              contentType:'application/json; charset=utf-8',
+              data: JSON.stringify(data)
+         }).done(function(){
+              alert('그룹 관리자가 승인하면 이용가능합니다.');
+              window.location.href='/';
+         }).fail(function(error){
+              alert('error 다시 시도해주십시오 '+JSON.stringify(error));
+         });
     }
 }
 group.init();

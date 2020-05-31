@@ -1,17 +1,21 @@
 package com.pjh.share.domain.group;
 
 import com.pjh.share.domain.BaseTimeEntity;
+import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.groupaccount.GroupAccount;
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.video.Video;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="groups")
@@ -21,6 +25,11 @@ public class Group extends BaseTimeEntity {
     @Column(name = "GROUPS_ID")
     private Long id;
 
+    //그룹을 만든 사람
+    @ManyToOne
+    @JoinColumn(name="ACCOUNT_ID")
+    private Account account;
+
     private String thumbnail;
 
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
@@ -28,6 +37,9 @@ public class Group extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Video> videos=new ArrayList<>();
+
+    @OneToMany(mappedBy = "group",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupAccount> groupAccounts=new ArrayList<>();
 
     @Column(length = 500,nullable = false)
     private String title;

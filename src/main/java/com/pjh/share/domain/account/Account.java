@@ -1,5 +1,7 @@
 package com.pjh.share.domain.account;
 
+import com.pjh.share.domain.group.Group;
+import com.pjh.share.domain.groupaccount.GroupAccount;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,8 @@ import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,6 +36,14 @@ public class Account {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    //자신이 가입한 그룹
+    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupAccount> groupAccounts=new ArrayList<>();
+
+    //자신이 만든 그룹
+    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> groups=new ArrayList<>();
 
     @Builder
     public Account(String name,String email,String password,String authString,Role role){

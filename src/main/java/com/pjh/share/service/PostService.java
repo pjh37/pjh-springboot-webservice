@@ -1,5 +1,7 @@
 package com.pjh.share.service;
 
+import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.group.Group;
 import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.domain.post.Posts;
@@ -18,18 +20,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PostService {
+
     private final PostsRepository postRepository;
     private final GroupRepository groupRepository;
     private final Integer pageSize=10;
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
+    public Long save(PostsSaveRequestDto requestDto,Account account){
         Group group=groupRepository.findById(requestDto.getGroupId()).orElseThrow(()->new IllegalArgumentException("해당 그룹이 없습니다"));;
         Posts post=postRepository.save(requestDto.toEntity());
         post.setGroup(group);
+        post.setName(account.getName());
         return post.getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(Integer curPage){
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
         return postRepository.findAllDesc(pageable)

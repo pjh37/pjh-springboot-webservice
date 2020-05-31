@@ -1,5 +1,7 @@
 package com.pjh.share.service;
 
+import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
@@ -24,12 +26,13 @@ public class CommentService {
     private final PostsRepository postsRepository;
     private final Integer pageSize=10;
     @Transactional
-    public Long save(CommentSaveRequestDto requestDto)throws Exception{
+    public Long save(CommentSaveRequestDto requestDto,Account account)throws Exception{
         System.out.println("CommentService : "+requestDto.getContent());
         Posts post=postsRepository.findById(requestDto.getPostId())
                 .orElseThrow(()->new IllegalArgumentException("해당 게시물이 없습니다"));
         Comment comment=commentRepository.save(requestDto.toEntity());
         comment.setPosts(post);
+        comment.setName(account.getName());
         return comment.getId();
     }
 

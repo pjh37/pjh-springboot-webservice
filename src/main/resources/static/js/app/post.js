@@ -17,7 +17,6 @@ var post={
         var data={
             groupId:$('#groupId').val(),
             title:$('#title').val(),
-            name:$('#name').val(),
             content:$('#content').val()
         }
 

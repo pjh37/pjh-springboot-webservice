@@ -17,8 +17,8 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
-                <th:block th:each="group:${groups}">
-                    <div class="group-item col-3" th:onclick="|javascript:group.groupJoinModal('${group.id}')|">
+                <th:block th:each="group:${myGroups}">
+                    <div class="group-item col-3" th:onclick="|javascript:group.groupIn('${group.id}','${group.isSecretRoom}')|">
                         <div class="image-container col">
                             <img class="thumbnail" th:src="@{${'file/'+group.thumbnail}}"/>
                         </div>
@@ -40,24 +40,27 @@
 
         </div>
     </div>
-    <!-- Modal  내가 가입할 수 있는 모달-->
-    <div class="modal fade" id="groupJoinModal" tabindex="-1" role="dialog" aria-labelledby="groupJoinModalLabel" aria-hidden="true">
+    <!-- Modal  내가 가입한 그룹이 비밀그룹일때 모달-->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="groupJoinModalLabel">그룹에 가입하시겠습니까?</h5>
-                    <input type="hidden" id="groupJoinId">
+                    <h5 class="modal-title" id="passwordModalLabel">그룹 비밀번호 확인</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <input type="password" class="form-control" id="groupPassword">
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="btn-groupJoin">가입</button>
+                    <button type="button" class="btn btn-primary" id="btn-passwordCheck">확인</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="/js/app/group.js"></script>
     <script src="/js/app/join.js"></script>
     <script src="/js/app/default.js"></script>

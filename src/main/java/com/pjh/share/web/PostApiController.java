@@ -1,5 +1,7 @@
 package com.pjh.share.web;
 
+import com.pjh.share.common.CurrentUser;
+import com.pjh.share.domain.account.Account;
 import com.pjh.share.service.PostService;
 import com.pjh.share.web.dto.PostsResponseDto;
 import com.pjh.share.web.dto.PostsSaveRequestDto;
@@ -20,9 +22,9 @@ public class PostApiController {
     }
 
     @PostMapping("/api/post")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto){
+    public Long save(@RequestBody PostsSaveRequestDto requestDto, @CurrentUser Account account){
         System.out.println("name : "+requestDto.getName());
-        return postService.save(requestDto);
+        return postService.save(requestDto,account);
     }
 
     @PutMapping("/api/post/{id}")
