@@ -83,6 +83,7 @@ var group={
         });
     },
     groupJoinModal:function(groupId){
+
         $('#groupJoinModal').modal('show');
         $('#groupJoinId').val(groupId);
     },
@@ -102,6 +103,35 @@ var group={
          }).fail(function(error){
               alert('error 다시 시도해주십시오 '+JSON.stringify(error));
          });
+    },
+    groupItemClick:function(groupItemId,isSecretRoom){
+        //그룹 아이템 클릭 했을때
+        //이 그룹의 참여자인가? 신규가입자인가?
+
+        $.ajax({
+            type:'get',
+            url:'/api/group/memberCheck/'+groupItemId,
+            dataType:'json',
+            contentType:'application/json;charset=utf-8',
+            success:function(isMember){
+                if(isMember){
+                     //비밀방인가 그냥 방인가?
+                     if(isSecretRoom==true){
+                        $('#passwordModal').modal('show');
+                     }else{
+                        window.location.href='/group/'+groupItemId;
+                     }
+                }else{
+                      if(isSecretRoom==true){
+                        $('#passwordModal').modal('show');
+                      }else{
+                        $('#groupJoinModal').modal('show');
+                        $('#groupJoinId').val(groupItemId);
+                      }
+
+                }
+            }
+        })
     }
 }
 group.init();

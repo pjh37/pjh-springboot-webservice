@@ -8,6 +8,7 @@ public class GroupResponseDto {
     private Long id;
     private String title;
     private String description;
+    private String groupAdmin;
     private Integer totalNum;
     private Integer currentNum;
 
@@ -15,6 +16,7 @@ public class GroupResponseDto {
         this.id=entity.getId();
         this.title=entity.getTitle();
         this.description=entity.getDescription();
+        this.groupAdmin=entity.getAccount().getName();
         this.totalNum=entity.getTotalNum();
         this.currentNum=entity.getCurrentNum();
     }

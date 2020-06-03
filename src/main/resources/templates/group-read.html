@@ -21,7 +21,7 @@
                     <h5 class="card-title" th:text="${group.title}"></h5>
                     <p class="card-text"  th:text="${group.description}"></p>
                     <span th:text="${group.currentNum+'명'}"></span>/<span th:text="${group.totalNum+'명'}"></span>
-                    <a href="#" class="btn btn-primary group-join">그룹 참여</a>
+                    <a href="#" class="btn btn-outline-secondary group-join">그룹 탈퇴</a>
                 </div>
             </div>
 
@@ -35,7 +35,48 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-noti" role="tabpanel" aria-labelledby="nav-noti-tab">안녕하세요</div>
-                <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">구성원소개란입니다</div>
+                <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">닉네임</th>
+                                <th scope="col">등급</th>
+                                <th scope="col">가입날짜</th>
+                                <!-- th:if="${account.name.equals(post.name)}"-->
+                                <th:block th:if="${account.name.equals(group.groupAdmin)}">
+                                    <th scope="col">권한수정</th>
+                                </th:block>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="member:${members}">
+                                <tr>
+                                    <td th:text="${member.name}"></td>
+                                    <td th:text="${member.role}"></td>
+                                    <td th:text="${member.modifiedDate}"></td>
+                                    <th:block th:if="${account.name.equals(group.groupAdmin)}">
+                                        <td>
+                                            <select id="inputState" class="form-control">
+                                                <th:block th:if="${member.role.equals('관리자')}">
+                                                    <option selected disabled>관리자</option>
+                                                </th:block>
+                                                <th:block th:if="${member.role.equals('임시회원')}">
+                                                    <option selected>임시회원</option>
+                                                    <option>정회원</option>
+                                                </th:block>
+                                                <th:block th:if="${member.role.equals('정회원')}">
+                                                    <option>임시회원</option>
+                                                    <option selected>정회원</option>
+                                                </th:block>
+                                            </select>
+                                        </td>
+                                    </th:block>
+                                </tr>
+
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
                     <br/>
                     <div class="video-header">

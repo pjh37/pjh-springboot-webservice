@@ -61,6 +61,7 @@ public class IndexController {
         if(account!=null){
             model.addAttribute("account",account);
         }
+        model.addAttribute("members",groupService.findGroupMemberByGroupId(id));
         model.addAttribute("videos",videoService.findAllDesc(id));
         model.addAttribute("group",groupService.findById(id));
         model.addAttribute("posts",postService.findAllDesc(0));

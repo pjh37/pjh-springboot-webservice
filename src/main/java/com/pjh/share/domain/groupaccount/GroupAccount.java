@@ -1,5 +1,6 @@
 package com.pjh.share.domain.groupaccount;
 
+import com.pjh.share.domain.BaseTimeEntity;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.group.Group;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GroupAccount {
+public class GroupAccount extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,10 +27,16 @@ public class GroupAccount {
     @JoinColumn(name="GROUPS_ID")
     private Group group;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+
     @Builder
-    public GroupAccount(Account account,Group group){
+    public GroupAccount(Account account,Group group,Role role){
         this.account=account;
         this.group=group;
+        this.role=role;
     }
 
 }

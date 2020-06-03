@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public class CommentListResponseDto {
         this.content=entity.getContent();
         this.likeCount=entity.getLikeCount();
         this.dislikeCount=entity.getDislikeCount();
-        this.modifiedDate=entity.getModifiedDate();
+        this.modifiedDate=LocalDateTime.parse(entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
 
 

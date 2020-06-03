@@ -57,4 +57,10 @@ public class GroupApiController {
         return false;
     }
 
+    @GetMapping("/api/group/memberCheck/{groupId}")
+    @ResponseBody
+    public boolean groupMemberCheck(@PathVariable Long groupId,@CurrentUser Account account){
+        return groupService.groupMemberCheck(groupId,account);
+    }
+
 }
