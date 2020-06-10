@@ -27,9 +27,9 @@ public class PostService {
     @Transactional
     public Long save(PostsSaveRequestDto requestDto,Account account){
         Group group=groupRepository.findById(requestDto.getGroupId()).orElseThrow(()->new IllegalArgumentException("해당 그룹이 없습니다"));;
+        requestDto.setName(account.getName());
         Posts post=postRepository.save(requestDto.toEntity());
         post.setGroup(group);
-        post.setName(account.getName());
         return post.getId();
     }
 

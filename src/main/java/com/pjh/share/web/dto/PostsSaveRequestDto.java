@@ -10,13 +10,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostsSaveRequestDto {
     private Long groupId;
-    private String title;
     private String name;
+    private String title;
     private String content;
 
     public Posts toEntity(){
         return Posts.builder()
                 .groupId(groupId)
+                .name(name)
                 .title(title)
                 .content(content)
                 .build();

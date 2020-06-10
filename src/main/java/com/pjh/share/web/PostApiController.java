@@ -23,7 +23,6 @@ public class PostApiController {
 
     @PostMapping("/api/post")
     public Long save(@RequestBody PostsSaveRequestDto requestDto, @CurrentUser Account account){
-        System.out.println("name : "+requestDto.getName());
         return postService.save(requestDto,account);
     }
 

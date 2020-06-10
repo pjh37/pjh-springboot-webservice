@@ -38,7 +38,7 @@
 .sidebar{
     background:#151719;
     padding-top:20px;
-    position:fixed;
+    position:absolute;
     left:0;
     width:250px;
     height:100%;
@@ -146,27 +146,48 @@
 .comment-writing{
     margin-top:20px;
 }
+.comment-item{
+    margin-bottom:20px;
+}
 #loading{
     margin: auto;
     background:#fff;
+    text-align: center;
 }
 #loading img{
     width:50px;
     height:50px;
 }
 .re-comment{
+    margin-top:10px;
+    padding-bottom: 25px;
     display:none;
+}
+.comment-reply-btn{
+    float: right;
+    margin-top: 5px;
 }
 #btn-comment-save{
     margin-top:20px;
 }
-.btn-like,btn-dislike{
+.comment-header>.userName{
+    font-weight: bold;
+}
+.btn-like,.btn-dislike{
     border: 0;
     outline: 0;
     background: #fff;
 }
-.btn-like,btn-dislike>img{
-    width:24px;
+.btn-like>img,.btn-dislike>img{
+    width:16px;
+    height:16px;
+}
+.btn-comment-delete,.btn-comment-update{
+    padding-left: 8px;
+    font-size: 13px;
+    margin: 0px 0px 0px 8px;
+    display: inline-block;
+    float: right;
 }
 .video-title>p{
       color:#000;
@@ -197,4 +218,10 @@
     margin:30px;
     width:640px;
     height:360px;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+#pageNav{
+    margin:0 auto;
 }

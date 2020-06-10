@@ -46,7 +46,7 @@
                 <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
                 <button type="button" class="btn btn-primary" id="btn-update">수정</button>
             </div>
-            <div class="comment-wrapper">
+            <div class="comment-wrapper w-75">
                 <div class="comment-writing">
                     <textarea class="form-control" id="comment-content" placeholder="댓글" maxlength="10000"></textarea>
                     <button type="button" class="btn btn-primary" id="btn-comment-save">등록</button>
@@ -59,6 +59,11 @@
                                 <!-- 유저 닉네임, 날짜 -->
                                 <span class="userName" th:text="${comment.name}"></span>
                                 <span class="modifiedDate" th:text="${comment.modifiedDate}"></span>
+                                <th:block th:if="${account.name.equals(comment.name)}">
+                                    <a href="javascript:;" class="btn-comment-delete" th:onclick="|javascript:comment.delete('${comment.id}')|">삭제</a>
+                                    <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.update('${comment.id}')|">수정</a>
+                                </th:block>
+
                             </div>
                             <div class="comment-body">
                                 <!-- 댓글내용 -->
@@ -68,19 +73,22 @@
                                 <!-- 좋아요/싫어요, 답글 -->
                                 <button type="button" class="btn-like">
                                     <img src="/images/like.png">
-                                    <span th:text="${comment.likeCount}"></span>
                                 </button>
+                                <span th:text="${comment.likeCount}"></span>
                                 <button type="button" class="btn-dislike">
                                     <img src="/images/dislike.png">
-                                    <span th:text="${comment.dislikeCount}"></span>
                                 </button>
-                                <a href="#" th:onclick="|commentView('${comment.id}')|">답글</a>
+                                <span th:text="${comment.dislikeCount}"></span>
+                                <a href="javascript:;" th:onclick="|javascript:commentView('${comment.id}')|">답글</a>
                                 <div class="re-comment" th:id="${'comment_'+comment.id}">
-                                    <textarea class="form-control" placeholder="답글" maxlength="10000"></textarea>
-                                    <button type="button" class="btn btn-secondary">취소</button>
-                                    <button type="button" class="btn btn-primary">등록</button>
+                                    <textarea th:id="${'comment_reply_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
+                                    <div class="comment-reply-btn">
+                                        <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_reply_cancel()|">취소</button>
+                                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}')|">등록</button>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </th:block>
 

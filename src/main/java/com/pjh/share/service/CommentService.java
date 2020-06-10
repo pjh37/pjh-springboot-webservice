@@ -6,8 +6,10 @@ import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
+import com.pjh.share.web.dto.CommentDeleteRequestDto;
 import com.pjh.share.web.dto.CommentListResponseDto;
 import com.pjh.share.web.dto.CommentSaveRequestDto;
+import com.pjh.share.web.dto.CommentUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,18 +32,35 @@ public class CommentService {
         System.out.println("CommentService : "+requestDto.getContent());
         Posts post=postsRepository.findById(requestDto.getPostId())
                 .orElseThrow(()->new IllegalArgumentException("해당 게시물이 없습니다"));
+        requestDto.setName(account.getName());
         Comment comment=commentRepository.save(requestDto.toEntity());
         comment.setPosts(post);
-        comment.setName(account.getName());
+
         return comment.getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CommentListResponseDto> findAllDesc(Integer curPage, Long postId){
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
         return commentRepository.findAllDesc(pageable,postId)
                 .stream()
                 .map(CommentListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long update(CommentUpdateRequestDto requestDto){
+        Comment comment=commentRepository.findById(requestDto.getCommentId())
+                .orElseThrow(()->new IllegalArgumentException("없는 댓글입니다."));
+        comment.update(requestDto.getContent());
+        return comment.getId();
+    }
+
+    @Transactional
+    public Long delete(CommentDeleteRequestDto requestDto){
+        Comment comment=commentRepository.findById(requestDto.getCommentId())
+                .orElseThrow(()->new IllegalArgumentException("없는 댓글입니다."));
+        commentRepository.delete(comment);
+        return comment.getId();
     }
 }
