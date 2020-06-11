@@ -64,7 +64,7 @@ public class IndexController {
         model.addAttribute("members",groupService.findGroupMemberByGroupId(id));
         model.addAttribute("videos",videoService.findAllDesc(id));
         model.addAttribute("group",groupService.findById(id));
-        model.addAttribute("posts",postService.findAllDesc(0));
+        model.addAttribute("posts",postService.findAllDesc(0,id));
         return "group-read";
     }
 

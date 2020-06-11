@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PostsRepository extends JpaRepository<Posts,Long> {
-    @Query("select p from Posts p")
-    List<Posts> findAllDesc(Pageable request);
+    @Query("select p from Posts p where p.group.id=:groupId")
+    List<Posts> findAllDesc(Pageable request,Long groupId);
 }

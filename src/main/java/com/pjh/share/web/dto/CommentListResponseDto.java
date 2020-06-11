@@ -17,6 +17,7 @@ public class CommentListResponseDto {
     private String content;
     private Integer likeCount;
     private Integer dislikeCount;
+    private Integer childCount;
     private String modifiedDate;
 
     public CommentListResponseDto(Comment entity){
@@ -25,6 +26,7 @@ public class CommentListResponseDto {
         this.content=entity.getContent();
         this.likeCount=entity.getLikeCount();
         this.dislikeCount=entity.getDislikeCount();
+        this.childCount=entity.getChildCount();
         this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 

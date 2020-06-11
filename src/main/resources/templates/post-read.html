@@ -80,6 +80,13 @@
                                 </button>
                                 <span th:text="${comment.dislikeCount}"></span>
                                 <a href="javascript:;" th:onclick="|javascript:commentView('${comment.id}')|">답글</a>
+                                <th:block th:if="${comment.childCount > 0}">
+                                    <div>
+                                        <a href="javascript:;" th:onclick="|javascript:comment.comment_reply_show('${comment.id}')|">
+                                            <span th:text="${'답글 '+comment.childCount+'개 보기'}"></span>
+                                        </a>
+                                    </div>
+                                </th:block>
                                 <div class="re-comment" th:id="${'comment_'+comment.id}">
                                     <textarea th:id="${'comment_reply_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
                                     <div class="comment-reply-btn">
@@ -87,6 +94,11 @@
                                         <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}')|">등록</button>
                                     </div>
                                 </div>
+
+                            </div>
+
+                            <div th:id="${'comment_reply_list_'+comment.id}">
+
                             </div>
 
                         </div>

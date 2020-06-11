@@ -8,6 +8,7 @@ var comment={
     save:function(){
         var data={
             postId:$('#postId').val(),
+            parentId:-1,
             content:$('#comment-content').val()
         }
        $.ajax({
@@ -64,12 +65,13 @@ var comment={
 
         var parentId=id;
         var data={
+            postId:$('#postId').val(),
             parentId:id,
             content:$('#comment_reply_'+id).val()
         }
         $.ajax({
             type:'POST',
-            url:'/api/comment/reply',
+            url:'/api/comment',
             dataType:'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -82,6 +84,20 @@ var comment={
     },
     comment_reply_cancel:function(){
         $('#comment_'+id).toggle('fast');
+    },
+    comment_reply_show:function(id){
+        $.ajax({
+            type:'GET',
+            url:'/api/comment/'+id,
+            dataType:'json',
+            contentType:'application/json;charset=utf-8',
+            success:function(comments){
+
+                comments.forEach(function(comment,idx){
+                    $('#comment_reply_list_'+id).append(comment.content);
+                })
+            }
+        });
     }
 }
 

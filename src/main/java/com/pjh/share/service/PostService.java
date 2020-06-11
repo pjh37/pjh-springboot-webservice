@@ -34,9 +34,9 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc(Integer curPage){
+    public List<PostsListResponseDto> findAllDesc(Integer curPage,Long groupId){
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
-        return postRepository.findAllDesc(pageable)
+        return postRepository.findAllDesc(pageable,groupId)
                 .stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());

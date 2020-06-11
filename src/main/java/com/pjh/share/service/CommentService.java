@@ -6,10 +6,7 @@ import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
-import com.pjh.share.web.dto.CommentDeleteRequestDto;
-import com.pjh.share.web.dto.CommentListResponseDto;
-import com.pjh.share.web.dto.CommentSaveRequestDto;
-import com.pjh.share.web.dto.CommentUpdateRequestDto;
+import com.pjh.share.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +32,11 @@ public class CommentService {
         requestDto.setName(account.getName());
         Comment comment=commentRepository.save(requestDto.toEntity());
         comment.setPosts(post);
-
+        if(comment.getParent()!=-1){
+            Comment parentComment=commentRepository.findById(comment.getParent())
+                    .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
+            parentComment.setChildCount(parentComment.getChildCount()+1);
+        }
         return comment.getId();
     }
 
@@ -47,7 +48,14 @@ public class CommentService {
                 .map(CommentListResponseDto::new)
                 .collect(Collectors.toList());
     }
-
+    @Transactional(readOnly = true)
+    public List<CommentListResponseDto> findAllChildByIdDesc(Integer curPage, Long parentId){
+        Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
+        return commentRepository.findAllChildByIdDesc(pageable,parentId)
+                .stream()
+                .map(CommentListResponseDto::new)
+                .collect(Collectors.toList());
+    }
     @Transactional
     public Long update(CommentUpdateRequestDto requestDto){
         Comment comment=commentRepository.findById(requestDto.getCommentId())
