@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ public class CommentListResponseDto {
     private String content;
     private Integer likeCount;
     private Integer dislikeCount;
+    private List<Comment> children;
     private Integer childCount;
     private String modifiedDate;
 
@@ -26,7 +28,8 @@ public class CommentListResponseDto {
         this.content=entity.getContent();
         this.likeCount=entity.getLikeCount();
         this.dislikeCount=entity.getDislikeCount();
-        this.childCount=entity.getChildCount();
+        this.children=entity.getChild();
+        this.childCount=entity.getChild().size();
         this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 

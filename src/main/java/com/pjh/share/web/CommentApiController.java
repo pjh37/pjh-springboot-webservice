@@ -25,7 +25,8 @@ public class CommentApiController {
 
     @PostMapping("/api/comment")
     public Long save(@RequestBody CommentSaveRequestDto requestDto, @CurrentUser Account account) throws Exception{
-        return commentService.save(requestDto,account);
+        if(!requestDto.getName().equals(account.getName()))return -1L;
+        return commentService.save(requestDto);
     }
     @PutMapping("/api/comment")
     public Long update(@RequestBody CommentUpdateRequestDto requestDto){

@@ -25,19 +25,32 @@ public class CommentService {
     private final PostsRepository postsRepository;
     private final Integer pageSize=10;
     @Transactional
-    public Long save(CommentSaveRequestDto requestDto,Account account)throws Exception{
+    public Long save(CommentSaveRequestDto requestDto)throws Exception{
         System.out.println("CommentService : "+requestDto.getContent());
         Posts post=postsRepository.findById(requestDto.getPostId())
                 .orElseThrow(()->new IllegalArgumentException("해당 게시물이 없습니다"));
-        requestDto.setName(account.getName());
+        Comment comment=requestDto.toEntity();
+        comment.setPosts(post);
+
+        if(requestDto.getParentId()!=-1){
+            Comment parentComment=commentRepository.findById(requestDto.getParentId())
+                    .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
+            comment.setParent(parentComment);
+        }
+        //Long commentId=post.addComment(requestDto);
+
+        /*
         Comment comment=commentRepository.save(requestDto.toEntity());
         comment.setPosts(post);
+
         if(comment.getParent()!=-1){
             Comment parentComment=commentRepository.findById(comment.getParent())
                     .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
             parentComment.setChildCount(parentComment.getChildCount()+1);
         }
-        return comment.getId();
+
+         */
+        return 0L;
     }
 
     @Transactional(readOnly = true)

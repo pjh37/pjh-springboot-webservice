@@ -48,60 +48,16 @@
             </div>
             <div class="comment-wrapper w-75">
                 <div class="comment-writing">
+                    <div>
+                        <input type="hidden" class="form-control" id="comment_userName" th:value="${account.name}">
+                        <span th:text="${account.name}"></span>
+                    </div>
                     <textarea class="form-control" id="comment-content" placeholder="댓글" maxlength="10000"></textarea>
                     <button type="button" class="btn btn-primary" id="btn-comment-save">등록</button>
                 </div>
                 <div class="comment-list">
                     <th:block th:each="comment:${comments}">
-                        <div class="comment-item">
-                            <input type="hidden" class="form-control" id="commentId" th:value="${comment.id}">
-                            <div class="comment-header">
-                                <!-- 유저 닉네임, 날짜 -->
-                                <span class="userName" th:text="${comment.name}"></span>
-                                <span class="modifiedDate" th:text="${comment.modifiedDate}"></span>
-                                <th:block th:if="${account.name.equals(comment.name)}">
-                                    <a href="javascript:;" class="btn-comment-delete" th:onclick="|javascript:comment.delete('${comment.id}')|">삭제</a>
-                                    <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.update('${comment.id}')|">수정</a>
-                                </th:block>
-
-                            </div>
-                            <div class="comment-body">
-                                <!-- 댓글내용 -->
-                                <p th:text="${comment.content}"></p>
-                            </div>
-                            <div class="comment-footer">
-                                <!-- 좋아요/싫어요, 답글 -->
-                                <button type="button" class="btn-like">
-                                    <img src="/images/like.png">
-                                </button>
-                                <span th:text="${comment.likeCount}"></span>
-                                <button type="button" class="btn-dislike">
-                                    <img src="/images/dislike.png">
-                                </button>
-                                <span th:text="${comment.dislikeCount}"></span>
-                                <a href="javascript:;" th:onclick="|javascript:commentView('${comment.id}')|">답글</a>
-                                <th:block th:if="${comment.childCount > 0}">
-                                    <div>
-                                        <a href="javascript:;" th:onclick="|javascript:comment.comment_reply_show('${comment.id}')|">
-                                            <span th:text="${'답글 '+comment.childCount+'개 보기'}"></span>
-                                        </a>
-                                    </div>
-                                </th:block>
-                                <div class="re-comment" th:id="${'comment_'+comment.id}">
-                                    <textarea th:id="${'comment_reply_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
-                                    <div class="comment-reply-btn">
-                                        <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_reply_cancel()|">취소</button>
-                                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}')|">등록</button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div th:id="${'comment_reply_list_'+comment.id}">
-
-                            </div>
-
-                        </div>
+                        <div th:replace="fragments/comment :: commentFragment"></div>
                     </th:block>
 
                 </div>

@@ -4,9 +4,11 @@ var comment={
         $('#btn-comment-save').on('click',function(){
             _this.save();
         });
+        $('.comment_reply_list').hide();
     },
     save:function(){
         var data={
+            name:$('#comment_userName').val(),
             postId:$('#postId').val(),
             parentId:-1,
             content:$('#comment-content').val()
@@ -65,6 +67,7 @@ var comment={
 
         var parentId=id;
         var data={
+            name:$('#comment_userName').val(),
             postId:$('#postId').val(),
             parentId:id,
             content:$('#comment_reply_'+id).val()
@@ -82,10 +85,12 @@ var comment={
             alert('답글 생성 실패');
         });
     },
-    comment_reply_cancel:function(){
+    comment_reply_cancel:function(id){
         $('#comment_'+id).toggle('fast');
     },
     comment_reply_show:function(id){
+        $('#comment_reply_list_'+id).toggle('fast');
+        /*
         $.ajax({
             type:'GET',
             url:'/api/comment/'+id,
@@ -94,10 +99,12 @@ var comment={
             success:function(comments){
 
                 comments.forEach(function(comment,idx){
+
                     $('#comment_reply_list_'+id).append(comment.content);
                 })
             }
         });
+        */
     }
 }
 

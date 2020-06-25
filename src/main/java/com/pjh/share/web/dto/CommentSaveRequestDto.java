@@ -17,7 +17,6 @@ public class CommentSaveRequestDto {
     private Integer dislikeCount;
     public Comment toEntity(){
         return Comment.builder()
-                .parentId(parentId)
                 .name(name)
                 .content(content)
                 .likeCount(0)

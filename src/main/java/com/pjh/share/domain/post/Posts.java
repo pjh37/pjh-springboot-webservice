@@ -3,6 +3,7 @@ package com.pjh.share.domain.post;
 import com.pjh.share.domain.BaseTimeEntity;
 import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.group.Group;
+import com.pjh.share.web.dto.CommentSaveRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,4 +51,5 @@ public class Posts extends BaseTimeEntity {
     public void setGroup(Group group){
         this.group=group;
     }
+
 }

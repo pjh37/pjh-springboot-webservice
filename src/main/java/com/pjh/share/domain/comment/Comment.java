@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +24,18 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name="POSTS_ID")
     private Posts posts;
 
-    private Long parent;//부모 댓글의 id
+    //private Long parent;//부모 댓글의 id
+
+    //이렇게 해야된다는데 검증해보자
+    //===============
+    @ManyToOne
+    @JoinColumn(name = "COMMENT_ID")
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> child=new ArrayList<>();
+
+    //================
 
     @Column(length = 500,nullable = false)
     private String name;
@@ -39,8 +52,7 @@ public class Comment extends BaseTimeEntity {
     private Integer childCount;
 
     @Builder
-    public Comment(Long parentId,String name,String content,Integer likeCount,Integer dislikeCount,Integer childCount){
-        this.parent=parentId;
+    public Comment(String name,String content,Integer likeCount,Integer dislikeCount,Integer childCount){
         this.name=name;
         this.content=content;
         this.likeCount=likeCount;
@@ -49,5 +61,14 @@ public class Comment extends BaseTimeEntity {
     }
     public void update(String content){
         this.content=content;
+    }
+
+    public void setPosts(Posts post){
+        this.posts=post;
+        post.getComments().add(this);
+    }
+    public void setParent(Comment comment){
+        this.parent=comment;
+        child.add(comment);
     }
 }
