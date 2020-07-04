@@ -32,7 +32,7 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "COMMENT_ID")
     private Comment parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent",orphanRemoval = true)
     private List<Comment> child=new ArrayList<>();
 
     //================

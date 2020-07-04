@@ -1,4 +1,4 @@
-package com.pjh.share.web;
+package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;

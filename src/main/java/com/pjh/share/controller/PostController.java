@@ -1,4 +1,4 @@
-package com.pjh.share.web;
+package com.pjh.share.controller;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;

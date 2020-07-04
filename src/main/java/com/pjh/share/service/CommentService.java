@@ -37,20 +37,7 @@ public class CommentService {
                     .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
             comment.setParent(parentComment);
         }
-        //Long commentId=post.addComment(requestDto);
-
-        /*
-        Comment comment=commentRepository.save(requestDto.toEntity());
-        comment.setPosts(post);
-
-        if(comment.getParent()!=-1){
-            Comment parentComment=commentRepository.findById(comment.getParent())
-                    .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
-            parentComment.setChildCount(parentComment.getChildCount()+1);
-        }
-
-         */
-        return 0L;
+        return comment.getId();
     }
 
     @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package com.pjh.share.web;
+package com.pjh.share.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
