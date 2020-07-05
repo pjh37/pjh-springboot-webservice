@@ -27,14 +27,14 @@
 
             <nav>
                 <div class="nav nav-tabs w-75" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-noti-tab" data-toggle="tab" href="#nav-noti" role="tab" aria-controls="nav-noti" aria-selected="true">공자사항</a>
+                    <a class="nav-item nav-link" id="nav-noti-tab" data-toggle="tab" href="#nav-noti" role="tab" aria-controls="nav-noti" aria-selected="false">공자사항</a>
                     <a class="nav-item nav-link" id="nav-member-tab" data-toggle="tab" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">구성원</a>
-                    <a class="nav-item nav-link" id="nav-board-tab" data-toggle="tab" href="#nav-board" role="tab" aria-controls="nav-board" aria-selected="false">게시글</a>
+                    <a class="nav-item nav-link active" id="nav-board-tab" data-toggle="tab" href="#nav-board" role="tab" aria-controls="nav-board" aria-selected="true">게시글</a>
                     <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">동영상</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-noti" role="tabpanel" aria-labelledby="nav-noti-tab">안녕하세요</div>
+                <div class="tab-pane fade" id="nav-noti" role="tabpanel" aria-labelledby="nav-noti-tab">안녕하세요</div>
                 <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
                     <table class="table table-hover">
                         <thead>
@@ -107,7 +107,7 @@
                     </div>
 
                 </div>
-                <div class="tab-pane fade" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
+                <div class="tab-pane fade show active" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
                     <br/>
                     <div class="board-header">
                         <a th:href="@{'/post/save/'+${group.id}}" role="button" class="btn btn-primary">글 등록</a>
@@ -141,9 +141,11 @@
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <th:block th:each="pageNum:${pageList}">
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{'/group/'+${group.id}}+'?page='+${pageNum}" th:text="${pageNum}"></a>
+                                    </li>
+                                </th:block>
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>

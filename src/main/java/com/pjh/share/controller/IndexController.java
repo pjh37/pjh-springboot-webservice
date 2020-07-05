@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -57,14 +58,16 @@ public class IndexController {
     }
 
     @GetMapping("/group/{id}")
-    public String group_read(Model model,@PathVariable Long id,@CurrentUser Account account){
+    public String group_read(Model model, @PathVariable Long id,
+                             @RequestParam(value = "page",defaultValue = "1")Integer pageNum, @CurrentUser Account account){
         if(account!=null){
             model.addAttribute("account",account);
         }
         model.addAttribute("members",groupService.findGroupMemberByGroupId(id));
         model.addAttribute("videos",videoService.findAllDesc(id));
         model.addAttribute("group",groupService.findById(id));
-        model.addAttribute("posts",postService.findAllDesc(0,id));
+        model.addAttribute("posts",postService.findAllDesc(pageNum,id));
+        model.addAttribute("pageList",postService.getPageList(pageNum,id));
         return "group-read";
     }
 

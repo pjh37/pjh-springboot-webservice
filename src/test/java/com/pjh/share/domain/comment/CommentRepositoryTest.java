@@ -46,7 +46,6 @@ public class CommentRepositoryTest {
                 .likeCount(0)
                 .dislikeCount(0)
                 .childCount(0)
-                .parentId(-1L)
                 .build());
 
         comment.setPosts(post);
@@ -68,7 +67,6 @@ public class CommentRepositoryTest {
                 .likeCount(0)
                 .dislikeCount(0)
                 .childCount(0)
-                .parentId(-1L)
                 .build());
         String content2="수공하세요";
         comment.update(content2);
@@ -85,7 +83,6 @@ public class CommentRepositoryTest {
                 .likeCount(0)
                 .dislikeCount(0)
                 .childCount(0)
-                .parentId(-1L)
                 .build());
         assertEquals(1,commentRepository.findAll().size());
         commentRepository.delete(comment);
@@ -108,7 +105,6 @@ public class CommentRepositoryTest {
                     .likeCount(0)
                     .dislikeCount(0)
                     .childCount(0)
-                    .parentId(-1L)
                     .build());
         }
         for(int i=0;i<3;i++){
@@ -118,7 +114,6 @@ public class CommentRepositoryTest {
                     .likeCount(0)
                     .dislikeCount(0)
                     .childCount(0)
-                    .parentId(2L)
                     .build());
         }
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
