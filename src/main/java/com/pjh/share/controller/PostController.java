@@ -31,6 +31,7 @@ public class PostController {
 
     @GetMapping("/post/read/{groupId}/{postId}")
     public String postRead(Model model,@PathVariable Long groupId, @PathVariable Long postId,@CurrentUser Account account){
+        postService.postClicked(postId);
         model.addAttribute("groupId",groupId);
         model.addAttribute("post",postService.findById(postId));
         model.addAttribute("comments",commentService.findAllDesc(firstPage,postId));

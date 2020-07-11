@@ -20,6 +20,7 @@ public class PostsSaveRequestDto {
                 .name(name)
                 .title(title)
                 .content(content)
+                .clickCount(0L)
                 .build();
     }
 }

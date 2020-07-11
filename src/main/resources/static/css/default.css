@@ -223,6 +223,9 @@
 .table tbody tr td{
     vertical-align: middle;
 }
+.table thead tr th{
+    vertical-align: middle;
+}
 #pageNav{
     margin:0 auto;
 }

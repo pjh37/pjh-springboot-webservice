@@ -21,6 +21,12 @@ var group={
        $('#btn-passwordCheck').on('click',function(){
             _this.passwordCheck();
        });
+
+       $('#groupThumbnail').on('change',function(){
+            _this.preLoading(this);
+       });
+
+
     },
     create:function(){
 
@@ -132,6 +138,15 @@ var group={
                 }
             }
         })
+    },
+    preLoading:function(input){
+          if(input.files&&input.files[0]){
+            var reader=new FileReader();
+            reader.onload=function(e){
+                $('#preloaded_thumbnail').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+          }
     }
 }
 group.init();

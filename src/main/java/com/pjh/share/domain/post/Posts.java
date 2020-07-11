@@ -38,11 +38,15 @@ public class Posts extends BaseTimeEntity {
     @Column(length = 5000,columnDefinition = "TEXT",nullable = false)
     private String content;
 
+    private Long clickCount;
+
+
     @Builder
-    public Posts(Long groupId, String name, String title, String content){
+    public Posts(Long groupId, String name, String title, String content,Long clickCount){
         this.name=name;
         this.title=title;
         this.content=content;
+        this.clickCount=clickCount;
     }
     public void update(String title,String content){
         this.title=title;
@@ -50,6 +54,10 @@ public class Posts extends BaseTimeEntity {
     }
     public void setGroup(Group group){
         this.group=group;
+        group.getPosts().add(this);
     }
 
+    public void postClicked(){
+        clickCount++;
+    }
 }

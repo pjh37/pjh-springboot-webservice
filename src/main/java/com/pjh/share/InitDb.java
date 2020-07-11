@@ -61,6 +61,7 @@ public class InitDb {
                         .content("안녕하세요"+i)
                         .groupId(group.getId())
                         .title("제목입니다"+i)
+                        .clickCount(0L)
                         .build();
                 post.setGroup(group);
                 postsRepository.save(post);
@@ -69,4 +70,6 @@ public class InitDb {
 
         }
     }
+
+
 }

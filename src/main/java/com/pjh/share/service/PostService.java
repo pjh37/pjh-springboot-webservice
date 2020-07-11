@@ -68,6 +68,14 @@ public class PostService {
         return pageList;
     }
 
+    @Transactional
+    public Long postClicked(Long id){
+        Posts post=postRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 게시물이 없습니다"));
+        post.postClicked();
+        return post.getId();
+    }
+
 
     @Transactional(readOnly = true)
     public PostsResponseDto findById(Long id){

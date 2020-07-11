@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,15 +17,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@DataJpaTest
 public class CommentRepositoryTest {
     @Autowired
     CommentRepository commentRepository;
-
-    @After
-    public void cleanUp(){
-        commentRepository.deleteAll();
-    }
 
     @Test
     public void 댓글작성_불러오기(){
@@ -97,30 +93,31 @@ public class CommentRepositoryTest {
         String content="댓글입니다. 안녕하세요";
         String replyName="둘리";
         String replyContent="대댓글입니다.";
-        //댓글10개 생성
-        for(int i=0;i<10;i++){
-            commentRepository.save(Comment.builder()
-                    .name(name)
-                    .content(content)
-                    .likeCount(0)
-                    .dislikeCount(0)
-                    .childCount(0)
-                    .build());
-        }
+        Comment commentParent=commentRepository.save(Comment.builder()
+                .name(name)
+                .content(content)
+                .likeCount(0)
+                .dislikeCount(0)
+                .childCount(0)
+                .build());
+
         for(int i=0;i<3;i++){
-            commentRepository.save(Comment.builder()
+            Comment comment=Comment.builder()
                     .name(replyName)
                     .content(replyContent)
                     .likeCount(0)
                     .dislikeCount(0)
                     .childCount(0)
-                    .build());
+                    .build();
+            comment.setParent(commentParent);
+            commentRepository.save(comment);
         }
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
-        List<Comment> commentList=commentRepository.findAllChildByIdDesc(pageable,2L);
-        Comment comment=commentList.get(0);
+        List<Comment> commentList=commentRepository.findAllChildByIdDesc(pageable,commentParent.getId());
+
         assertEquals(3,commentList.size());
-        assertEquals(comment.getName(),replyName);
-        assertEquals(comment.getContent(),replyContent);
+        assertEquals(commentList.get(0).getName(),replyName);
+        assertEquals(commentList.get(0).getContent(),replyContent);
+        assertEquals(commentList.get(0).getParent().getName(),name);
     }
 }

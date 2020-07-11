@@ -2,6 +2,8 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.groupaccount.GroupAccount;
+import com.pjh.share.service.GroupAccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.web.dto.GroupCreateRequestDto;
 import com.pjh.share.web.dto.GroupJoinRequestDto;
@@ -18,25 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class GroupApiController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     private final GroupService groupService;
 
-    @PostMapping("/api/group")
-    @ResponseBody
-    public String save(Model model, GroupCreateRequestDto requestDto, @CurrentUser Account account) throws Exception{
-        groupService.save(requestDto,account);
-        if(account!=null){
-            model.addAttribute("account",account);
-        }
-
-        return "index";
-    }
-
     @PostMapping("/api/group/join")
-    @ResponseBody
     public Boolean join(Model model,@RequestBody GroupJoinRequestDto requestDto, @CurrentUser Account account)throws Exception{
         System.out.println("groupId : "+requestDto.getGroupId());
         groupService.join(requestDto,account);
@@ -46,9 +36,7 @@ public class GroupApiController {
         return true;
     }
 
-
     @PostMapping("/api/group/check/p")
-    @ResponseBody
     public boolean groupPasswordCheck(@RequestBody GroupPwCheckRequestDto requestDto){
         System.out.println("groupPasswordCheck : "+requestDto.getId()+" pw : "+requestDto.getPassword());
         if(groupService.groupPwCheck(requestDto)){
@@ -58,7 +46,6 @@ public class GroupApiController {
     }
 
     @GetMapping("/api/group/memberCheck/{groupId}")
-    @ResponseBody
     public boolean groupMemberCheck(@PathVariable Long groupId,@CurrentUser Account account){
         return groupService.groupMemberCheck(groupId,account);
     }

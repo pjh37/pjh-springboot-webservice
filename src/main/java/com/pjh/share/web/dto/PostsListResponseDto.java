@@ -15,12 +15,14 @@ public class PostsListResponseDto {
     private String title;
     private String content;
     private String modifiedDate;
+    private Long clickCount;
 
     public PostsListResponseDto(Posts entity){
         this.id=entity.getId();
         this.name=entity.getName();
         this.title=entity.getTitle();
         this.content=entity.getContent();
-        this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        this.clickCount=entity.getClickCount();
     }
 }

@@ -65,6 +65,16 @@
                         </div>
                         <div class="comment-footer">
                             <!-- 좋아요/싫어요, 답글 -->
+
+                            <a href="javascript:;" class="btn-like" th:onclick="|javascript:comment.like('${child.id}')|">
+                                <img src="/images/like.png">
+                            </a>
+                            <span th:id="${'likeCount_'+child.id}" th:text="${child.likeCount}"></span>
+                            <a href="javascript:;" class="btn-dislike" th:onclick="|javascript:comment.dislike('${child.id}')|">
+                                <img src="/images/dislike.png">
+                            </a>
+                            <span th:id="${'dislikeCount_'+child.id}" th:text="${child.dislikeCount}"></span>
+                            <!--
                             <button type="button" class="btn-like">
                                 <img src="/images/like.png">
                             </button>
@@ -73,6 +83,7 @@
                                 <img src="/images/dislike.png">
                             </button>
                             <span th:text="${child.dislikeCount}"></span>
+                            -->
                             <a href="javascript:;" th:onclick="|javascript:commentView('${child.id}')|">답글</a>
                             <th:block th:if="${comment.childCount > 0}">
                                 <div>

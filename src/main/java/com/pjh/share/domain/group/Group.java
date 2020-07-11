@@ -77,4 +77,5 @@ public class Group extends BaseTimeEntity {
         if(this.currentNum<=0)return;
         this.currentNum-=1;
     }
+
 }

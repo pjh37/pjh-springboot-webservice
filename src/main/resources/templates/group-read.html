@@ -21,7 +21,9 @@
                     <h5 class="card-title" th:text="${group.title}"></h5>
                     <p class="card-text"  th:text="${group.description}"></p>
                     <span th:text="${group.currentNum+'명'}"></span>/<span th:text="${group.totalNum+'명'}"></span>
-                    <a href="#" class="btn btn-outline-secondary group-join">그룹 탈퇴</a>
+                    <button data-toggle="modal" data-target="#groupWithdrawModal" class="btn btn-outline-secondary group-join">그룹 탈퇴</button>
+                    <div th:replace="fragments/group-withdraw-modal :: groupWithdrawModalFragment"></div>
+                    <!-- "@{'/api/withdraw?group='+{group.id}}" -->
                 </div>
             </div>
 
@@ -118,17 +120,19 @@
                             <thead class="thead-strong">
                             <tr>
                                 <th style="width:10%">게시글</th>
-                                <th style="width:70%">제목</th>
+                                <th style="width:60%">제목</th>
                                 <th style="width:10%">작성자</th>
-                                <th style="width:10%">최종 수정일</th>
+                                <th style="width:10%">수정일</th>
+                                <th style="width:10%">조회수</th>
                             </tr>
                             </thead>
                             <tbody id="tbody" th:each="post:${posts}">
                             <tr>
                                 <td style="width:10%" th:text="${post.id}"></td>
-                                <td style="width:70%" ><a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a></td>
+                                <td style="width:60%" ><a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a></td>
                                 <td style="width:10%" th:text="${post.name}"></td>
                                 <td style="width:10%" th:text="${post.modifiedDate}"></td>
+                                <td style="width:10%" th:text="${post.clickCount}"></td>
                             </tr>
                             </tbody>
                         </table>

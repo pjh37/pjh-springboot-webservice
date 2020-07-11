@@ -5,6 +5,8 @@ var comment={
             _this.save();
         });
         $('.comment_reply_list').hide();
+
+
     },
     save:function(){
         var data={
@@ -16,7 +18,7 @@ var comment={
        $.ajax({
             type:'POST',
             url:'/api/comment',
-            dataType:'json',
+            dataType:'text',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
        }).done(function(){
@@ -105,6 +107,30 @@ var comment={
             }
         });
         */
+    },
+    like:function(id){
+        var likeCount=$('#likeCount_'+id).text()*1+1;
+        $('#likeCount_'+id).text(likeCount);
+        $.ajax({
+            type:'POST',
+            url:'api/comment/'+id,
+            dataType:'json',
+            contentType:'application/json;charset=utf-8'
+        }).done(function(){
+            //완료
+        })
+    },
+    dislike:function(id){
+        var likeCount=$('#dislikeCount_'+id).text()*1+1;
+        $('#likeCount_'+id).text(likeCount);
+        $.ajax({
+             type:'POST',
+             url:'api/comment/'+id,
+             dataType:'json',
+             contentType:'application/json;charset=utf-8'
+        }).done(function(){
+              //완료
+         })
     }
 }
 

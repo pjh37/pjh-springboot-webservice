@@ -25,9 +25,12 @@ public class CommentApiController {
 
     @PostMapping("/api/comment")
     public Long save(@RequestBody CommentSaveRequestDto requestDto, @CurrentUser Account account) throws Exception{
-        if(!requestDto.getName().equals(account.getName()))return -1L;
+        if(!requestDto.getName().equals(account.getName())){
+            return -1L;
+        }
         return commentService.save(requestDto);
     }
+
     @PutMapping("/api/comment")
     public Long update(@RequestBody CommentUpdateRequestDto requestDto){
         return commentService.update(requestDto);
@@ -36,4 +39,5 @@ public class CommentApiController {
     public Long delete(@RequestBody CommentDeleteRequestDto requestDto){
         return commentService.delete(requestDto);
     }
+
 }

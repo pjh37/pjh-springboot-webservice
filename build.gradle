@@ -31,6 +31,14 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('com.h2database:h2')
 
+    /*
+    //spring-data-redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
+    //embeded-redis
+    compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+     */
+
     //thymeleaf 의존성
     compile('org.springframework.boot:spring-boot-starter-mustache')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
