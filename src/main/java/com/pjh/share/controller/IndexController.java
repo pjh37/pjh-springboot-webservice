@@ -58,7 +58,7 @@ public class IndexController {
     }
 
     @GetMapping("/group/{id}")
-    public String group_read(Model model, @PathVariable Long id,
+    public String group_read(Model model, @PathVariable("id") Long id,
                              @RequestParam(value = "page",defaultValue = "1")Integer pageNum, @CurrentUser Account account){
         if(account!=null){
             model.addAttribute("account",account);
@@ -79,5 +79,13 @@ public class IndexController {
         }
         model.addAttribute("myGroups",myGroups);
         return "myGroups";
+    }
+
+    @GetMapping("/chatroom-list")
+    public String chatRoom(Model model,@CurrentUser Account account){
+        if(account!=null){
+            model.addAttribute("account",account);
+        }
+        return "chatroom-list";
     }
 }

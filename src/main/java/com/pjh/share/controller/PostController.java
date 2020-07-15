@@ -21,7 +21,7 @@ public class PostController {
     private final CommentService commentService;
     private final Integer firstPage=0;
     @GetMapping("/post/save/{groupId}")
-    public String postSave(Model model, @PathVariable Long groupId, @CurrentUser Account account){
+    public String postSave(Model model, @PathVariable("groupId") Long groupId, @CurrentUser Account account){
         if(account!=null){
             model.addAttribute("account",account);
         }
@@ -30,7 +30,8 @@ public class PostController {
     }
 
     @GetMapping("/post/read/{groupId}/{postId}")
-    public String postRead(Model model,@PathVariable Long groupId, @PathVariable Long postId,@CurrentUser Account account){
+    public String postRead(Model model,@PathVariable("groupId") Long groupId,
+                           @PathVariable("postId") Long postId,@CurrentUser Account account){
         postService.postClicked(postId);
         model.addAttribute("groupId",groupId);
         model.addAttribute("post",postService.findById(postId));
