@@ -15,9 +15,9 @@ var chatroom={
             dataType:'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function(id){
+        }).done(function(response){
              alert('채팅방생성 완료.');
-             window.location.href='/chatroom/'+id;
+             window.location.href='/chatroom/'+response.roomKey;
          }).fail(function(error){
              alert('생성실패');
          });

@@ -18,8 +18,11 @@ public class ChatRoom extends BaseTimeEntity {
 
     private String title;
 
+    private String roomKey;
+
     @Builder
-    public ChatRoom(String title){
+    public ChatRoom(String title,String roomKey){
         this.title=title;
+        this.roomKey=roomKey;
     }
 }
