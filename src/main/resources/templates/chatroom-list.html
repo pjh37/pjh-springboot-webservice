@@ -23,15 +23,14 @@
                     <a class="btn btn-primary" data-toggle="modal" data-target="#chatRoomCreateModal" data-whatever="@getbootstrap" href="#">채팅방생성</a>
                 </div>
                 <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
-                <th:block th:each="chatRoom:${chatRooms}">
-                    <div class="card">
-                        <div class="card-body">
-                            <a th:href="@{'/chatroom/'+${chatRoom.id}}" th:text="${chatRoom.title}"></a>
-                        </div>
-                    </div>
-                </th:block>
-
             </div>
+            <th:block th:each="chatRoom:${chatRooms}">
+                <div class="card col-8 chatRoom" th:onclick="|window.location.href='@{${'/chatroom/'+chatRoom.roomKey}}'|">
+                    <div class="card-body">
+                        <a href="#" th:text="${chatRoom.title}"></a>
+                    </div>
+                </div>
+            </th:block>
 
         </div>
     </div>

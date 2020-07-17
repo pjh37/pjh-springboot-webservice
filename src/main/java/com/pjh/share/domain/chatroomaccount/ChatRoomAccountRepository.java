@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChatRoomAccountRepository extends JpaRepository<ChatRoomAccount,Long> {
-    @Query("select c.chatRoom from ChatRoomAccount c where c.account.id=:accountId order by g.id desc")
+    @Query("select c.chatRoom from ChatRoomAccount c where c.account.id=:accountId order by c.id desc")
     List<ChatRoom> findAllMyChatRoom(@Param("accountId") Long id);
 }

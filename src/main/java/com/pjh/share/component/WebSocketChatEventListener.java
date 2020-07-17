@@ -30,6 +30,9 @@ public class WebSocketChatEventListener {
         StompHeaderAccessor headerAccessor=StompHeaderAccessor.wrap(event.getMessage());
         String username=(String)headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
+            log.info("===========");
+            log.info("유저가 방을 나감 + "+username);
+            log.info("===========");
             ChatMessageDto chatMessage = new ChatMessageDto("Leave",username,"나감");
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

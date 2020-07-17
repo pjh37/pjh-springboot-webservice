@@ -24,18 +24,25 @@ var chat={
     onMessageReceived:function(data){
         var message = JSON.parse(data.body);
         var msgList=$('#chat-message-list');
-
+        var name=$('#userName').text();
         if (message.type === 'newUser') {
                message.content="새로운 유저 입장 "+message.sender;
         }else if (message.type === 'Leave') {
                message.content=message.sender+" 님이 퇴장하셨습니다.";
         }
-        var msg='<div class="card chat-message-my">'+
-                    '<div class="card-body">'+
-                        '<h5 class="card-title chat-message-name">'+message.sender+'</h5>'+
-                        '<p class="card-text chat-message-content">'+message.content+'</p>'+
-                    '</div>'+
-                '</div>';
+        var msg="";
+        if(message.sender==name){
+            msg+='<div class="card chat-message-my">';
+        }else{
+             msg+='<div class="card chat-message-other">';
+        }
+        msg+='<div class="card-body">'+
+                  '<span class="card-title chat-message-name">'+message.sender+'</span>'+
+                  '<span class="chat-createdDate">0.0.0</span>'+
+                  '<p class="card-text chat-message-content">'+message.content+'</p>'+
+            '</div>'+
+        '</div>';
+
         msgList.prepend(msg);
     },
     enterkey:function(){

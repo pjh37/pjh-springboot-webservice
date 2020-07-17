@@ -2,10 +2,13 @@ package com.pjh.share.domain.chatroomaccount;
 
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.chatroom.ChatRoom;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 public class ChatRoomAccount {
     @Id
     @GeneratedValue
@@ -18,4 +21,11 @@ public class ChatRoomAccount {
     @ManyToOne
     @JoinColumn(name="CHATROOM_ID")
     private ChatRoom chatRoom;
+
+    @Builder
+    public ChatRoomAccount(Account account,ChatRoom chatRoom){
+        this.account=account;
+        this.chatRoom=chatRoom;
+    }
+
 }

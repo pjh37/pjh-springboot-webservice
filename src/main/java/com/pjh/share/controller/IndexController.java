@@ -26,6 +26,7 @@ public class IndexController {
     private final GroupService groupService;
     private final AccountService accountService;
     private final VideoService videoService;
+
     @GetMapping("/")
     public String index(Model model, @CurrentUser Account account){
         if(account!=null){
@@ -81,11 +82,5 @@ public class IndexController {
         return "myGroups";
     }
 
-    @GetMapping("/chatroom-list")
-    public String chatRoom(Model model,@CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
-        }
-        return "chatroom-list";
-    }
+
 }
