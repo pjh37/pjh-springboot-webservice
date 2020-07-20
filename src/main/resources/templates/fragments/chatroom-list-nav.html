@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="navFragment">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ml-auto" sec:authorize="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="modal" data-target="#joinModal" data-whatever="@getbootstrap" href="#">회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">로그인</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav ml-auto" sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="/login" id="userName" th:text="${account.name}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/logout" method="post" th:action="@{/logout}">
+                            <input type="submit" value="로그아웃" class="nav-link btn btn-outline-info my-2 my-sm-0 btn-sm">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <!-- 모달-->
+    <!-- <div th:replace="fragments/group-withdraw-modal :: groupWithdrawModalFragment"></div>   -->
+    <div th:replace="modal/joinModal :: joinModalFragment"></div>
+
+</div>
+
+</html>

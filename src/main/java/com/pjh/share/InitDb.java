@@ -3,6 +3,8 @@ package com.pjh.share;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
+import com.pjh.share.domain.friend.Friend;
+import com.pjh.share.domain.friend.FriendRepository;
 import com.pjh.share.domain.group.Group;
 import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.domain.groupaccount.GroupAccount;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.pjh.share.domain.groupaccount.*;
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -35,15 +38,48 @@ public class InitDb {
         private final GroupAccountRepository groupAccountRepository;
         private final GroupRepository groupRepository;
         private final PostsRepository postsRepository;
+        private final FriendRepository friendRepository;
+        private ArrayList<Account> users=new ArrayList<>();
         public void dbInit(){
 
-            Account account=Account.builder()
-                    .name("홍길동")
-                    .email("jjjj1352@naver.com")
-                    .password("123123123")
-                    .authString("toejt23j2p25453pwjer")
-                    .role(Role.USER).build();
-            accountRepository.save(account);
+            for(int i=0;i<10;i++){
+                Account user=Account.builder()
+                        .name("홍길동"+i)
+                        .email(i+"jjjj1352@naver.com")
+                        .password("123123123"+i)
+                        .authString("toejt23j2p25453pwjer"+i)
+                        .role(Role.USER).build();
+                accountRepository.save(user);
+                users.add(user);
+
+            }
+
+
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(0).getId())
+                    .friendId(users.get(1).getId())
+                    .build());
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(0).getId())
+                    .friendId(users.get(2).getId())
+                    .build());
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(0).getId())
+                    .friendId(users.get(3).getId())
+                    .build());
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(3).getId())
+                    .friendId(users.get(1).getId())
+                    .build());
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(3).getId())
+                    .friendId(users.get(7).getId())
+                    .build());
+            friendRepository.save(Friend.builder()
+                    .accountId(users.get(3).getId())
+                    .friendId(users.get(6).getId())
+                    .build());
+
 
             Group group=Group.builder()
                     .title("스프링모임")
@@ -52,12 +88,12 @@ public class InitDb {
                     .totalNum(10)
                     .password(null)
                     .build();
-            group.setAccount(account);
+            group.setAccount(users.get(0));
             group=groupRepository.save(group);
-            groupAccountRepository.save(new GroupAccount(account,group, com.pjh.share.domain.groupaccount.Role.ADMIN));
+            groupAccountRepository.save(new GroupAccount(users.get(0),group, com.pjh.share.domain.groupaccount.Role.ADMIN));
 
             for(int i=0;i<57;i++){
-                Posts post=Posts.builder().name(account.getName())
+                Posts post=Posts.builder().name(users.get(0).getName())
                         .content("안녕하세요"+i)
                         .groupId(group.getId())
                         .title("제목입니다"+i)

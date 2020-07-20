@@ -38,7 +38,7 @@ var chat={
         }
         msg+='<div class="card-body">'+
                   '<span class="card-title chat-message-name">'+message.sender+'</span>'+
-                  '<span class="chat-createdDate">0.0.0</span>'+
+                  '<span class="chat-createdDate">2020.07.17</span>'+
                   '<p class="card-text chat-message-content">'+message.content+'</p>'+
             '</div>'+
         '</div>';

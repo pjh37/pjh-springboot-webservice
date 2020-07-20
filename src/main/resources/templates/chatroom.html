@@ -6,20 +6,26 @@
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/default.css">
+
     <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/chatroom-list.css">
 </th:block>
 
 <div layout:fragment="content">
 
-    <div th:replace="fragments/nav :: navFragment"></div>
-    <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    <div id="content-wrapper">
-        <div class="container-fluid">
+    <div class="wrapper">
+        <div th:replace="fragments/chatroom-list-sidebar :: sidebarFragment"></div>
+        <div id="content">
+            <div th:replace="fragments/chatroom-list-nav :: navFragment"></div>
             <div class="row">
                 <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
                 <input type="hidden" id="roomKey" th:value="${roomKey}">
                 <div id="chat-container">
+                    <div id="chat-header">
+                        <button type="button" class="btn btn-invite">
+                            <img src="/images/friend.png">
+                        </button>
+                    </div>
                     <div id="chat-message-list">
                         <!-- 여기 메세지가 들어옴 -->
 
@@ -32,9 +38,9 @@
 
 
             </div>
-
         </div>
     </div>
+
 
 
 

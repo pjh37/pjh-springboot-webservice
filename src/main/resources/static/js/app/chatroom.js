@@ -4,6 +4,9 @@ var chatroom={
         $('#btn-chatRoomCreate').on('click',function(){
             _this.create();
         });
+        $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+        });
     },
     create:function(){
         var data={
@@ -21,6 +24,9 @@ var chatroom={
          }).fail(function(error){
              alert('생성실패');
          });
+    },
+    invite:function(){
+        var name;
     }
 }
 chatroom.init();
