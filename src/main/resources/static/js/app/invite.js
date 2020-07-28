@@ -1,6 +1,6 @@
 var invite={
     init:function(){
-        _this=this;
+        var _this=this;
         $('#btn-invite').on('click',function(){
             _this.friendInvite();
         });
@@ -27,5 +27,5 @@ var invite={
             alert('오류발생');
         });
     }
-}
+};
 invite.init();

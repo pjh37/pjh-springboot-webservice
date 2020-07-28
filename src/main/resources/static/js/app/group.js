@@ -148,5 +148,5 @@ var group={
             reader.readAsDataURL(input.files[0]);
           }
     }
-}
+};
 group.init();

@@ -32,5 +32,5 @@ var video={
                  alert('업로드 실패 : '+JSON.stringify(error));
              });
     }
-}
+};
 video.init();

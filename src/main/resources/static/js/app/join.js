@@ -50,5 +50,5 @@ var join={
                     alert('error 다시 시도해주십시오 '+error);
                 });
     }
-}
+};
 join.init();

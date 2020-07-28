@@ -1,6 +1,6 @@
 var chatroom={
     init:function(){
-        _this=this;
+        var _this=this;
         $('#btn-chatRoomCreate').on('click',function(){
             _this.create();
         });
@@ -28,5 +28,5 @@ var chatroom={
     invite:function(){
         var name;
     }
-}
+};
 chatroom.init();

@@ -125,41 +125,4 @@ public class GroupRepositoryTest {
         assertEquals(savedPost.getContent(),postContent);
     }
 
-    @Test
-    public void 그룹별_게시글불러오기(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글들작성_게시글들불러오기(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글들작성_그룹삭제(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글작성_댓글작성(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글작성_댓글작성_게시글삭제(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글작성_댓글작성_댓글수정(){
-
-    }
-
-    @Test
-    public void 그룹생성_게시글작성_댓글작성_댓글삭제(){
-
-    }
-
-
-
 }

@@ -132,7 +132,7 @@ var comment={
               //완료
          })
     }
-}
+};
 
 function commentView(id){
     $('#comment_'+id).toggle('fast');

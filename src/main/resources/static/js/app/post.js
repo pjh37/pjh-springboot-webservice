@@ -1,7 +1,7 @@
 
 var post={
     init:function(){
-        _this=this;
+        var _this=this;
         $('#btn-save').on('click',function(){
             _this.save();
         });
@@ -66,6 +66,6 @@ var post={
              alert('게시글 삭제실패');
         });
     }
-}
+};
 
 post.init();

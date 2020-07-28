@@ -2,7 +2,7 @@ var client=null;
 
 var chat={
     init:function(){
-        _this=this;
+        var _this=this;
         var socket = new SockJS('/websocketApp');
         client = Stomp.over(socket);
         client.connect({}, function(){
@@ -69,6 +69,6 @@ var chat={
         }
     }
 
-}
+};
 
 chat.init();
