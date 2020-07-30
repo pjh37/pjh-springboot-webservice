@@ -1,7 +1,8 @@
-package com.pjh.share.domain.group;
+package com.pjh.share.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjh.share.api.GroupApiController;
+import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.web.dto.GroupCreateRequestDto;
 import org.junit.After;
