@@ -1,25 +1,29 @@
-package com.pjh.share.domain.posts;
+package com.pjh.share.repository;
 
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertEquals;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class PostRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
-    @After
+    @Before
     public void cleanUp(){
         postsRepository.deleteAll();
     }
@@ -38,9 +42,9 @@ public class PostRepositoryTest {
                 .build());
         List<Posts> postsList=postsRepository.findAll();
         Posts post=postsList.get(0);
-        assertEquals(post.getName(),name);
-        assertEquals(post.getContent(),content);
-        assertEquals(post.getTitle(),title);
+        assertThat(post.getName()).isEqualTo(name);
+        assertThat(post.getContent()).isEqualTo(content);
+        assertThat(post.getTitle()).isEqualTo(title);
     }
 
     @Test
@@ -60,9 +64,10 @@ public class PostRepositoryTest {
         String title2="수정된게시글제목";
         String content2="수정된게시글내용입니다";
         post.update(title2,content2);
-        assertEquals(post.getName(),name);
-        assertEquals(post.getContent(),content2);
-        assertEquals(post.getTitle(),title2);
+
+        assertThat(post.getName()).isEqualTo(name);
+        assertThat(post.getContent()).isEqualTo(content2);
+        assertThat(post.getTitle()).isEqualTo(title2);
     }
 
     @Test
@@ -77,8 +82,8 @@ public class PostRepositoryTest {
                 .title(title)
                 .groupId(0L)
                 .build());
-        assertEquals(1,postsRepository.findAll().size());
+        assertThat(postsRepository.findAll().size()).isEqualTo(1);
         postsRepository.delete(post);
-        assertEquals(0,postsRepository.findAll().size());
+        assertThat(postsRepository.findAll().size()).isEqualTo(0);
     }
 }

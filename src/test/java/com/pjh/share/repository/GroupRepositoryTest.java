@@ -1,20 +1,25 @@
-package com.pjh.share.domain.group;
+package com.pjh.share.repository;
 
+import com.pjh.share.domain.group.Group;
+import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
+@Transactional
 public class GroupRepositoryTest {
     @Autowired
     GroupRepository groupRepository;
@@ -22,7 +27,7 @@ public class GroupRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
-    @After
+    @Before
     public void cleanUp(){
         groupRepository.deleteAll();
         postsRepository.deleteAll();
@@ -40,9 +45,9 @@ public class GroupRepositoryTest {
                 .build();
         Group savedGroup=groupRepository.save(group);
 
-        assertEquals(savedGroup.getTitle(),title);
-        assertEquals(savedGroup.getDescription(),des);
-        assertEquals(savedGroup.getTotalNum(),totalNum);
+        assertThat(savedGroup.getTitle()).isEqualTo(title);
+        assertThat(savedGroup.getDescription()).isEqualTo(des);
+        assertThat(savedGroup.getTotalNum()).isEqualTo(totalNum);
     }
 
     @Test
@@ -68,10 +73,10 @@ public class GroupRepositoryTest {
 
         Group updatedGroup=groupRepository.findById(savedGroup.getId()).orElseThrow(()->new IllegalArgumentException());
 
-        assertEquals(updatedGroup.getTitle(),updatedTitle);
-        assertEquals(updatedGroup.getDescription(),updatedDes);
-        assertEquals(updatedGroup.getTotalNum(),updatedTotalNum);
 
+        assertThat(updatedGroup.getTitle()).isEqualTo(updatedTitle);
+        assertThat(updatedGroup.getDescription()).isEqualTo(updatedDes);
+        assertThat(updatedGroup.getTotalNum()).isEqualTo(updatedTotalNum);
     }
 
     @Test
@@ -87,10 +92,10 @@ public class GroupRepositoryTest {
         Group savedGroup=groupRepository.save(group);
 
         int beforeCount=groupRepository.findAll().size();
-        assertEquals(beforeCount,1);
+        assertThat(beforeCount).isEqualTo(1);
         groupRepository.delete(savedGroup);
         int afterCount=groupRepository.findAll().size();
-        assertEquals(afterCount,0);
+        assertThat(afterCount).isEqualTo(0);
     }
 
     @Test
@@ -118,11 +123,11 @@ public class GroupRepositoryTest {
 
 
         post.setGroup(savedGroup);
-
         Posts savedPost=savedGroup.getPosts().get(0);
-        assertEquals(savedPost.getName(),name);
-        assertEquals(savedPost.getTitle(),postTitle);
-        assertEquals(savedPost.getContent(),postContent);
+
+        assertThat(savedPost.getName()).isEqualTo(name);
+        assertThat(savedPost.getTitle()).isEqualTo(postTitle);
+        assertThat(savedPost.getContent()).isEqualTo(postContent);
     }
 
 }

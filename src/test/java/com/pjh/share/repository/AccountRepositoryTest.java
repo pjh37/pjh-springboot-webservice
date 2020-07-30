@@ -1,12 +1,17 @@
-package com.pjh.share.domain.account;
+package com.pjh.share.repository;
 
+import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.AccountRepository;
+import com.pjh.share.domain.account.Role;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,11 +25,12 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class AccountRepositoryTest {
     @Autowired
     AccountRepository accountRepository;
 
-    @After
+    @Before
     public void cleanUp(){
         accountRepository.deleteAll();
     }
@@ -44,8 +50,9 @@ public class AccountRepositoryTest {
                 .role(Role.USER).build());
         List<Account> accountList=accountRepository.findAll();
         Account account=accountList.get(0);
-        assertEquals(account.getName(),name);
-        assertEquals(account.getEmail(),email);
+
+        assertThat(account.getName()).isEqualTo(name);
+        assertThat(account.getEmail()).isEqualTo(email);
     }
 
     @Test
@@ -61,11 +68,15 @@ public class AccountRepositoryTest {
                 .authString(authString)
                 .role(Role.USER).build());
         List<Account> accountList=accountRepository.findAll();
+        String name2="둘리";
         String password2="987987987";
+
         Account account=accountList.get(0);
+        account.setName(name2);
         account.setPassword(password2);
-        assertEquals(account.getName(),name);
-        assertEquals(account.getPassword(),password2);
+
+        assertThat(account.getName()).isEqualTo(name2);
+        assertThat(account.getPassword()).isEqualTo(password2);
     }
     @Test
     public void 회원저장_삭제(){
@@ -82,6 +93,6 @@ public class AccountRepositoryTest {
         Long id=account.getId();
         accountRepository.delete(account);
         List<Account> accountList=accountRepository.findAll();
-        assertEquals(accountList.size(),0);
+        assertThat(accountList.size()).isEqualTo(0);
     }
 }

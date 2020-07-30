@@ -1,7 +1,10 @@
-package com.pjh.share.domain.comment;
+package com.pjh.share.repository;
 
+import com.pjh.share.domain.comment.Comment;
+import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +14,24 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
+@Transactional
 public class CommentRepositoryTest {
     @Autowired
     CommentRepository commentRepository;
+
+    @Before
+    public void cleanUp(){
+        commentRepository.deleteAll();
+    }
 
     @Test
     public void 댓글작성_불러오기(){
@@ -46,11 +57,11 @@ public class CommentRepositoryTest {
 
         comment.setPosts(post);
 
-        assertEquals(comment.getName(),name);
-        assertEquals(comment.getContent(),content);
-        assertEquals(comment.getPosts().getTitle(),postTitle);
-        assertEquals(comment.getPosts().getContent(),postContent);
-        assertEquals(comment.getPosts().getName(),postAuthor);
+        assertThat(comment.getName()).isEqualTo(name);
+        assertThat(comment.getContent()).isEqualTo(content);
+        assertThat(comment.getPosts().getTitle()).isEqualTo(postTitle);
+        assertThat(comment.getPosts().getContent()).isEqualTo(postContent);
+        assertThat(comment.getPosts().getName()).isEqualTo(postAuthor);
     }
 
     @Test
@@ -66,7 +77,7 @@ public class CommentRepositoryTest {
                 .build());
         String content2="수공하세요";
         comment.update(content2);
-        assertEquals(comment.getContent(),content2);
+        assertThat(comment.getContent()).isEqualTo(content2);
     }
 
     @Test
@@ -80,9 +91,9 @@ public class CommentRepositoryTest {
                 .dislikeCount(0)
                 .childCount(0)
                 .build());
-        assertEquals(1,commentRepository.findAll().size());
+        assertThat(commentRepository.findAll().size()).isEqualTo(1);
         commentRepository.delete(comment);
-        assertEquals(0,commentRepository.findAll().size());
+        assertThat(commentRepository.findAll().size()).isEqualTo(0);
     }
 
     @Test
@@ -115,9 +126,9 @@ public class CommentRepositoryTest {
         Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
         List<Comment> commentList=commentRepository.findAllChildByIdDesc(pageable,commentParent.getId());
 
-        assertEquals(3,commentList.size());
-        assertEquals(commentList.get(0).getName(),replyName);
-        assertEquals(commentList.get(0).getContent(),replyContent);
-        assertEquals(commentList.get(0).getParent().getName(),name);
+        assertThat(commentList.size()).isEqualTo(3);
+        assertThat(commentList.get(0).getName()).isEqualTo(replyName);
+        assertThat(commentList.get(0).getContent()).isEqualTo(replyContent);
+        assertThat(commentList.get(0).getParent().getName()).isEqualTo(name);
     }
 }
