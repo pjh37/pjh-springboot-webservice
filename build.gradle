@@ -10,6 +10,10 @@ buildscript{
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+plugins{
+    id 'com.google.cloud.tools.jib' version '1.0.0'
+}
+
 apply plugin:'java'
 apply plugin:'eclipse'
 apply plugin:'org.springframework.boot'
