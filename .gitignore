@@ -2,6 +2,6 @@
 /.gradle/
 .idea
 .gradle
-application.yml
+src/main/resources/application.yml
 /build/
 /build/classes/java/main/
