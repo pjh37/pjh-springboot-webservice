@@ -1,11 +1,16 @@
 package com.pjh.share.api;
 
 
+import com.pjh.share.domain.account.Account;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.component.EmailSender;
 import com.pjh.share.web.dto.AccountCreateRequestDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -20,5 +25,16 @@ public class AccountApiController {
         req.setAuthString(authString);
         emailSender.sendAuthMail(req.getEmail(),authString);
         return accountService.save(req);
+    }
+
+    @GetMapping("/api/v1/search")
+    public Result findByNameContaining(@RequestParam(value = "name")String name){
+        return new Result(accountService.findByNameContaining(name));
+    }
+
+    @Data
+    @AllArgsConstructor
+    class Result<T>{
+        private T data;
     }
 }

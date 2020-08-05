@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div th:fragment="inviteModalFragment" class="modal fade" id="inviteModalFragment" tabindex="-1" role="dialog" aria-labelledby="chatRoomCreateModalModalLabel" aria-hidden="true">
+<div th:fragment="chatRoomInviteModalFragment" class="modal fade" id="chatRoomInviteModalFragment" tabindex="-1" role="dialog" aria-labelledby="chatRoomInviteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inviteModalLabel">채팅방 초대</h5>
+                <h5 class="modal-title" id="chatRoomInviteModalLabel">채팅방 초대</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control" id="inviteName">
+                <input type="text" class="form-control" id="inviteName" onkeydown="chat.findFriend()" placeholder="닉네임 입력">
+                <div class="friends">
+                    <th:block th:each="friend:${friends}">
+                        <div class="card col-8">
+                            <div class="card-body">
+                                <h3 th:text="${friend.name}"></h3>
+                                <button type="button" class="float-right btn btn-outline-success" th:id="${friend.name}"
+                                        th:onclick="|javascript:chat.inviteToChatRoom('${friend.name}')|">초대하기</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>

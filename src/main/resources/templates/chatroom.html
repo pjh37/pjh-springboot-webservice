@@ -22,8 +22,10 @@
                 <input type="hidden" id="roomKey" th:value="${roomKey}">
                 <div id="chat-container">
                     <div id="chat-header">
-                        <button type="button" class="btn btn-invite">
-                            <img src="/images/friend.png">
+
+                        <button type="button" class="btn btn-primary"  id="btn-invite"
+                                data-toggle="modal" data-target="#chatRoomCreateModal" data-whatever="@getbootstrap">
+                            초대하기
                         </button>
                     </div>
                     <div id="chat-message-list">
@@ -35,13 +37,11 @@
                         <input id="message"  onkeydown="chat.enterkey()" type="text" placeholder="메세지를 입력하세요"/>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 
-
+    <div th:replace="modal/chatRoomInviteModal :: chatRoomInviteModalFragment"></div>
 
 
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>

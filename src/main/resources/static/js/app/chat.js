@@ -67,6 +67,49 @@ var chat={
             				.stringify(chatMessage));
             $('#message').val('');
         }
+    },
+    inviteToChatRoom:function(name){
+        var data={
+            name:name,
+            roomKey:$('#roomKey').val()
+        }
+         $.ajax({
+            url:'/api/v1/invite',
+            type:'post',
+            dataType:'json',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+          }).done(function(response){
+             $('#'+name).val('요청완료');
+          }).fail(function(error){
+              $('#'+name).val('초대실패');
+          });
+    },
+    findFriend:function(){
+        var friendList=$('.friends');
+        if($('#inviteName').val()==''){
+            $('.friends').show('show');
+        }else{
+            $('.friends').show('hide');
+        }
+        if(window.event.keyCode==13){
+
+            $.ajax({
+                url:'/api/v1/search?name='$('#inviteName').val(),
+                type:'get',
+                dataType:'json',
+                contentType:'application/json; charset=utf-8'
+            }).done(function(response){
+                var data=response.data;
+                if(data.length==0){
+                    friendList.append('<div>'+없는 이름입니다+'</div>');
+                }else{
+
+                }
+            }).fail(function(error){
+
+            });
+        }
     }
 
 };

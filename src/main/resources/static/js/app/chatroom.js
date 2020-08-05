@@ -13,7 +13,7 @@ var chatroom={
             title:$('#chatRoomTitle').val()
         }
         $.ajax({
-            url:'/api/chatroom',
+            url:'/api/v1/chatroom',
             type:'post',
             dataType:'json',
             contentType:'application/json; charset=utf-8',
