@@ -5,9 +5,7 @@ import com.pjh.share.domain.chatroom.ChatRoom;
 import com.pjh.share.domain.chatroom.ChatRoomRepository;
 import com.pjh.share.domain.chatroomaccount.ChatRoomAccount;
 import com.pjh.share.domain.chatroomaccount.ChatRoomAccountRepository;
-import com.pjh.share.web.dto.ChatRoomCreateDto;
-import com.pjh.share.web.dto.ChatRoomCreateResponseDto;
-import com.pjh.share.web.dto.ChatRoomListResponseDto;
+import com.pjh.share.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,5 +36,16 @@ public class ChatRoomService {
                 .stream()
                 .map(ChatRoomListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ChatRoomInviteResponseDto inviteToChatRoom(ChatRoomInviteDto request, Account account){
+        ChatRoom chatRoom=chatRoomRepository.findByRoomKey(request.getRoomKey());
+        ChatRoomAccount chatRoomAccount=ChatRoomAccount.builder()
+                .account(account)
+                .chatRoom(chatRoom)
+                .build();
+        chatRoomAccountRepository.save(chatRoomAccount);
+        return new ChatRoomInviteResponseDto(true);
     }
 }
