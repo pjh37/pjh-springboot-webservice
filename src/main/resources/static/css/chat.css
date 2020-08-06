@@ -7,7 +7,7 @@
     border-radius: 10px;
 }
 #chat-message-list{
-    height:800px;
+    height:700px;
     display: flex;
     flex-direction: column-reverse;
     padding: 0 20px;
@@ -43,6 +43,17 @@
 .chat-createdDate{
     float: right;
 }
+
+.friends{
+    overflow-y: scroll;
+    height: 400px;
+}
+.friend-name{
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+    vertical-align: -webkit-baseline-middle;
+}
+
 ::-webkit-scrollbar{
     display: none;
 }

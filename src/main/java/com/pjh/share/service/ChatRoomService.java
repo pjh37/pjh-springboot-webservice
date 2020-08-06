@@ -1,6 +1,7 @@
 package com.pjh.share.service;
 
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.chatroom.ChatRoom;
 import com.pjh.share.domain.chatroom.ChatRoomRepository;
 import com.pjh.share.domain.chatroomaccount.ChatRoomAccount;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
+    private final AccountRepository accountRepository;
     private final ChatRoomAccountRepository chatRoomAccountRepository;
 
     @Transactional
@@ -41,8 +43,9 @@ public class ChatRoomService {
     @Transactional
     public ChatRoomInviteResponseDto inviteToChatRoom(ChatRoomInviteDto request, Account account){
         ChatRoom chatRoom=chatRoomRepository.findByRoomKey(request.getRoomKey());
+        Account friend=accountRepository.findByName(request.getName());
         ChatRoomAccount chatRoomAccount=ChatRoomAccount.builder()
-                .account(account)
+                .account(friend)
                 .chatRoom(chatRoom)
                 .build();
         chatRoomAccountRepository.save(chatRoomAccount);

@@ -80,31 +80,38 @@ var chat={
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
           }).done(function(response){
-             $('#'+name).val('요청완료');
+             $('#'+name).text('요청완료');
+              $('#'+name).attr('disabled',true);
           }).fail(function(error){
-              $('#'+name).val('초대실패');
+              $('#'+name).text('초대실패');
           });
     },
     findFriend:function(){
         var friendList=$('.friends');
-        if($('#inviteName').val()==''){
-            $('.friends').show('show');
-        }else{
-            $('.friends').show('hide');
-        }
-        if(window.event.keyCode==13){
 
+        if(window.event.keyCode==13){
+            $('.friends').empty();
             $.ajax({
-                url:'/api/v1/search?name='$('#inviteName').val(),
+                url:'/api/v1/search?name='+$('#inviteName').val(),
                 type:'get',
                 dataType:'json',
                 contentType:'application/json; charset=utf-8'
             }).done(function(response){
                 var data=response.data;
                 if(data.length==0){
-                    friendList.append('<div>'+없는 이름입니다+'</div>');
+                    friendList.append('<div>'+'없는 이름입니다'+'</div>');
                 }else{
-
+                    data.forEach(function(value){
+                        var str="";
+                        str+='<div class="card col-12">'+
+                             '<div class="card-body">'+
+                                 '<h4 class="friend-name">'+value.name+'</h4>'+
+                         '<button type="button" class="float-right btn btn-outline-success" id='+value.name+' onClick="chat.inviteToChatRoom(\''+value.name+'\')">초대하기</button>'+
+                              '</div>'+
+                         '</div>';
+                         friendList.append(str);
+                    });
+                    $('.friends').show('show');
                 }
             }).fail(function(error){
 
