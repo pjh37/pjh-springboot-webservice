@@ -2,29 +2,31 @@ package com.pjh.share.domain.friend;
 
 import com.pjh.share.domain.account.Account;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
-public class InviteResWait {
+public class InviteAuthWait {
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long senderId;
+    private String sender;
 
-    private Long receiverId;
+    private String receiver;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private State state;
 
     @Builder
-    public InviteResWait(Account senderId,Account receiverId,Status status){
-        this.senderId=senderId.getId();
-        this.receiverId=receiverId.getId();
-        this.status=status;
+    public InviteAuthWait(Account sender, Account receiver, State state){
+        this.sender=sender.getName();
+        this.receiver=receiver.getName();
+        this.state=state;
     }
 }

@@ -22,7 +22,7 @@
                     <a class="btn btn-primary" data-toggle="modal" data-target="#inviteModal"
                        data-whatever="@getbootstrap" href="#">친구초대</a>
                     <a class="btn btn-primary" data-toggle="modal" data-target="#friendRequestAuthWaitModal"
-                       data-whatever="@getbootstrap" href="#">승인대기</a>
+                       data-whatever="@getbootstrap">승인대기</a>
 
                 </div>
                 <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
@@ -41,6 +41,7 @@
     <!-- Modal  내가 가입할 수 있는 모달-->
     <div th:replace="modal/chatRoomCreateModal :: chatRoomCreateModalFragment"></div>
     <div th:replace="modal/inviteModal :: inviteModalFragment"></div>
+    <div th:replace="modal/friendRequestAuthWaitModal :: friendRequestAuthWaitModalFragment"></div>
 
     <script src="/js/app/join.js"></script>
     <script src="/js/app/default.js"></script>

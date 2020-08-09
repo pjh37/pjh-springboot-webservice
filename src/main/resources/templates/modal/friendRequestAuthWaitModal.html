@@ -4,20 +4,65 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="friendRequestAuthWaitModalLabel">채팅방 초대</h5>
+                <h5 class="modal-title" id="friendRequestAuthWaitModalLabel">승인대기</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="auth-list">
-                    <th:block th:each="request:${friendRequests}">
-                        <div class="card col-8">
-                            <div class="card-body">
+                    <div class="card col-12">
+                        <div class="card-body">
+                            <table class="table table-borderless">
+                                <thead>
+                                <tr>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">상태</th>
+                                    <th scope="col">수락/거절</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="data:${authRequests}">
+                                    <tr>
+                                        <td th:text="${data.name}"></td>
+                                        <td th:text="${data.state}"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">수락</button>
+                                            <button type="button" class="btn btn-danger">거절</button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                <!-- 테스트 데이터 -->
 
-                            </div>
+                                <tr>
+                                    <td>홍길동</td>
+                                    <td>친구요청대기</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary">수락</button>
+                                        <button type="button" class="btn btn-danger">거절</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>둘리</td>
+                                    <td>친구요청대기</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary">수락</button>
+                                        <button type="button" class="btn btn-danger">거절</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>고양이</td>
+                                    <td>친구요청대기</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary">수락</button>
+                                        <button type="button" class="btn btn-danger">거절</button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
-                    </th:block>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

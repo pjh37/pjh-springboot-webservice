@@ -107,6 +107,18 @@ ul ul a {
     min-height: 100vh;
     transition: all 0.3s;
 }
+
+@media (min-width: 576px)
+.modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+}
+
+.auth-list{
+    overflow-y: scroll;
+    height: 400px;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         min-width: 80px;

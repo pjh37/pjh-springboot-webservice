@@ -12,7 +12,7 @@ var invite={
         }
         $.ajax({
             type:'POST',
-            url:'/api/friend/invite',
+            url:'/api/v1/friend/invite',
             dataType:'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
