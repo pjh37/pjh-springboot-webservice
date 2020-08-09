@@ -17,8 +17,13 @@
             <div class="row">
                 <div class="chatroomlist-header">
                     <!-- <a th:href="@{'/video/save/'+${group.id}}" role="button" class="btn btn-primary">동영상 업로드</a> -->
-                    <a class="btn btn-primary" data-toggle="modal" data-target="#chatRoomCreateModal" data-whatever="@getbootstrap" href="#">채팅방생성</a>
-                    <a class="btn btn-primary" data-toggle="modal" data-target="#inviteModal" data-whatever="@getbootstrap" href="#">친구초대</a>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#chatRoomCreateModal"
+                       data-whatever="@getbootstrap" href="#">채팅방생성</a>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#inviteModal"
+                       data-whatever="@getbootstrap" href="#">친구초대</a>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#friendRequestAuthWaitModal"
+                       data-whatever="@getbootstrap" href="#">승인대기</a>
+
                 </div>
                 <!-- th:onclick="|window.location.href='@{${'group/'+group.id}}'|" -->
             </div>

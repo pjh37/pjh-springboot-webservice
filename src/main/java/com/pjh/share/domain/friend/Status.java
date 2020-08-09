@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Status {
-    REFUSE("STATUS_REFUSE","초대거절"),
-    WAIT("STATUS_WAIT","응답대기"),
-    INVITING("STATUS_INVITING","초대요청");
+    REFUSE("REFUSE","초대거절"),
+    WAIT("WAIT","응답대기"),
+    INVITING("INVITING","초대요청");
 
 
     private final String key;
