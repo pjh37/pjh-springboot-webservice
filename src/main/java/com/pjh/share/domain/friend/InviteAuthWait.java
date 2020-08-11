@@ -29,4 +29,12 @@ public class InviteAuthWait {
         this.receiver=receiver.getName();
         this.state=state;
     }
+
+    public void confirmed(){
+        this.state=State.CONFIRM;
+    }
+
+    public void refused(){
+        this.state=State.REFUSE;
+    }
 }

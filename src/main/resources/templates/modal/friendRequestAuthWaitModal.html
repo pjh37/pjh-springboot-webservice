@@ -21,17 +21,8 @@
                                     <th scope="col">수락/거절</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <th:block th:each="data:${authRequests}">
-                                    <tr>
-                                        <td th:text="${data.name}"></td>
-                                        <td th:text="${data.state}"></td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">수락</button>
-                                            <button type="button" class="btn btn-danger">거절</button>
-                                        </td>
-                                    </tr>
-                                </th:block>
+                                <tbody class="inviteList">
+
                                 <!-- 테스트 데이터 -->
 
                                 <tr>

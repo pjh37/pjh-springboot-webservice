@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface InviteAuthWaitRepository extends JpaRepository<InviteAuthWait,Long> {
-    @Query("select i from InviteAuthWait i where i.receiver=:name")
-    List<InviteAuthWait> findInviteAuthWaitList(@Param("name")String name);
+    @Query("select i from InviteAuthWait i where i.receiver=:receiver")
+    List<InviteAuthWait> findInviteAuthWaitList(@Param("receiver")String receiver);
 }

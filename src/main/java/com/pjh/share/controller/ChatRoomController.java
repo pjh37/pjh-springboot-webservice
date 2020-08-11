@@ -30,7 +30,7 @@ public class ChatRoomController {
         if(account!=null){
             model.addAttribute("account",account);
             model.addAttribute("chatRooms",chatRoomService.findAllMyChatRoom(account.getId()));
-            model.addAttribute("authRequests",inviteService.findInviteAuthWaitList(account.getName()));
+            //model.addAttribute("authRequests",inviteService.findInviteAuthWaitList(account.getName()));
         }
         return "chatroom-list";
     }
