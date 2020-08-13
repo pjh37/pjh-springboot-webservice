@@ -44,10 +44,11 @@ dependencies {
 
 
 
-    /*
+
     //spring-data-redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.session:spring-session-data-redis'
+    /*
     //embeded-redis
     compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
      */
