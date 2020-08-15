@@ -3,14 +3,15 @@ package com.pjh.share.controller;
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.Role;
-import com.pjh.share.domain.group.Group;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
 import com.pjh.share.service.VideoService;
 import com.pjh.share.web.dto.GroupListResponseDto;
-import com.pjh.share.web.dto.GroupResponseDto;
+import com.pjh.share.domain.account.SessionUser;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +23,16 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
+    private Logger logger= LoggerFactory.getLogger(getClass());
     private final PostService postService;
     private final GroupService groupService;
     private final AccountService accountService;
     private final VideoService videoService;
 
     @GetMapping("/")
-    public String index(Model model, @CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
-
+    public String index(Model model, @CurrentUser SessionUser user){
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         List<GroupListResponseDto> groupListResponseDtos=groupService.findAll();
         model.addAttribute("groups",groupListResponseDtos);
@@ -60,9 +61,9 @@ public class IndexController {
 
     @GetMapping("/group/{id}")
     public String group_read(Model model, @PathVariable("id") Long id,
-                             @RequestParam(value = "page",defaultValue = "1")Integer pageNum, @CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
+                             @RequestParam(value = "page",defaultValue = "1")Integer pageNum, @CurrentUser SessionUser user){
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         model.addAttribute("members",groupService.findGroupMemberByGroupId(id));
         model.addAttribute("videos",videoService.findAllDesc(id));

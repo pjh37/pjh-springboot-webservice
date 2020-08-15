@@ -2,6 +2,7 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.groupaccount.GroupAccount;
 import com.pjh.share.service.GroupAccountService;
 import com.pjh.share.service.GroupService;
@@ -27,11 +28,10 @@ public class GroupApiController {
     private final GroupService groupService;
 
     @PostMapping("/api/group/join")
-    public Boolean join(Model model,@RequestBody GroupJoinRequestDto requestDto, @CurrentUser Account account)throws Exception{
-        System.out.println("groupId : "+requestDto.getGroupId());
-        groupService.join(requestDto,account);
-        if(account!=null){
-            model.addAttribute("account",account);
+    public Boolean join(Model model,@RequestBody GroupJoinRequestDto requestDto, @CurrentUser SessionUser user)throws Exception{
+        groupService.join(requestDto,user);
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         return true;
     }
@@ -46,8 +46,8 @@ public class GroupApiController {
     }
 
     @GetMapping("/api/group/memberCheck/{groupId}")
-    public boolean groupMemberCheck(@PathVariable Long groupId,@CurrentUser Account account){
-        return groupService.groupMemberCheck(groupId,account);
+    public boolean groupMemberCheck(@PathVariable Long groupId,@CurrentUser SessionUser user){
+        return groupService.groupMemberCheck(groupId,user);
     }
 
 }

@@ -2,6 +2,7 @@ package com.pjh.share.service;
 
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.file.File;
 import com.pjh.share.domain.file.FileRepository;
 import com.pjh.share.domain.group.Group;
@@ -24,7 +25,7 @@ public class GroupService {
     private final GroupAccountRepository groupAccountRepository;
     private final GroupRepository groupRepository;
     private final FileRepository fileRepository;
-
+    private final AccountRepository accountRepository;
     @Transactional
     public Long save(GroupCreateRequestDto dto,Account account)throws Exception{
         Group group=groupRepository.save(dto.toEntity());
@@ -40,9 +41,16 @@ public class GroupService {
     }
 
     @Transactional
-    public Long join(GroupJoinRequestDto requestDto,Account account){
-        Group group=groupRepository.findById(requestDto.getGroupId()).orElseThrow(()->new IllegalArgumentException("없는 그룹입니다."));
-        GroupAccount groupAccount=new GroupAccount(account,group,Role.GUEST);
+    public Long join(GroupJoinRequestDto requestDto, SessionUser user){
+        Group group=groupRepository.findById(requestDto.getGroupId())
+                .orElseThrow(()->new IllegalArgumentException("없는 그룹입니다."));
+        Account account=accountRepository.findById(user.getId())
+                .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
+        GroupAccount groupAccount= GroupAccount.builder()
+                .account(account)
+                .group(group)
+                .role(Role.GUEST)
+                .build();
         return groupAccountRepository.save(groupAccount).getId();
     }
 
@@ -91,7 +99,7 @@ public class GroupService {
     }
 
     @Transactional
-    public boolean groupMemberCheck(Long groupId,Account account){
-        return groupAccountRepository.existsByAccountIdAndGroupId(account.getId(),groupId);
+    public boolean groupMemberCheck(Long groupId,SessionUser user){
+        return groupAccountRepository.existsByAccountIdAndGroupId(user.getId(),groupId);
     }
 }

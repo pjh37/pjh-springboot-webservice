@@ -1,7 +1,7 @@
 package com.pjh.share.config.auth;
 
 import com.pjh.share.common.CurrentUser;
-import com.pjh.share.web.dto.SessionUser;
+import com.pjh.share.domain.account.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

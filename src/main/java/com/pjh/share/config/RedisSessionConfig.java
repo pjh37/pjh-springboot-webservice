@@ -5,6 +5,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 
 @Configuration
-@EnableRedisHttpSession
 public class RedisSessionConfig extends AbstractHttpSessionApplicationInitializer {
+    public RedisSessionConfig(){
+        super(RedisConfig.class);
+    }
 }
