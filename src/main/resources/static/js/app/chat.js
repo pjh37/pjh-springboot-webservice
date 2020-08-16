@@ -58,6 +58,7 @@ var chat={
         var roomKey=$('#roomKey').val();
         if(messageContent&&client){
             var chatMessage = {
+                roomKey:roomKey,
             	sender : name,
             	content : messageContent,
             	type : 'CHAT'
