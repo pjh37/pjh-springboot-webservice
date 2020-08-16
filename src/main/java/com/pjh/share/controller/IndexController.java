@@ -45,16 +45,16 @@ public class IndexController {
         return "welcome";
     }
     @GetMapping("/group-manage")
-    public String group_manage(Model model, @CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
+    public String group_manage(Model model, @CurrentUser SessionUser user){
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         return "group-manage";
     }
     @GetMapping("/group-create")
-    public String group_create(Model model, @CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
+    public String group_create(Model model, @CurrentUser SessionUser user){
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         return "group-create";
     }
@@ -74,10 +74,10 @@ public class IndexController {
     }
 
     @GetMapping("/myGroups")
-    public String myGroups(Model model,@CurrentUser Account account){
-        List<GroupListResponseDto> myGroups=groupService.findAllMyGroup(account.getId());
-        if(account!=null){
-            model.addAttribute("account",account);
+    public String myGroups(Model model,@CurrentUser SessionUser user){
+        List<GroupListResponseDto> myGroups=groupService.findAllMyGroup(user.getId());
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         model.addAttribute("myGroups",myGroups);
         return "myGroups";

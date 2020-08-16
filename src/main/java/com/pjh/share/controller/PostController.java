@@ -2,6 +2,7 @@ package com.pjh.share.controller;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.CommentService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
@@ -21,9 +22,9 @@ public class PostController {
     private final CommentService commentService;
     private final Integer firstPage=0;
     @GetMapping("/post/save/{groupId}")
-    public String postSave(Model model, @PathVariable("groupId") Long groupId, @CurrentUser Account account){
-        if(account!=null){
-            model.addAttribute("account",account);
+    public String postSave(Model model, @PathVariable("groupId") Long groupId, @CurrentUser SessionUser user){
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         model.addAttribute("group",groupService.findById(groupId));
         return "post-save";
@@ -31,13 +32,13 @@ public class PostController {
 
     @GetMapping("/post/read/{groupId}/{postId}")
     public String postRead(Model model,@PathVariable("groupId") Long groupId,
-                           @PathVariable("postId") Long postId,@CurrentUser Account account){
+                           @PathVariable("postId") Long postId,@CurrentUser SessionUser user){
         postService.postClicked(postId);
         model.addAttribute("groupId",groupId);
         model.addAttribute("post",postService.findById(postId));
         model.addAttribute("comments",commentService.findAllDesc(firstPage,postId));
-        if(account!=null){
-            model.addAttribute("account",account);
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         return "post-read";
     }

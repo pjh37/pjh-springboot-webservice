@@ -2,6 +2,7 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.CommentService;
 import com.pjh.share.web.dto.CommentDeleteRequestDto;
 import com.pjh.share.web.dto.CommentListResponseDto;
@@ -24,8 +25,8 @@ public class CommentApiController {
     }
 
     @PostMapping("/api/comment")
-    public Long save(@RequestBody CommentSaveRequestDto requestDto, @CurrentUser Account account) throws Exception{
-        if(!requestDto.getName().equals(account.getName())){
+    public Long save(@RequestBody CommentSaveRequestDto requestDto, @CurrentUser SessionUser user) throws Exception{
+        if(!requestDto.getName().equals(user.getName())){
             return -1L;
         }
         return commentService.save(requestDto);

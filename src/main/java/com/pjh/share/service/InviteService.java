@@ -2,6 +2,7 @@ package com.pjh.share.service;
 
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.friend.*;
 import com.pjh.share.web.dto.InviteAuthWaitDto;
 import com.pjh.share.web.dto.InviteRequestDto;
@@ -20,10 +21,11 @@ public class InviteService {
     private final FriendRepository friendRepository;
 
     @Transactional
-    public boolean inviteRequest(Account sender, InviteRequestDto req){
+    public boolean inviteRequest(SessionUser user, InviteRequestDto req){
         if(!accountRepository.existsByName(req.getName()))return false;
         Account receiver=accountRepository.findByName(req.getName());
-
+        Account sender=accountRepository.findById(user.getId())
+                .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
         InviteAuthWait inviteAuthWait = InviteAuthWait.builder()
                 .sender(sender)
                 .receiver(receiver)

@@ -2,6 +2,7 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.ChatRoomService;
 import com.pjh.share.web.dto.ChatRoomCreateDto;
 import com.pjh.share.web.dto.ChatRoomCreateResponseDto;
@@ -17,13 +18,13 @@ public class ChatRoomApiController {
     private final ChatRoomService chatRoomService;
 
     @PostMapping("/api/v1/chatroom")
-    public ChatRoomCreateResponseDto create(@RequestBody ChatRoomCreateDto request,@CurrentUser Account account){
-        return chatRoomService.create(request,account);
+    public ChatRoomCreateResponseDto create(@RequestBody ChatRoomCreateDto request,@CurrentUser SessionUser user){
+        return chatRoomService.create(request,user);
     }
 
     @PostMapping("/api/v1/invite")
-    public Result inviteToChatRoom(@RequestBody ChatRoomInviteDto request, @CurrentUser Account account){
-        return new Result(chatRoomService.inviteToChatRoom(request,account));
+    public Result inviteToChatRoom(@RequestBody ChatRoomInviteDto request, @CurrentUser SessionUser user){
+        return new Result(chatRoomService.inviteToChatRoom(request,user));
     }
 
     @Data

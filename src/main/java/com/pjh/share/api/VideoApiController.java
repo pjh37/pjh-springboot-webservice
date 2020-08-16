@@ -2,6 +2,7 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.VideoService;
 import com.pjh.share.web.dto.VideoUploadRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class VideoApiController {
 
     @PostMapping("/api/video")
     @ResponseBody
-    public Long videoUpload(VideoUploadRequestDto requestDto, @CurrentUser Account account)throws Exception{
-        return videoService.save(requestDto,account.getName());
+    public Long videoUpload(VideoUploadRequestDto requestDto, @CurrentUser SessionUser user)throws Exception{
+        return videoService.save(requestDto,user.getName());
     }
 
     @GetMapping("/watch/{video_name}")

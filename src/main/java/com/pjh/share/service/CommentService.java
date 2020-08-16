@@ -8,6 +8,8 @@ import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
 import com.pjh.share.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,23 +23,24 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+    private Logger logger= LoggerFactory.getLogger(getClass());
     private final CommentRepository commentRepository;
     private final PostsRepository postsRepository;
     private final Integer pageSize=10;
     @Transactional
     public Long save(CommentSaveRequestDto requestDto)throws Exception{
-        System.out.println("CommentService : "+requestDto.getContent());
         Posts post=postsRepository.findById(requestDto.getPostId())
                 .orElseThrow(()->new IllegalArgumentException("해당 게시물이 없습니다"));
         Comment comment=requestDto.toEntity();
         comment.setPosts(post);
-
+        logger.info("requestDto.getParentId() : "+requestDto.getParentId());
         if(requestDto.getParentId()!=-1){
             Comment parentComment=commentRepository.findById(requestDto.getParentId())
                     .orElseThrow(()->new IllegalArgumentException("부모댓글 없음"));
             comment.setParent(parentComment);
         }
-        return comment.getId();
+
+        return commentRepository.save(comment).getId();
     }
 
     @Transactional(readOnly = true)

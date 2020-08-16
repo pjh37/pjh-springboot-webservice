@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,9 +27,12 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final FileRepository fileRepository;
     private final AccountRepository accountRepository;
+    private final HttpSession session;
     @Transactional
-    public Long save(GroupCreateRequestDto dto,Account account)throws Exception{
+    public Long save(GroupCreateRequestDto dto,SessionUser user)throws Exception{
         Group group=groupRepository.save(dto.toEntity());
+        Account account=accountRepository.findById(user.getId())
+                .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
         File file=dto.toFileEntity();
 
         group.thumbnailUpdate(file.getFileName());

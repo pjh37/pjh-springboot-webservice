@@ -2,6 +2,7 @@ package com.pjh.share.service;
 
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.chatroom.ChatRoom;
 import com.pjh.share.domain.chatroom.ChatRoomRepository;
 import com.pjh.share.domain.chatroomaccount.ChatRoomAccount;
@@ -22,8 +23,10 @@ public class ChatRoomService {
     private final ChatRoomAccountRepository chatRoomAccountRepository;
 
     @Transactional
-    public ChatRoomCreateResponseDto create(ChatRoomCreateDto request, Account account){
+    public ChatRoomCreateResponseDto create(ChatRoomCreateDto request, SessionUser user){
         ChatRoom chatRoom=chatRoomRepository.save(request.toEntity());
+        Account account=accountRepository.findById(user.getId())
+                .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
         ChatRoomAccount chatRoomAccount=ChatRoomAccount.builder()
                 .account(account)
                 .chatRoom(chatRoom)
@@ -41,7 +44,7 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public ChatRoomInviteResponseDto inviteToChatRoom(ChatRoomInviteDto request, Account account){
+    public ChatRoomInviteResponseDto inviteToChatRoom(ChatRoomInviteDto request, SessionUser user){
         ChatRoom chatRoom=chatRoomRepository.findByRoomKey(request.getRoomKey());
         Account friend=accountRepository.findByName(request.getName());
         ChatRoomAccount chatRoomAccount=ChatRoomAccount.builder()

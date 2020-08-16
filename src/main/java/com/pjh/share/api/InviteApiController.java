@@ -2,6 +2,7 @@ package com.pjh.share.api;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.InviteService;
 import com.pjh.share.web.dto.InviteAuthWaitDto;
 import com.pjh.share.web.dto.InviteRequestDto;
@@ -21,8 +22,8 @@ public class InviteApiController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     private final InviteService inviteService;
     @PostMapping("/api/v1/friend/invite")
-    public InviteResponseDto friendInvite(@RequestBody InviteRequestDto req, @CurrentUser Account account){
-        boolean result=inviteService.inviteRequest(account,req);
+    public InviteResponseDto friendInvite(@RequestBody InviteRequestDto req, @CurrentUser SessionUser user){
+        boolean result=inviteService.inviteRequest(user,req);
         logger.info("=================");
         logger.info("/api/friend/invite "+req.getName());
         logger.info("=================");
@@ -42,8 +43,8 @@ public class InviteApiController {
     }
 
     @GetMapping("/api/v1/invite/list")
-    public Result inviteList(@CurrentUser Account account){
-        List<InviteAuthWaitDto> inviteAuthWaitDtos=inviteService.findInviteAuthWaitList(account.getName());
+    public Result inviteList(@CurrentUser SessionUser user){
+        List<InviteAuthWaitDto> inviteAuthWaitDtos=inviteService.findInviteAuthWaitList(user.getName());
         return new Result(inviteAuthWaitDtos);
     }
 

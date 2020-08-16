@@ -2,6 +2,7 @@ package com.pjh.share.controller;
 
 import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.video.Video;
 import com.pjh.share.service.VideoService;
 import com.pjh.share.web.dto.VideoResponseDto;
@@ -25,10 +26,10 @@ public class VideoController {
     private final VideoService videoService;
 
     @GetMapping("/watch/v/{id}")
-    public String video(Model model,@PathVariable Long id,@CurrentUser Account account){
+    public String video(Model model,@PathVariable Long id,@CurrentUser SessionUser user){
         VideoResponseDto videoResponse =videoService.findById(id);
-        if(account!=null){
-            model.addAttribute("account",account);
+        if(user!=null){
+            model.addAttribute("account",user);
         }
         model.addAttribute("video",videoResponse);
         return "watch";

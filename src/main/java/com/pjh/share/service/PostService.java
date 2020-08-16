@@ -2,6 +2,7 @@ package com.pjh.share.service;
 
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.group.Group;
 import com.pjh.share.domain.group.GroupRepository;
 import com.pjh.share.domain.post.Posts;
@@ -24,11 +25,15 @@ public class PostService {
 
     private final PostsRepository postRepository;
     private final GroupRepository groupRepository;
+    private final AccountRepository accountRepository;
     private final static Integer PAGE_SIZE=10;
     private final static Integer BLOCK_PAGE_SIZE=4;
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto,Account account){
-        Group group=groupRepository.findById(requestDto.getGroupId()).orElseThrow(()->new IllegalArgumentException("해당 그룹이 없습니다"));;
+    public Long save(PostsSaveRequestDto requestDto, SessionUser user){
+        Group group=groupRepository.findById(requestDto.getGroupId())
+                .orElseThrow(()->new IllegalArgumentException("해당 그룹이 없습니다"));
+        Account account=accountRepository.findById(user.getId())
+                .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
         requestDto.setName(account.getName());
         Posts post=postRepository.save(requestDto.toEntity());
         post.setGroup(group);
