@@ -3,9 +3,10 @@ package com.pjh.share.controller;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@WebMvcTest(IndexControllerTest.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IndexControllerTest {
     @Autowired
@@ -34,7 +35,7 @@ public class IndexControllerTest {
 
     private MockMvc mvc;
 
-    @Before
+    @BeforeEach
     public void setup(){
         mvc= MockMvcBuilders.webAppContextSetup(context)
                 .apply(springSecurity())

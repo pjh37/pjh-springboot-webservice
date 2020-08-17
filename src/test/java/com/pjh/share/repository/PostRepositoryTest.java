@@ -2,11 +2,12 @@ package com.pjh.share.repository;
 
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,14 +17,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
+@DataJpaTest
 @Transactional
 public class PostRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
-    @Before
+    @BeforeEach
     public void cleanUp(){
         postsRepository.deleteAll();
     }

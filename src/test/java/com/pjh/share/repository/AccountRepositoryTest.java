@@ -3,12 +3,13 @@ package com.pjh.share.repository;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +22,15 @@ import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.isEquals;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
+@DataJpaTest
 @Transactional
 public class AccountRepositoryTest {
     @Autowired
     AccountRepository accountRepository;
 
-    @Before
+    @BeforeEach
     public void cleanUp(){
         accountRepository.deleteAll();
     }

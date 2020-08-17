@@ -3,10 +3,10 @@ package com.pjh.share.repository;
 import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,16 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
+@DataJpaTest
 @Transactional
 public class CommentRepositoryTest {
     @Autowired
     CommentRepository commentRepository;
 
-    @Before
+    @BeforeEach
     public void cleanUp(){
         commentRepository.deleteAll();
     }

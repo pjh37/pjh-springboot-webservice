@@ -2,15 +2,16 @@ package com.pjh.share.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjh.share.domain.group.GroupRepository;
-import com.pjh.share.web.dto.GroupCreateRequestDto;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -19,8 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest(GroupControllerTest.class)
 public class GroupControllerTest {
     @Autowired
     private WebApplicationContext context;
@@ -33,7 +33,7 @@ public class GroupControllerTest {
 
     private MockMvc mvc;
 
-    @Before
+    @BeforeEach
     public void setup(){
         mvc= MockMvcBuilders.webAppContextSetup(context)
                 .apply(springSecurity())
@@ -45,6 +45,8 @@ public class GroupControllerTest {
         //임시
         mvc.perform(get("/group-create"))
                 .andExpect(status().isOk());
+
+
         /*
         String index="index";
         String title="스프링 부트 스터디 모집";

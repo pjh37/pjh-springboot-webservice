@@ -2,10 +2,10 @@ package com.pjh.share.repository;
 
 import com.pjh.share.domain.chatroom.ChatRoom;
 import com.pjh.share.domain.chatroom.ChatRoomRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +14,13 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@DataJpaTest
 @Transactional
 public class ChatRoomRepositoryTest {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    @Before
+    @BeforeEach
     public void cleanUp(){
         chatRoomRepository.deleteAll();
     }
