@@ -1,19 +1,41 @@
 package com.pjh.share.service;
 
 import com.pjh.share.domain.post.Posts;
+import com.pjh.share.web.dto.PostsListResponseDto;
+import com.pjh.share.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
+    private final static Integer PAGE_SIZE=10;
+    private final static Integer BLOCK_PAGE_SIZE=4;
     private final PostRepository postRepository;
 
-    public Posts findByName(String name){
-        return postRepository.findByName(name);
+    public Posts findById(Long id){
+        return postRepository.findById(id);
     }
 
-    public void save(Posts post){
-        postRepository.save(post);
+    public Long save(Posts post){
+        return postRepository.save(post).getId();
+    }
+
+    public List<PostsListResponseDto> findAllDesc(Integer curPage,Long groupId){
+        Pageable pageable= PageRequest.of(curPage-1,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
+        return null;
+    }
+
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        return postRepository.update(id,requestDto);
+    }
+
+    public void delete(Long id){
+        postRepository.delete(id);
     }
 }
