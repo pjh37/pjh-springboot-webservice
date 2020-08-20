@@ -4,6 +4,10 @@ import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
 
+import com.pjh.share.service.AccountService;
+import com.pjh.share.service.GroupService;
+import com.pjh.share.service.PostService;
+import com.pjh.share.service.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,15 +31,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(IndexControllerTest.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest(controllers = {IndexController.class},includeFilters = @ComponentScan.Filter(classes = {EnableWebSecurity.class}))
 public class IndexControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired
+    @MockBean
     private AccountRepository accountRepository;
 
+    @MockBean
+    private AccountService accountService;
+
+    @MockBean
+    private PostService postService;
+
+    @MockBean
+    private GroupService groupService;
+
+    @MockBean
+    private VideoService videoService;
+
+    @Autowired
     private MockMvc mvc;
 
     @BeforeEach
