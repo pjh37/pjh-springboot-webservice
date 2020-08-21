@@ -6,6 +6,7 @@ import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.friend.InviteAuthWait;
 import com.pjh.share.service.ChatRoomService;
 import com.pjh.share.service.InviteService;
+import com.pjh.share.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 @RequiredArgsConstructor
 public class ChatRoomController {
+    private static final int INIT_PAGE=0;
     private final ChatRoomService chatRoomService;
+    private final MessageService messageService;
     private final InviteService inviteService;
+
     @GetMapping("/chatroom/{roomKey}")
     public String join(Model model, @PathVariable("roomKey")String roomKey,@CurrentUser SessionUser user){
         if(user!=null){
             model.addAttribute("account",user);
         }
+        model.addAttribute("messages",messageService.findAllDesc(INIT_PAGE));
         model.addAttribute("roomKey",roomKey);
         return "chatroom";
     }

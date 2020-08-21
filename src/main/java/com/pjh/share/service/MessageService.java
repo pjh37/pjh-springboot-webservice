@@ -19,9 +19,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class MessageService {
-    private ChatRoomRepository chatRoomRepository;
-    private MessageRepository messageRepository;
     private final static Integer PAGE_SIZE=20;
+    private final ChatRoomRepository chatRoomRepository;
+    private final MessageRepository messageRepository;
+
     @Transactional
     public Long save(ChatMessageDto chatMessageDto){
         ChatRoom chatRoom=chatRoomRepository.findByRoomKey(chatMessageDto.getRoomKey());
@@ -35,7 +36,7 @@ public class MessageService {
 
     @Transactional(readOnly = true)
     public List<ChatMessageResponseDto> findAllDesc(int curPage){
-        Pageable pageable= PageRequest.of(curPage-1,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
         return messageRepository.findAll(pageable)
                 .stream()
                 .map(ChatMessageResponseDto::new)

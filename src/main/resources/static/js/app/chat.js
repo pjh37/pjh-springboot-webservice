@@ -38,7 +38,7 @@ var chat={
         }
         msg+='<div class="card-body">'+
                   '<span class="card-title chat-message-name">'+message.sender+'</span>'+
-                  '<span class="chat-createdDate">2020.07.17</span>'+
+                  '<span class="chat-createdDate">'+message.createdDate+'</span>'+
                   '<p class="card-text chat-message-content">'+message.content+'</p>'+
             '</div>'+
         '</div>';
@@ -47,7 +47,7 @@ var chat={
     },
     enterkey:function(){
          _this=this;
-            if(window.event.keyCode==13){
+            if(window.event.keyCode==13&&$('#message').val()!=""){
                 _this.sendMessage();
                 $('#message').val("");
             }
@@ -56,11 +56,13 @@ var chat={
         var messageContent = $('#message').val();
         var name=$('#userName').text();
         var roomKey=$('#roomKey').val();
+        var createdDate=new Date().toLocaleTimeString();
         if(messageContent&&client){
             var chatMessage = {
                 roomKey:roomKey,
             	sender : name,
             	content : messageContent,
+            	createdDate:createdDate,
             	type : 'CHAT'
             };
 

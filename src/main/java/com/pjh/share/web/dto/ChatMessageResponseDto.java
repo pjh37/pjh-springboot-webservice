@@ -10,12 +10,13 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class ChatMessageResponseDto {
     private String roomKey;
-    private String name;
+    private String sender;
     private String content;
     private String createdDate;
+
     public ChatMessageResponseDto(Message entity){
         this.roomKey=entity.getChatRoom().getRoomKey();
-        this.name=entity.getName();
+        this.sender=entity.getName();
         this.content=entity.getContent();
         this.createdDate=entity.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }

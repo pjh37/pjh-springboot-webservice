@@ -30,7 +30,15 @@
                     </div>
                     <div id="chat-message-list">
                         <!-- 여기 메세지가 들어옴 -->
-
+                        <th:block th:each="message:${messages}">
+                            <div class="card chat-message-my">
+                                <div class="card-body">
+                                <span class="card-title chat-message-name" th:text="${message.sender}"></span>
+                                <span class="chat-createdDate" th:text="${message.createdDate}"></span>
+                                <p class="card-text chat-message-content" th:text="${message.content}"></p>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
                     <div id="chat-form">
                         <!-- <img src="/images/attachment-icon.svg" alt="파일 첨부"/> onkeydown="enterkey()"-->
