@@ -1,5 +1,6 @@
 package com.pjh.share.config;
 
+import com.pjh.share.config.auth.LoginFailHandler;
 import com.pjh.share.domain.account.Role;
 import com.pjh.share.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +14,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AccountService accountService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new LoginFailHandler();
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**","/images/**","/js/**");
@@ -39,12 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**","/h2-console/**","/join/**").permitAll()
+                .antMatchers("/","/login/**","/h2-console/**","/join/**").permitAll()
                 .antMatchers("/api/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
+                .failureUrl("/login?error=true")
+                .failureHandler(authenticationFailureHandler())
                 .usernameParameter("email")
                 .permitAll();
         http.logout().logoutSuccessUrl("/");

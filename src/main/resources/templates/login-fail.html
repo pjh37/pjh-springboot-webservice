@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/loginfail.css">
+</th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <strong>로그인에 실패 했습니다</strong>
+            <a href="/">원래페이지로</a>
+        </div>
+    </div>
+
+</html>

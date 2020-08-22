@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -39,10 +40,11 @@ public class IndexController {
         return "index";
     }
     @GetMapping("/email/auth/{auth}")
-    public String emailAuth(@PathVariable String auth){
+    public String emailAuth(@PathVariable String auth, HttpSession session){
+        if(session.getAttribute("user")!=null)session.removeAttribute("user");
         String userEmail=accountService.findByAuth(auth);
         accountService.setRole(userEmail, Role.USER);
-        return "welcome";
+        return "login";
     }
     @GetMapping("/group-manage")
     public String group_manage(Model model, @CurrentUser SessionUser user){

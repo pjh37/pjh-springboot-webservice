@@ -40,6 +40,7 @@ public class AccountService implements UserDetailsService {
                 .id(account.getId())
                 .name(account.getName())
                 .email(account.getEmail())
+                .role(account.getRole())
                 .build();
 
         httpSession.setAttribute("user",sessionUser);
