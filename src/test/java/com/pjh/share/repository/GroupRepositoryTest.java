@@ -17,19 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
-@Transactional
 public class GroupRepositoryTest {
     @Autowired
-    GroupRepository groupRepository;
+    private GroupRepository groupRepository;
 
     @Autowired
-    PostsRepository postsRepository;
+    private PostsRepository postsRepository;
 
     @BeforeEach
-    public void cleanUp(){
-        groupRepository.deleteAll();
-        postsRepository.deleteAll();
-    }
+    public void cleanUp(){ }
 
     @Test
     public void 그룹생성_불러오기(){

@@ -25,15 +25,12 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 
 @DataJpaTest
-@Transactional
 public class AccountRepositoryTest {
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @BeforeEach
-    public void cleanUp(){
-        accountRepository.deleteAll();
-    }
+    public void cleanUp(){ }
 
     @Test
     public void 회원저장_불러오기(){

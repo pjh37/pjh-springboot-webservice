@@ -22,15 +22,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
-@Transactional
 public class CommentRepositoryTest {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @BeforeEach
-    public void cleanUp(){
-        commentRepository.deleteAll();
-    }
+    public void cleanUp(){ }
 
     @Test
     public void 댓글작성_불러오기(){

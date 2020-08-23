@@ -19,15 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
-@Transactional
 public class PostRepositoryTest {
     @Autowired
-    PostsRepository postsRepository;
+    private PostsRepository postsRepository;
 
     @BeforeEach
-    public void cleanUp(){
-        postsRepository.deleteAll();
-    }
+    public void cleanUp(){ }
 
     @Test
     public void 게시글저장하기_불러오기(){

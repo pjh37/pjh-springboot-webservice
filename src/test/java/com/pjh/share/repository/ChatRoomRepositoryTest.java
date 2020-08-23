@@ -15,15 +15,12 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Transactional
 public class ChatRoomRepositoryTest {
     @Autowired
-    ChatRoomRepository chatRoomRepository;
+    private ChatRoomRepository chatRoomRepository;
 
     @BeforeEach
-    public void cleanUp(){
-        chatRoomRepository.deleteAll();
-    }
+    public void cleanUp(){ }
 
     @Test
     public void 채팅방생성_조회(){
