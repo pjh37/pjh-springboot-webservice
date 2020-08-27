@@ -7,6 +7,7 @@ import java.io.File;
 public class FileUtil {
 
     public static void upload(MultipartFile file,String fileName)throws Exception{
+        if(file==null)return;
         Integer idx=file.getOriginalFilename().indexOf(".");
         String mimeType=file.getOriginalFilename().substring(idx);
         String dirPath="C:"+File.separator+"uploads";
