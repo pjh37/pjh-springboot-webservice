@@ -17,10 +17,12 @@ import javax.servlet.http.Cookie;
 @RequiredArgsConstructor
 @Controller
 public class PostController {
+
     private final PostService postService;
     private final GroupService groupService;
     private final CommentService commentService;
     private final Integer firstPage=0;
+
     @GetMapping("/post/save/{groupId}")
     public String postSave(Model model, @PathVariable("groupId") Long groupId, @CurrentUser SessionUser user){
         if(user!=null){

@@ -37,6 +37,7 @@ public class GroupService {
 
         group.thumbnailUpdate(file.getFileName());
         group.setAccount(account);
+        group.memberJoin();
 
         fileRepository.save(file).groupIdUpdate(group.getId());
         FileUtil.upload(dto.getFile(),file.getFileName());
@@ -48,6 +49,8 @@ public class GroupService {
     public Long join(GroupJoinRequestDto requestDto, SessionUser user){
         Group group=groupRepository.findById(requestDto.getGroupId())
                 .orElseThrow(()->new IllegalArgumentException("없는 그룹입니다."));
+        group.memberJoin();
+
         Account account=accountRepository.findById(user.getId())
                 .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
         GroupAccount groupAccount= GroupAccount.builder()

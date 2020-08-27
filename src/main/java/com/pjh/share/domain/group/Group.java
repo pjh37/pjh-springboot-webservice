@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="groups")
+@Table(name="groupc")
 public class Group extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,10 +70,11 @@ public class Group extends BaseTimeEntity {
     public void thumbnailUpdate(String thumbnail){
         this.thumbnail=thumbnail;
     }
-    public void currentNumInc(){
-        this.currentNum+=1;
+    public void memberJoin(){
+        if(currentNum>=totalNum)return;
+        this.currentNum++;
     }
-    public void currentNumDesc(){
+    public void memberWithdraw(){
         if(this.currentNum<=0)return;
         this.currentNum-=1;
     }
