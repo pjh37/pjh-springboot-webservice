@@ -4,6 +4,7 @@ import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
 
+import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
@@ -17,7 +18,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,15 +30,23 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {IndexController.class},includeFilters = @ComponentScan.Filter(classes = {EnableWebSecurity.class}))
+@WebMvcTest(controllers = {IndexController.class}
+,includeFilters = @ComponentScan.Filter(classes = {EnableWebSecurity.class}))
 public class IndexControllerTest {
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private MockMvc mvc;
+
+    private MockHttpSession session;
 
     @MockBean
     private AccountRepository accountRepository;
@@ -51,14 +63,19 @@ public class IndexControllerTest {
     @MockBean
     private VideoService videoService;
 
-    @Autowired
-    private MockMvc mvc;
+
 
     @BeforeEach
     public void setup(){
         mvc= MockMvcBuilders.webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+        session=new MockHttpSession();
+        SessionUser user= SessionUser.builder()
+                .name("user")
+                .role(Role.USER)
+                .build();
+        session.setAttribute("user",user);
     }
 
     @Test
@@ -84,19 +101,33 @@ public class IndexControllerTest {
                 .authString(authString)
                 .role(Role.GUEST).build());
 
-        mvc.perform(get("/email/auth/{auth}",authString))
+        mvc.perform(get("/email/auth/{auth}",authString).with(user("admin").roles(Role.USER.getTitle())))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void 그룹관리페이지()throws Exception{
-        mvc.perform(get("/group-manage"))
+        mvc.perform(get("/group-manage").with(user("admin").roles(Role.USER.getTitle())))
                 .andExpect(status().isOk());
     }
 
     @Test
+    @WithMockUser(username = "user",roles = "일반 사용자")
     public void 그룹생성페이지()throws Exception{
-        mvc.perform(get("/group-create"))
+        mvc.perform(get("/group-create").session(session))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user",roles = "일반 사용자")
+    public void 그룹_내부_조회()throws Exception{
+
+        mvc.perform(get("/group/{id}",0L)
+                .session(session)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 }
