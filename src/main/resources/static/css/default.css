@@ -232,3 +232,7 @@
 .comment_reply_list{
     margin-left: 50px;
 }
+
+#pageList{
+    display: flex;
+}

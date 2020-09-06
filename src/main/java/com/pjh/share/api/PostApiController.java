@@ -4,12 +4,17 @@ import com.pjh.share.common.CurrentUser;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.service.PostService;
+import com.pjh.share.web.dto.PostsListResponseDto;
 import com.pjh.share.web.dto.PostsResponseDto;
 import com.pjh.share.web.dto.PostsSaveRequestDto;
 import com.pjh.share.web.dto.PostsUpdateRequestDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,5 +41,20 @@ public class PostApiController {
     public Long delete(@PathVariable Long id){
         postService.delete(id);
         return id;
+    }
+
+    @GetMapping("/api/v1/group/{id}")
+    public Result<List<PostsListResponseDto>> findPostByPage(@PathVariable("id") Long id,
+                                                     @RequestParam(value = "page",defaultValue = "1")Integer pageNum,
+                                                     @CurrentUser SessionUser user){
+        return new Result<List<PostsListResponseDto>>(postService.findAllDesc(pageNum,id),postService.getPageList(pageNum,id),id);
+    }
+
+    @Data
+    @AllArgsConstructor
+    class Result<T>{
+        private T data;
+        private List<Integer> pageList;
+        private Long groupId;
     }
 }

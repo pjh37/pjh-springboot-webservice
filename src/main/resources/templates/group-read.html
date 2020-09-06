@@ -126,14 +126,16 @@
                                 <th style="width:10%">조회수</th>
                             </tr>
                             </thead>
-                            <tbody id="tbody" th:each="post:${posts}">
-                            <tr>
-                                <td style="width:10%" th:text="${post.id}"></td>
-                                <td style="width:60%" ><a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a></td>
-                                <td style="width:10%" th:text="${post.name}"></td>
-                                <td style="width:10%" th:text="${post.modifiedDate}"></td>
-                                <td style="width:10%" th:text="${post.clickCount}"></td>
-                            </tr>
+                            <tbody id="tbody" class="postList">
+                            <th:block th:each="post:${posts}">
+                                <tr>
+                                    <td style="width:10%" th:text="${post.id}"></td>
+                                    <td style="width:60%" ><a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a></td>
+                                    <td style="width:10%" th:text="${post.name}"></td>
+                                    <td style="width:10%" th:text="${post.modifiedDate}"></td>
+                                    <td style="width:10%" th:text="${post.clickCount}"></td>
+                                </tr>
+                            </th:block>
                             </tbody>
                         </table>
                     </div>
@@ -145,11 +147,14 @@
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <th:block th:each="pageNum:${pageList}">
-                                    <li class="page-item">
-                                        <a class="page-link" th:href="@{'/group/'+${group.id}}+'?page='+${pageNum}" th:text="${pageNum}"></a>
-                                    </li>
-                                </th:block>
+                                <div id="pageList">
+                                    <th:block th:each="pageNum:${pageList}">
+                                        <li class="page-item">
+                                            <a class="page-link" th:href="@{'/group/'+${group.id}}+'?page='+${pageNum}" th:text="${pageNum}"></a>
+                                        </li>
+                                    </th:block>
+                                </div>
+
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>

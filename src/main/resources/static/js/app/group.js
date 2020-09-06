@@ -26,7 +26,48 @@ var group={
             _this.preLoading(this);
        });
 
+        $('.page-item>a').on('click',function(e){
+            e.preventDefault();
+            item=$(this);
+            postList=$('.postList');
 
+            href=item.attr('href');
+
+            $.ajax({
+                type:'GET',
+                url:"/api/v1"+href,
+                dataType:'json',
+                contentType:'application/json; charset=utf-8'
+            }).done(function(response){
+                postList.children().remove();
+                var data=response.data;
+                var groupId=response.groupId;
+                var pageList=response.pageList;
+
+                var html="";
+                //<a th:href="@{'/post/read/'+${group.id}+'/'+${post.id}}" th:text="${post.title}"></a>
+                data.forEach(function(value){
+                     html+="<tr>"+
+                       "<td style='width:10%'>"+value.id+"</td>"+
+                       "<td style='width:60%'><a href='/post/read/"+groupId+"/"+value.id+"'>"+value.title+"</a></td>"+
+                       "<td style='width:10%'>"+value.name+"</td>"+
+                       "<td style='width:10%'>"+value.modifiedDate+"</td>"+
+                       "<td style='width:10%'>"+value.clickCount+"</td>"+
+                    "</tr>";
+
+                 });
+                 postList.prepend(html);
+                 html="";
+                 $('#pageList').children().remove();
+                 pageList.forEach(function(value){
+                    html+="<li class='page-item'>"+
+                              "<a class='page-link' href='/group/"+groupId+"?"+"page="+value+"'>"+value+"</a>"+
+                          "</li>";
+                 });
+
+                 $('#pageList').prepend(html)
+            });
+        });
     },
     create:function(){
 
@@ -148,5 +189,6 @@ var group={
             reader.readAsDataURL(input.files[0]);
           }
     }
+
 };
 group.init();
