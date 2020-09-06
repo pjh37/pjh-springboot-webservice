@@ -147,10 +147,12 @@
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
+                                <!-- th:onclick="|javascript:group.groupItemClick('${group.id}','${group.isSecretRoom}')|" -->
                                 <div id="pageList">
                                     <th:block th:each="pageNum:${pageList}">
                                         <li class="page-item">
-                                            <a class="page-link" th:href="@{'/group/'+${group.id}}+'?page='+${pageNum}" th:text="${pageNum}"></a>
+                                            <a class="page-link" href="javascript:void(0);"
+                                               th:text="${pageNum}" th:onclick="|javascript:group.pageChange('${group.id}','${pageNum}')|"></a>
                                         </li>
                                     </th:block>
                                 </div>

@@ -6,10 +6,7 @@ import com.pjh.share.domain.account.SessionUser;
 import com.pjh.share.domain.groupaccount.GroupAccount;
 import com.pjh.share.service.GroupAccountService;
 import com.pjh.share.service.GroupService;
-import com.pjh.share.web.dto.GroupCreateRequestDto;
-import com.pjh.share.web.dto.GroupJoinRequestDto;
-import com.pjh.share.web.dto.GroupPwCheckRequestDto;
-import com.pjh.share.web.dto.GroupResponseDto;
+import com.pjh.share.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -49,5 +47,4 @@ public class GroupApiController {
     public boolean groupMemberCheck(@PathVariable Long groupId,@CurrentUser SessionUser user){
         return groupService.groupMemberCheck(groupId,user);
     }
-
 }
