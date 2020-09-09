@@ -12,7 +12,7 @@ public class UserAccount extends User {
     private Logger logger= LoggerFactory.getLogger(getClass());
     private Account account;
     public UserAccount(Account account){
-        super(account.getEmail(),account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_"+account.getRole())));
+        super(account.getEmail(),account.getPassword(), Arrays.asList(new SimpleGrantedAuthority("ROLE_"+account.getRole())));
         this.account=account;
         logger.info("======================");
         logger.info("UserAccount 동작");
