@@ -61,7 +61,7 @@ public class PostControllerTest {
     @WithMockUser(username = "user",roles = "일반 사용자")
     public void 게시물_저장_페이지() throws Exception{
         Long groupId=1L;
-        String title="스프링 부트 스터디 모집";
+        String title="스프링 부트 스터디 모집합니다";
         String des="선착순모집입니다.";
         Integer totalNum=10;
         Group group=Group.builder()
