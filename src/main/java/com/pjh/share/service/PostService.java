@@ -42,7 +42,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(Integer curPage,Long groupId){
-        Pageable pageable= PageRequest.of(curPage-1,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage-1,PAGE_SIZE,Sort.by("id").descending());
         return postRepository.findAllDesc(pageable,groupId)
                 .stream()
                 .map(PostsListResponseDto::new)

@@ -36,7 +36,8 @@ public class MessageService {
 
     @Transactional(readOnly = true)
     public List<ChatMessageResponseDto> findAllDesc(int curPage){
-        Pageable pageable= PageRequest.of(curPage,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
+        //Pageable pageable= PageRequest.of(curPage,PAGE_SIZE,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage,PAGE_SIZE,Sort.by("id").descending());
         return messageRepository.findAll(pageable)
                 .stream()
                 .map(ChatMessageResponseDto::new)

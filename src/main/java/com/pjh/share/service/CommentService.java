@@ -45,7 +45,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentListResponseDto> findAllDesc(Integer curPage, Long postId){
-        Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage,pageSize,Sort.by("id").descending());
         return commentRepository.findAllDesc(pageable,postId)
                 .stream()
                 .map(CommentListResponseDto::new)
@@ -53,7 +53,7 @@ public class CommentService {
     }
     @Transactional(readOnly = true)
     public List<CommentListResponseDto> findAllChildByIdDesc(Integer curPage, Long parentId){
-        Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage,pageSize,Sort.by("id").descending());
         return commentRepository.findAllChildByIdDesc(pageable,parentId)
                 .stream()
                 .map(CommentListResponseDto::new)
