@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Message extends BaseTimeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

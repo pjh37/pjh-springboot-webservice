@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name="friends")
 public class Friend extends BaseTimeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long accountId;

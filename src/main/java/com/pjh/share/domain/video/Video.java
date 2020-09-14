@@ -29,16 +29,16 @@ public class Video extends BaseTimeEntity {
     @Column(length = 500,columnDefinition = "TEXT",nullable = false)
     private String fileName;
 
-    @Column(length = 500,columnDefinition = "TEXT",nullable = false)
-    private String fileOriginalName;
+    @Column(length = 500,columnDefinition = "TEXT",nullable = true)
+    private String url;
 
     private Long clickCount=0L;
 
     @Builder
-    public Video(String title,String fileName,String fileOriginalName){
+    public Video(String title,String fileName,String url){
         this.title=title;
         this.fileName=fileName;
-        this.fileOriginalName=fileOriginalName;
+        this.url=url;
     }
 
 

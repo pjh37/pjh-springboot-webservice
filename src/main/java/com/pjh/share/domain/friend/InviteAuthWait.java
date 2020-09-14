@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class InviteAuthWait {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String sender;
