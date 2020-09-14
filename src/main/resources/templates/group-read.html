@@ -91,7 +91,7 @@
                         <th:block th:each="video:${videos}">
                             <div class="video-item col-3" th:onclick="|window.location.href='@{${'../watch/v/'+video.id}}'|">
                                 <video oncontextmenu="return false;" class="col">
-                                    <source th:src="@{'/watch/'+${video.fileName}+'#t=2.5'}" type="video/mp4">
+                                    <source th:src="@{${video.url}+'#t=2.5'}" type="video/mp4">
                                 </video>
                                 <div class="video-title col">
                                     <p th:text="${video.title}"></p>
