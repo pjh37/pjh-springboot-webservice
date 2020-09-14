@@ -119,7 +119,7 @@ public class CommentRepositoryTest {
             comment.setParent(commentParent);
             commentRepository.save(comment);
         }
-        Pageable pageable= PageRequest.of(curPage,pageSize,new Sort(Sort.Direction.DESC,"id"));
+        Pageable pageable= PageRequest.of(curPage,pageSize,Sort.by("id").descending());
         List<Comment> commentList=commentRepository.findAllChildByIdDesc(pageable,commentParent.getId());
 
         assertThat(commentList.size()).isEqualTo(3);

@@ -1,5 +1,6 @@
 package com.pjh.share.component;
 
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -33,6 +34,7 @@ public class S3Uploader {
     private String upload(File uploadFile,String dirName){
         String fileName=dirName+"/"+uploadFile.getName();
         String uploadUrl=putS3(uploadFile,fileName);
+        logger.info("uploadedUrl in S3Uploader component : "+uploadUrl);
         removeNewFile(uploadFile);
         return uploadUrl;
     }
