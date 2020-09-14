@@ -19,7 +19,6 @@ public class VideoUploadRequestDto {
         return Video.builder()
                 .title(title)
                 .fileName(fileName)
-                .fileOriginalName(file.getOriginalFilename())
                 .build();
     }
 }
