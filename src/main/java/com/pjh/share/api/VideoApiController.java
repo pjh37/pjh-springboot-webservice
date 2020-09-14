@@ -19,7 +19,6 @@ public class VideoApiController {
     private final VideoService videoService;
 
     @PostMapping("/api/video")
-    @ResponseBody
     public Long videoUpload(VideoUploadRequestDto requestDto, @CurrentUser SessionUser user)throws Exception{
         return videoService.save(requestDto,user.getName());
     }
