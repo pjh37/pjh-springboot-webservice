@@ -79,16 +79,14 @@
             </li>
         </ul>
         
-
     + ### 해결방안
-        <ul>
+       <ul>
             <li>
                 <h3>
-                    AWS의 s3와 cloud front(CDN)을 통해 캐싱 하여 본 서버의 부하를 줄이고 동영상 스트리밍이 더 부드럽게 작동 되도록 하였습니다.
-                    
+                   AWS의 s3와 cloud front(CDN)을 통해 캐싱 하여 본 서버의 부하를 줄이고 동영상 스트리밍이 더 부드럽게 작동 되도록 하였습니다.
                 </h3>
             </li>
-        </ul>
+       </ul>
 
 <br/>
         
@@ -126,7 +124,8 @@
 
 ## 기능별 캡처
 ### 그룹만들기
-![그룹만들기1](https://user-images.githubusercontent.com/37110261/88568092-6145c400-d073-11ea-968a-65598c4f8e1f.PNG){:width="800px" height="500px"}
+![그룹만들기1](https://user-images.githubusercontent.com/37110261/88568092-6145c400-d073-11ea-968a-65598c4f8e1f.PNG)
+
 
 <br/>
 
