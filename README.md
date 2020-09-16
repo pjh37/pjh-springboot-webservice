@@ -155,6 +155,6 @@
 <br/>
 
 ### 채팅
-![채팅1](https://user-images.githubusercontent.com/37110261/88569011-cbab3400-d074-11ea-9963-eb3feb748c42.PNG){:width="800px" height="500px"}
+![채팅1](https://user-images.githubusercontent.com/37110261/88569011-cbab3400-d074-11ea-9963-eb3feb748c42.PNG)
 
 <br/>
