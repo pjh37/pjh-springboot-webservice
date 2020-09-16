@@ -1,10 +1,7 @@
-package com.pjh.share.service;
+package com.pjh.share.service.post;
 
 
 import com.pjh.share.domain.post.Posts;
-import com.pjh.share.domain.post.PostsRepository;
-import com.pjh.share.web.dto.PostsResponseDto;
-import com.pjh.share.web.dto.PostsSaveRequestDto;
 
 import com.pjh.share.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;

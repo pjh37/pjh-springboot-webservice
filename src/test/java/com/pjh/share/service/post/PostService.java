@@ -1,4 +1,4 @@
-package com.pjh.share.service;
+package com.pjh.share.service.post;
 
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.web.dto.PostsListResponseDto;
