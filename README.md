@@ -130,27 +130,27 @@
 <br/>
 
 ### 권한수정
-![권한수정](https://user-images.githubusercontent.com/37110261/88568975-be8e4500-d074-11ea-9fbb-a39f6ff401c5.PNG){:width="600px" height="300px"}
+![권한수정](https://user-images.githubusercontent.com/37110261/88568975-be8e4500-d074-11ea-9fbb-a39f6ff401c5.PNG)
 
 <br/>
 
 ### 게시글
-![게시글](https://user-images.githubusercontent.com/37110261/88568980-c0f09f00-d074-11ea-93ab-a698bd8908b4.PNG){:width="800px" height="500px"}
+![게시글](https://user-images.githubusercontent.com/37110261/88568980-c0f09f00-d074-11ea-93ab-a698bd8908b4.PNG)
 
 <br/>
 
 ### 동영상업로드
-![동영상업로드](https://user-images.githubusercontent.com/37110261/88568989-c3eb8f80-d074-11ea-88c7-8003b8ecf4a8.PNG){:width="800px" height="500px"}
+![동영상업로드](https://user-images.githubusercontent.com/37110261/88568989-c3eb8f80-d074-11ea-88c7-8003b8ecf4a8.PNG)
 
 <br/>
 
 ### 재생
-![재생](https://user-images.githubusercontent.com/37110261/88568999-c6e68000-d074-11ea-8099-8f87579647c9.PNG){:width="800px" height="500px"}
+![재생](https://user-images.githubusercontent.com/37110261/88568999-c6e68000-d074-11ea-8099-8f87579647c9.PNG)
 
 <br/>
 
 ### 채팅방
-![채팅방](https://user-images.githubusercontent.com/37110261/88569007-c9e17080-d074-11ea-96e4-2aaab4d4edbe.PNG){:width="800px" height="500px"}
+![채팅방](https://user-images.githubusercontent.com/37110261/88569007-c9e17080-d074-11ea-96e4-2aaab4d4edbe.PNG)
 
 <br/>
 
