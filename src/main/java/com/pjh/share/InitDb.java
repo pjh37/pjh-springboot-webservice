@@ -27,7 +27,7 @@ public class InitDb {
     private final InitService initService;
     @PostConstruct
     public void init(){
-        //initService.dbInit();
+        initService.dbInit();
     }
 
     @Component
@@ -53,7 +53,7 @@ public class InitDb {
                 users.add(user);
 
             }
-
+            System.out.println("postConstruct 실행");
 
             friendRepository.save(Friend.builder()
                     .accountId(users.get(0).getId())
