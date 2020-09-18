@@ -14,3 +14,12 @@ cache:
 
 # clean 후 Build (Build시 자동으로 test 수행)
 script: "./gradlew clean build"
+
+before_deploy:
+  - chmod +x gradlew
+
+# CI 실행 완료시 메일 알림
+notifications:
+  email:
+    recipients:
+      - epictroll2018@gmail.com
