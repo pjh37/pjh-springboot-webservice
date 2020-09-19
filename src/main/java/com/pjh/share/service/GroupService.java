@@ -1,5 +1,6 @@
 package com.pjh.share.service;
 
+import com.pjh.share.component.S3Uploader;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.SessionUser;
@@ -18,29 +19,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class GroupService {
+    private static final String DIR_NAME="images";
     private final GroupAccountRepository groupAccountRepository;
     private final GroupRepository groupRepository;
     private final FileRepository fileRepository;
     private final AccountRepository accountRepository;
-    private final HttpSession session;
+    private final S3Uploader s3Uploader;
+
     @Transactional
     public Long save(GroupCreateRequestDto dto,SessionUser user)throws Exception{
         Group group=groupRepository.save(dto.toEntity());
         Account account=accountRepository.findById(user.getId())
                 .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
-        File file=dto.toFileEntity();
 
-        group.thumbnailUpdate(file.getFileName());
+        if(dto.getFile().getSize()!=0){
+            group.thumbnailUpdate(s3Uploader.upload(dto.getFile(),DIR_NAME));
+        }
         group.setAccount(account);
         group.memberJoin();
-
-        fileRepository.save(file).groupIdUpdate(group.getId());
-        FileUtil.upload(dto.getFile(),file.getFileName());
         groupAccountRepository.save(new GroupAccount(account,group, Role.ADMIN));
         return group.getId();
     }
@@ -109,4 +111,6 @@ public class GroupService {
     public boolean groupMemberCheck(Long groupId,SessionUser user){
         return groupAccountRepository.existsByAccountIdAndGroupId(user.getId(),groupId);
     }
+
+
 }

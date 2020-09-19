@@ -46,6 +46,7 @@ var group={
         formData.append("totalNum",$('#totalNum').val());
         formData.append("file",$("#groupThumbnail")[0].files[0]);
 
+
          $.ajax({
              type:'POST',
              url:'/api/group',

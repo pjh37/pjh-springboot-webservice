@@ -25,7 +25,7 @@
                                 <img class="thumbnail" src="/images/default_thumbnail.jpg"/>
                             </th:block>
                             <th:block th:if="${group.thumbnail!=null}">
-                                <img class="thumbnail" th:src="@{${'file/'+group.thumbnail}}"/>
+                                <img class="thumbnail" th:src="@{${'http://'+group.thumbnail}}"/>
                             </th:block>
                         </div>
                         <div class="group-mid col">
