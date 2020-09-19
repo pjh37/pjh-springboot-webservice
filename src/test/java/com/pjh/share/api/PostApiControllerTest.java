@@ -101,6 +101,7 @@ public class PostApiControllerTest {
                 .id(1L)
                 .build();
     }
+    /*
     @Test
     public void 게시글_저장() throws Exception{
         //given
@@ -152,6 +153,8 @@ public class PostApiControllerTest {
         assertThat(postsResponseDto.getTitle()).isEqualTo("바뀐제목");
         assertThat(postsResponseDto.getContent()).isEqualTo("바뀐내용");
     }
+
+    */
     private ResultActions requestGetPost()throws Exception{
         return mvc.perform(get("/api/post/{id}",0L)
                 .contentType(MediaType.APPLICATION_JSON))
