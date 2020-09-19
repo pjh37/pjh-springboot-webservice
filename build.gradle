@@ -9,12 +9,15 @@ buildscript{
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
     }
 }
 plugins{
     id 'com.google.cloud.tools.jib' version '1.0.0'
 }
 
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'jacoco'
 apply plugin:'java'
 apply plugin:'eclipse'
 apply plugin:'org.springframework.boot'
@@ -29,6 +32,15 @@ version '1.0-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
 sourceCompatibility = 1.8
 targetCompatibility =1.8
 ext.lombokVersion='1.18.4'
+
+jacocoTestReport{
+    reports{
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
