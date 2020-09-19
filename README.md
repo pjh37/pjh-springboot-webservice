@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/pjh37/pjh-springboot-webservice.svg?branch=master)](https://travis-ci.org/pjh37/pjh-springboot-webservice)
-
+[![Coverage Status](https://coveralls.io/repos/github/pjh37/pjh-springboot-webservice/badge.svg?branch=master)](https://coveralls.io/github/pjh37/pjh-springboot-webservice?branch=master)
 ### - 기간 : 2020.05~2020.09 (4개월)
 ### - 인원 : 개인 프로젝트
 ### - Github : <https://github.com/pjh37/pjh-springboot-webservice>
