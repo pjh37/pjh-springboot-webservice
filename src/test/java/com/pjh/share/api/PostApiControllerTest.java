@@ -56,7 +56,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
  */
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class PostApiControllerTest {
 
