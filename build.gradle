@@ -78,7 +78,8 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     testCompile('org.springframework.boot:spring-boot-starter-test'){
-        exclude module: 'junit'
+        exclude group: 'junit'
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testCompile('org.springframework.security:spring-security-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')

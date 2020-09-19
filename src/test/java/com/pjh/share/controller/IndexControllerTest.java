@@ -1,5 +1,6 @@
 package com.pjh.share.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
@@ -9,6 +10,7 @@ import com.pjh.share.service.AccountService;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.service.PostService;
 import com.pjh.share.service.VideoService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -22,14 +24,12 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,8 +37,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {IndexController.class}
-,includeFilters = @ComponentScan.Filter(classes = {EnableWebSecurity.class}))
+@SpringBootTest
+@AutoConfigureMockMvc
+@Slf4j
 public class IndexControllerTest {
     @Autowired
     private WebApplicationContext context;
@@ -47,6 +48,9 @@ public class IndexControllerTest {
     private MockMvc mvc;
 
     private MockHttpSession session;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private AccountRepository accountRepository;
@@ -63,8 +67,10 @@ public class IndexControllerTest {
     @MockBean
     private VideoService videoService;
 
+    @MockBean
+    private IndexController indexController;
 
-
+/*
     @BeforeEach
     public void setup(){
         mvc= MockMvcBuilders.webAppContextSetup(context)
@@ -84,6 +90,7 @@ public class IndexControllerTest {
 
         mvc.perform(get("/"))
                 .andExpect(status().isOk());
+
     }
 
     @Test
@@ -101,7 +108,8 @@ public class IndexControllerTest {
                 .authString(authString)
                 .role(Role.GUEST).build());
 
-        mvc.perform(get("/email/auth/{auth}",authString).with(user("admin").roles(Role.USER.getTitle())))
+        mvc.perform(get("/email/auth/{auth}",authString)
+                .with(user("admin").roles(Role.USER.getTitle())))
                 .andExpect(status().isOk());
     }
 
@@ -125,9 +133,11 @@ public class IndexControllerTest {
 
         mvc.perform(get("/group/{id}",0L)
                 .session(session)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+ */
 }
