@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pjh37/pjh-springboot-webservice.svg?branch=master)](https://travis-ci.org/pjh37/pjh-springboot-webservice)
+
 ### - 기간 : 2020.05~2020.09 (4개월)
 ### - 인원 : 개인 프로젝트
 ### - Github : <https://github.com/pjh37/pjh-springboot-webservice>
@@ -69,36 +71,17 @@
 
 + ### 동영상 스트리밍 (AWS s3,cloud front(CDN) 활용)
     + ### 기존코드의 문제점
-        <ul>
-            <li>
-                <h3>
-                RandomAccessFile과 request Header의 요청된 range를 읽고 status code를 206을 준다.
-                이렇게 할 경우 요청된 부분을 읽어 response.write를 하게 되면 임의 지점을 요청해도 재생이 잘되었으나
-                접속자 수를 조금만 증가 시켜도 부하가 폭증하는 것을 발견
-                </h3>
-            </li>
-        </ul>
-        
+        + ### RandomAccessFile과 request Header의 요청된 range를 읽고 status code를 206을 준다. 이렇게 할 경우 요청된 부분을 읽어 response.write를 하게 되면 임의 지점을 요청해도 재생이 잘되었으나접속자 수를 조금만 증가 시켜도 부하가 폭증하는 것을 발견
+       
     + ### 해결방안
-       <ul>
-            <li>
-                <h3>
-                   AWS의 s3와 cloud front(CDN)을 통해 캐싱 하여 본 서버의 부하를 줄이고 동영상 스트리밍이 더 부드럽게 작동 되도록 하였습니다.
-                </h3>
-            </li>
-       </ul>
+        + ### AWS의 s3와 cloud front(CDN)을 통해 캐싱 하여 본 서버의 부하를 줄이고 동영상 스트리밍이 더 부드럽게 작동 되도록 하였습니다.
+      
 
 <br/>
         
 + ### RabbitMQ 적용
-    <ul>
-        <li>
-            <h3>
-                RabbitMQ를 윈도우에 설치할때 여러가지 오류가 많이 발생하게 된다. nbp에서 서버를 빌린뒤
-                rabbitmq를 docker이미지로 설치 및 작동시켜 주었습니다.
-            </h3>
-        </li>
-    </ul>
+    + ### RabbitMQ를 윈도우에 설치할때 여러가지 오류가 많이 발생하게 된다. nbp에서 서버를 빌린뒤 rabbitmq를 docker이미지로 설치 및 작동시켜 주었습니다.
+    
     
     > rabbitmq라는 메세지 큐를 적용한 이유는 rabbitmq가 가진 다른 응용프로그램과 데이터 송수신 기능과
     대용량 데이터를 처리하기 위한 작업분산 기능을 넣을 수 있기 때문입니다.
@@ -108,18 +91,9 @@
 + ### 편리한 배포를와 리스크 분산을 위한 Docker 적용
     + ### AWS-> Naver Cloud로 이전 작업중 환경 설정의 번거러움, 버전 관리의 어려움등 이전작업에 어려움을 느낌
     + ### 어디를 가도 동일한 환경아래에서 실행 시키고 장애 발생시 쉽고 빠른 재배포를 위해 Docker를 적용했습니다.
-    <ul>
-        <li>
-            <h3>
-            spring내장 톰켓안에서 DB,redis를 함께 구동하다가 어느 하나에서 문제가 생기면 다른 곳도 이상이 생기
-            는 것을 발견하고 각각을 docker 컨테이너로 분리하여 배포하였습니다.
-            </h3>
-        </li>
-    </ul>
+    + ### spring내장 톰켓안에서 DB,redis를 함께 구동하다가 어느 하나에서 문제가 생기면 다른 곳도 이상이 생기는 것을 발견하고 각각을 docker 컨테이너로 분리하여 배포하였습니다.
     
-
-
-    
+   
 <br/>
 
 ## 기능별 캡처
