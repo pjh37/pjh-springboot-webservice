@@ -2,8 +2,10 @@
 /.gradle/
 .idea
 .gradle
+out
 src/main/resources/aws.yml
 src/main/resources/application.yml
+.travis.yml
 
 /build/
 /build/classes/java/main/
