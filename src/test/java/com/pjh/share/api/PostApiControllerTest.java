@@ -36,6 +36,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -57,12 +58,8 @@ WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
  */
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@Transactional
 public class PostApiControllerTest {
-
-    @Autowired
-    private MockMvc mvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -88,25 +85,20 @@ public class PostApiControllerTest {
 
     @BeforeEach
     public void setup(){
-        postsRepository.deleteAll();
-        mvc= MockMvcBuilders.webAppContextSetup(context).addFilter(((request,response,chain)->{
-            response.setCharacterEncoding("UTF-8");
-            chain.doFilter(request,response);
-        }))
-                .apply(springSecurity())
-                .build();
+        accountRepository.save(Account.builder().name("유저").password("123")
+                .email("abc").role(Role.USER).authString("abc").build());
+
         user=SessionUser.builder()
                 .name("user")
                 .role(Role.USER)
                 .id(1L)
                 .build();
     }
-    /*
+
     @Test
     public void 게시글_저장() throws Exception{
         //given
-        accountRepository.save(Account.builder().name("유저").password("123")
-                .email("abc").role(Role.USER).authString("abc").build());
+
         Posts post=getPost();
         post.setId(0L);
         Group group=getGroup();
@@ -154,7 +146,7 @@ public class PostApiControllerTest {
         assertThat(postsResponseDto.getContent()).isEqualTo("바뀐내용");
     }
 
-    */
+/*
     private ResultActions requestGetPost()throws Exception{
         return mvc.perform(get("/api/post/{id}",0L)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -162,6 +154,8 @@ public class PostApiControllerTest {
 
     }
 
+
+ */
     private PostsSaveRequestDto buildPostRequest(Posts post){
         PostsSaveRequestDto postsSaveRequestDto=new PostsSaveRequestDto();
         postsSaveRequestDto.setTitle(post.getTitle());
