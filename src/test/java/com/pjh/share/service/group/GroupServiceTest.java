@@ -95,7 +95,7 @@ public class GroupServiceTest {
         dto.setPassword("123");
         return dto;
     }
-    private GroupPwCheckRequestDto buildGroupPwCheckRequestDto(Long groupId,String password){
+    private GroupPwCheckRequestDto buildGroupPwCheckRequestDto(Long groupId, String password){
         GroupPwCheckRequestDto groupPwCheckRequestDto=new GroupPwCheckRequestDto();
         groupPwCheckRequestDto.setId(groupId);
         groupPwCheckRequestDto.setPassword(password);
