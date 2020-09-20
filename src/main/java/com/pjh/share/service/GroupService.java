@@ -38,7 +38,7 @@ public class GroupService {
         Account account=accountRepository.findById(user.getId())
                 .orElseThrow(()->new IllegalArgumentException("없는 회원입니다."));
 
-        if(dto.getFile().getSize()!=0){
+        if(dto.getFile()!=null&&dto.getFile().getSize()!=0){
             group.thumbnailUpdate(s3Uploader.upload(dto.getFile(),DIR_NAME));
         }
         group.setAccount(account);

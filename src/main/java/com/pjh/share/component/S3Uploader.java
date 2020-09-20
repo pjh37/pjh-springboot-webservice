@@ -25,6 +25,9 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${cloud.front.domainName}")
+    private String domainName;
+
     public String upload(MultipartFile multipartFile,String dirName)throws Exception{
         File uploadFile=convert(multipartFile)
                 .orElseThrow(()->new IllegalArgumentException("MultipartFile -> File로 전환 실패했습니다."));
@@ -35,8 +38,9 @@ public class S3Uploader {
         String fileName=dirName+"/"+uploadFile.getName();
         String uploadUrl=putS3(uploadFile,fileName);
         logger.info("uploadedUrl in S3Uploader component : "+uploadUrl);
+        logger.info("cloud front domain name : "+domainName);
         removeNewFile(uploadFile);
-        return uploadUrl;
+        return domainName+"/"+fileName;
     }
 
     private String putS3(File uploadFile, String fileName) {

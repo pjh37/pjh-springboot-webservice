@@ -67,8 +67,8 @@ public class Group extends BaseTimeEntity {
         this.currentNum=currentNum;
         this.totalNum=totalNum;
     }
-    public void thumbnailUpdate(String thumbnail){
-        this.thumbnail=thumbnail;
+    public void thumbnailUpdate(String thumbnailUrl){
+        this.thumbnail=thumbnailUrl;
     }
     public void memberJoin(){
         if(currentNum>=totalNum)return;
