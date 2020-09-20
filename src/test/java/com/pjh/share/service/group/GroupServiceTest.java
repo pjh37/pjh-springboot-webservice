@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.spring5.processor.SpringValueTagProcessor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -96,10 +95,10 @@ public class GroupServiceTest {
         return dto;
     }
     private GroupPwCheckRequestDto buildGroupPwCheckRequestDto(Long groupId, String password){
-        GroupPwCheckRequestDto groupPwCheckRequestDto=new GroupPwCheckRequestDto();
-        groupPwCheckRequestDto.setId(groupId);
-        groupPwCheckRequestDto.setPassword(password);
-        return groupPwCheckRequestDto;
+        GroupPwCheckRequestDto groupPwCheckRequestTestDto =new GroupPwCheckRequestDto();
+        groupPwCheckRequestTestDto.setId(groupId);
+        groupPwCheckRequestTestDto.setPassword(password);
+        return groupPwCheckRequestTestDto;
     }
 
 
