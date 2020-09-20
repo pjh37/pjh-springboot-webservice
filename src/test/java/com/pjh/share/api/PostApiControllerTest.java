@@ -33,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -56,7 +57,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /*
 WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
  */
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class PostApiControllerTest {
@@ -85,27 +86,24 @@ public class PostApiControllerTest {
 
     @BeforeEach
     public void setup(){
-        accountRepository.save(Account.builder().name("유저").password("123")
-                .email("abc").role(Role.USER).authString("abc").build());
+        Long accountId=accountRepository.save(Account.builder().name("유저").password("123")
+                .email("abc").role(Role.USER).authString("abc").build()).getId();
 
         user=SessionUser.builder()
                 .name("user")
                 .role(Role.USER)
-                .id(1L)
+                .id(accountId)
                 .build();
     }
 
     @Test
     public void 게시글_저장() throws Exception{
         //given
-
         Posts post=getPost();
         post.setId(0L);
         Group group=getGroup();
         groupRepository.save(group);
         post.setGroup(group);
-
-
 
         //when
         Long postId=postApiController.save(buildPostRequest(post),user);
@@ -113,8 +111,6 @@ public class PostApiControllerTest {
 
         //then
         assertThat(postsResponseDto.getTitle()).isEqualTo("제목");
-
-
     }
 
     @Test
