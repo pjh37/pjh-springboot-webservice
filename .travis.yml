@@ -25,7 +25,7 @@ after_success:
 
 before_install:
   - chmod +x gradlew
-  - wget http://services.gradle.org/distributions/gradle-5.2.1-bin.zip
+  - wget https://services.gradle.org/distributions/gradle-5.2.1-bin.zip
   - unzip -qq gradle-5.2.1-bin.zip
   - export GRADLE_HOME=$PWD/gradle-5.2.1
   - export PATH=$GRADLE_HOME/bin:$PATH
