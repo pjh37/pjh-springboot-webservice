@@ -61,11 +61,6 @@ WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class PostApiControllerTest {
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private WebApplicationContext context;
 
     @Autowired
     private PostsRepository postsRepository;
