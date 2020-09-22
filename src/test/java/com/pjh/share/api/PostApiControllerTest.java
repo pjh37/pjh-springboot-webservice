@@ -58,10 +58,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-@AutoConfigureMockMvc
-@Slf4j
 public class PostApiControllerTest {
 
     @Autowired
@@ -81,6 +77,7 @@ public class PostApiControllerTest {
 
     private SessionUser user;
 
+
     @BeforeEach
     public void setup(){
         Long accountId=accountRepository.save(Account.builder().name("유저").password("123")
@@ -93,6 +90,7 @@ public class PostApiControllerTest {
                 .build();
     }
 
+    /*
     @Test
     public void 게시글_저장() throws Exception{
         //given
@@ -139,6 +137,8 @@ public class PostApiControllerTest {
         assertThat(postsResponseDto.getContent()).isEqualTo("바뀐내용");
     }
 
+
+     */
 /*
     private ResultActions requestGetPost()throws Exception{
         return mvc.perform(get("/api/post/{id}",0L)

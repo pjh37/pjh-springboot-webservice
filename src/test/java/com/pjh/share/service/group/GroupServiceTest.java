@@ -1,9 +1,14 @@
 package com.pjh.share.service.group;
 
+import com.pjh.share.component.S3Uploader;
 import com.pjh.share.domain.account.Account;
 import com.pjh.share.domain.account.AccountRepository;
 import com.pjh.share.domain.account.Role;
 import com.pjh.share.domain.account.SessionUser;
+import com.pjh.share.domain.file.FileRepository;
+import com.pjh.share.domain.group.Group;
+import com.pjh.share.domain.group.GroupRepository;
+import com.pjh.share.domain.groupaccount.GroupAccountRepository;
 import com.pjh.share.service.GroupService;
 import com.pjh.share.web.dto.GroupCreateRequestDto;
 import com.pjh.share.web.dto.GroupPwCheckRequestDto;
@@ -12,29 +17,67 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
-@SpringBootTest
-@Transactional
+@ExtendWith(MockitoExtension.class)
 public class GroupServiceTest {
-    @Autowired
-    private GroupService groupService;
+    private static final Long GROUP_ID=1L;
 
-    @Autowired
+    @Mock
+    private GroupAccountRepository groupAccountRepository;
+
+    @Mock
+    private GroupRepository groupRepository;
+
+    @Mock
+    private FileRepository fileRepository;
+
+    @Mock
+    private S3Uploader s3Uploader;
+
+    @Mock
     private AccountRepository accountRepository;
 
-    private SessionUser sessionUser;
+    private SessionUser sessionUser=SessionUser.builder()
+            .name("유저")
+            .role(Role.USER)
+            .id(1L)
+            .build();;
 
+
+
+    @Test
+    @DisplayName("그룹 생성 테스트")
+    public void groupCreate() throws Exception{
+        GroupService groupService=new GroupService(groupAccountRepository,groupRepository
+                ,fileRepository,accountRepository,s3Uploader);
+        assertNotNull(groupService);
+        Group group=toGroupEntity();
+        GroupCreateRequestDto groupCreateRequestDto=buildGroupDto();
+        GroupResponseDto groupResponseDto=buildGroupResponseDto(group);
+        when(groupRepository.findById(GROUP_ID)).thenReturn(Optional.of(group));
+
+        Optional<Group> findById=groupRepository.findById(GROUP_ID);
+
+        assertEquals(findById.get().getTitle(),"그룹이름");
+
+
+
+    }
+
+    /*
     @BeforeEach
     public void setUp(){
         Long accountId=accountRepository.save(Account.builder().name("유저").password("123")
@@ -92,6 +135,8 @@ public class GroupServiceTest {
 
         assertThat(result).isEqualTo(false);
     }
+
+     */
     private GroupCreateRequestDto buildGroupDto(){
         GroupCreateRequestDto dto=new GroupCreateRequestDto();
         dto.setTitle("그룹이름");
@@ -107,6 +152,29 @@ public class GroupServiceTest {
         groupPwCheckRequestTestDto.setPassword(password);
         return groupPwCheckRequestTestDto;
     }
+    private Account toAccountEntity(){
+        Account account=Account.builder()
+                .name("유저")
+                .email("abc@naver.com")
+                .password("123123123")
+                .authString("1234556")
+                .role(Role.USER).build();
+        return account;
+    }
+    private Group toGroupEntity(){
+        Group group=Group.builder()
+                .title("그룹이름")
+                .description("그룹설명")
+                .totalNum(20)
+                .build();
+        group.setId(GROUP_ID);
+        group.setAccount(toAccountEntity());
+        return group;
+    }
 
+    private GroupResponseDto buildGroupResponseDto(Group group){
+        GroupResponseDto groupResponseDto=new GroupResponseDto(group);
+        return groupResponseDto;
+    }
 
 }
