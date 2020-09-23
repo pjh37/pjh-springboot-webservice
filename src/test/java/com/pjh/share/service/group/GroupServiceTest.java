@@ -27,6 +27,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 
@@ -65,31 +66,24 @@ public class GroupServiceTest {
     @Test
     @DisplayName("그룹 생성 테스트")
     public void groupCreate() throws Exception{
+        //given
         GroupService groupService=new GroupService(groupAccountRepository,groupRepository
                 ,fileRepository,accountRepository,s3Uploader);
         Group group=toGroupEntity();
         Account account=toAccountEntity();
+        group.setAccount(account);
         GroupCreateRequestDto groupCreateRequestDto=buildGroupDto(group);
-        doReturn(group).when(groupRepository).save(any());
-        doReturn(Optional.of(account)).when(accountRepository).findById(USER_ID);
-        groupService.save(groupCreateRequestDto,sessionUser);
-        //when(groupService.save(groupCreateRequestDto,sessionUser)).thenReturn(GROUP_ID);
+        GroupResponseDto groupResponseDto=buildGroupResponseDto(group);
+        given(groupRepository.save(any())).willReturn(group);
+        given(accountRepository.findById(USER_ID)).willReturn(Optional.of(account));
+        given(groupRepository.findById(GROUP_ID)).willReturn(Optional.of(group));
 
-
-        /*
-        assertNotNull(groupService);
-        Group group=toGroupEntity();
-        Account account=toAccountEntity();
-        GroupCreateRequestDto groupCreateRequestDto=buildGroupDto(group);
-        //GroupResponseDto groupResponseDto=buildGroupResponseDto(group);
-        when(accountRepository.findById(USER_ID)).thenReturn(Optional.of(account));
-        Optional<Account> account1=accountRepository.findById(USER_ID);
-        assertNotNull(account1);
-
-        when(groupRepository.save(group)).thenReturn(group);
+        //when
         groupService.save(groupCreateRequestDto,sessionUser);
 
-         */
+        //then
+        GroupResponseDto groupResponseDto2=groupService.findById(GROUP_ID);
+        assertThat(groupResponseDto2.getTitle()).isEqualTo("그룹이름");
     }
 
     /*
