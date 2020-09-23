@@ -41,6 +41,7 @@ public class GroupService {
         if(dto.getFile()!=null&&dto.getFile().getSize()!=0){
             group.thumbnailUpdate(s3Uploader.upload(dto.getFile(),DIR_NAME));
         }
+
         group.setAccount(account);
         group.memberJoin();
         groupAccountRepository.save(new GroupAccount(account,group, Role.ADMIN));

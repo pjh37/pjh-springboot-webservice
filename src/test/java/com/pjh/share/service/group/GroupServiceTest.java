@@ -27,14 +27,13 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
 public class GroupServiceTest {
     private static final Long GROUP_ID=1L;
-
+    private static final Long USER_ID=1L;
     @Mock
     private GroupAccountRepository groupAccountRepository;
 
@@ -50,31 +49,47 @@ public class GroupServiceTest {
     @Mock
     private AccountRepository accountRepository;
 
-    private SessionUser sessionUser=SessionUser.builder()
-            .name("유저")
-            .role(Role.USER)
-            .id(1L)
-            .build();;
+    private SessionUser sessionUser;
+
+    @BeforeEach
+    public void setup(){
 
 
+        sessionUser=SessionUser.builder()
+                .name("user")
+                .role(Role.USER)
+                .id(USER_ID)
+                .build();
+    }
 
     @Test
     @DisplayName("그룹 생성 테스트")
     public void groupCreate() throws Exception{
         GroupService groupService=new GroupService(groupAccountRepository,groupRepository
                 ,fileRepository,accountRepository,s3Uploader);
+        Group group=toGroupEntity();
+        Account account=toAccountEntity();
+        GroupCreateRequestDto groupCreateRequestDto=buildGroupDto(group);
+        doReturn(group).when(groupRepository).save(any());
+        doReturn(Optional.of(account)).when(accountRepository).findById(USER_ID);
+        groupService.save(groupCreateRequestDto,sessionUser);
+        //when(groupService.save(groupCreateRequestDto,sessionUser)).thenReturn(GROUP_ID);
+
+
+        /*
         assertNotNull(groupService);
         Group group=toGroupEntity();
-        GroupCreateRequestDto groupCreateRequestDto=buildGroupDto();
-        GroupResponseDto groupResponseDto=buildGroupResponseDto(group);
-        when(groupRepository.findById(GROUP_ID)).thenReturn(Optional.of(group));
+        Account account=toAccountEntity();
+        GroupCreateRequestDto groupCreateRequestDto=buildGroupDto(group);
+        //GroupResponseDto groupResponseDto=buildGroupResponseDto(group);
+        when(accountRepository.findById(USER_ID)).thenReturn(Optional.of(account));
+        Optional<Account> account1=accountRepository.findById(USER_ID);
+        assertNotNull(account1);
 
-        Optional<Group> findById=groupRepository.findById(GROUP_ID);
+        when(groupRepository.save(group)).thenReturn(group);
+        groupService.save(groupCreateRequestDto,sessionUser);
 
-        assertEquals(findById.get().getTitle(),"그룹이름");
-
-
-
+         */
     }
 
     /*
@@ -137,13 +152,13 @@ public class GroupServiceTest {
     }
 
      */
-    private GroupCreateRequestDto buildGroupDto(){
+    private GroupCreateRequestDto buildGroupDto(Group group){
         GroupCreateRequestDto dto=new GroupCreateRequestDto();
-        dto.setTitle("그룹이름");
-        dto.setDescription("그룹설명");
-        dto.setTotalNum(20);
-        dto.setCurrentNum(0);
-        dto.setPassword("123");
+        dto.setTitle(group.getTitle());
+        dto.setDescription(group.getDescription());
+        dto.setTotalNum(group.getTotalNum());
+        dto.setCurrentNum(group.getCurrentNum());
+        dto.setPassword(group.getPassword());
         return dto;
     }
     private GroupPwCheckRequestDto buildGroupPwCheckRequestDto(Long groupId, String password){
@@ -166,9 +181,10 @@ public class GroupServiceTest {
                 .title("그룹이름")
                 .description("그룹설명")
                 .totalNum(20)
+                .currentNum(0)
+                .password("123")
                 .build();
         group.setId(GROUP_ID);
-        group.setAccount(toAccountEntity());
         return group;
     }
 

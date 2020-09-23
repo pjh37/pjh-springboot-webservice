@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,50 +60,39 @@ WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
  */
 @ExtendWith(SpringExtension.class)
 public class PostApiControllerTest {
-
-    @Autowired
-    private PostsRepository postsRepository;
-
-    @Autowired
-    private PostService postService;
-
-    @Autowired
+    private static final Long USER_ID=1L;
+    private static final Long POST_ID=1L;
+    @Mock
     private PostApiController postApiController;
 
-    @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
+    @Mock
+    private PostService postService;
 
     private SessionUser user;
 
 
     @BeforeEach
     public void setup(){
-        Long accountId=accountRepository.save(Account.builder().name("유저").password("123")
-                .email("abc").role(Role.USER).authString("abc").build()).getId();
+
 
         user=SessionUser.builder()
                 .name("user")
                 .role(Role.USER)
-                .id(accountId)
+                .id(USER_ID)
                 .build();
     }
 
-    /*
+
     @Test
     public void 게시글_저장() throws Exception{
         //given
+        postApiController=new PostApiController(postService);
         Posts post=getPost();
-        post.setId(0L);
-        Group group=getGroup();
-        groupRepository.save(group);
-        post.setGroup(group);
-
+        post.setGroup(getGroup());
         //when
-        Long postId=postApiController.save(buildPostRequest(post),user);
-        PostsResponseDto postsResponseDto=postApiController.findById(postId);
+        when(postApiController.save(buildPostRequest(post),user)).thenReturn(POST_ID);
+        when(postApiController.findById(POST_ID)).thenReturn(buildPostResponseDto(post));
+        PostsResponseDto postsResponseDto=postApiController.findById(POST_ID);
 
         //then
         assertThat(postsResponseDto.getTitle()).isEqualTo("제목");
@@ -111,17 +101,18 @@ public class PostApiControllerTest {
     @Test
     public void 게시글_조회() throws Exception{
         //given
+        postApiController=new PostApiController(postService);
         Posts post=getPost();
-        Long postId=postsRepository.save(post).getId();
-
+        post.setGroup(getGroup());
         //when
-        PostsResponseDto postsResponseDto=postApiController.findById(postId);
+        when(postApiController.findById(POST_ID)).thenReturn(buildPostResponseDto(post));
 
+        PostsResponseDto postsResponseDto=postApiController.findById(POST_ID);
         //then
         assertThat(postsResponseDto.getTitle()).isEqualTo("제목");
         assertThat(postsResponseDto.getContent()).isEqualTo("내용");
     }
-
+    /*
     @Test
     public void 게시글_수정() throws Exception{
         //given
@@ -149,6 +140,9 @@ public class PostApiControllerTest {
 
 
  */
+    private PostsResponseDto buildPostResponseDto(Posts post){
+        return new PostsResponseDto(post);
+    }
     private PostsSaveRequestDto buildPostRequest(Posts post){
         PostsSaveRequestDto postsSaveRequestDto=new PostsSaveRequestDto();
         postsSaveRequestDto.setTitle(post.getTitle());
