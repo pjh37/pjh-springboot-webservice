@@ -55,6 +55,7 @@ public class GroupServiceTest {
     private SessionUser sessionUser;
 
     private GroupService groupService;
+
     @BeforeEach
     public void setup(){
         groupService=new GroupService(groupAccountRepository,groupRepository

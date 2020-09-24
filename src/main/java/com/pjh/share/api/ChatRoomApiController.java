@@ -7,6 +7,7 @@ import com.pjh.share.service.ChatRoomService;
 import com.pjh.share.web.dto.ChatRoomCreateDto;
 import com.pjh.share.web.dto.ChatRoomCreateResponseDto;
 import com.pjh.share.web.dto.ChatRoomInviteDto;
+import com.pjh.share.web.dto.ChatRoomInviteResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class ChatRoomApiController {
     }
 
     @PostMapping("/api/v1/invite")
-    public Result inviteToChatRoom(@RequestBody ChatRoomInviteDto request, @CurrentUser SessionUser user){
-        return new Result(chatRoomService.inviteToChatRoom(request,user));
+    public Result<ChatRoomInviteResponseDto> inviteToChatRoom(@RequestBody ChatRoomInviteDto request, @CurrentUser SessionUser user){
+        return new Result<ChatRoomInviteResponseDto>(chatRoomService.inviteToChatRoom(request,user));
     }
 
     @Data

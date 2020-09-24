@@ -11,6 +11,7 @@ import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
 import com.pjh.share.service.AccountService;
 import com.pjh.share.service.PostService;
+import com.pjh.share.service.post.PostRepository;
 import com.pjh.share.web.dto.PostsListResponseDto;
 import com.pjh.share.web.dto.PostsResponseDto;
 
@@ -62,19 +63,21 @@ WebMvcTest의 경우 JPA의 기능이 작동하지 않는다.
 public class PostApiControllerTest {
     private static final Long USER_ID=1L;
     private static final Long POST_ID=1L;
-    @Mock
+
     private PostApiController postApiController;
 
     @Mock
     private PostService postService;
+
+    @Mock
+    private PostRepository postRepository;
 
     private SessionUser user;
 
 
     @BeforeEach
     public void setup(){
-
-
+        postApiController=new PostApiController(postService);
         user=SessionUser.builder()
                 .name("user")
                 .role(Role.USER)
@@ -86,7 +89,7 @@ public class PostApiControllerTest {
     @Test
     public void 게시글_저장() throws Exception{
         //given
-        postApiController=new PostApiController(postService);
+
         Posts post=getPost();
         post.setGroup(getGroup());
         //when
@@ -112,34 +115,24 @@ public class PostApiControllerTest {
         assertThat(postsResponseDto.getTitle()).isEqualTo("제목");
         assertThat(postsResponseDto.getContent()).isEqualTo("내용");
     }
-    /*
+
     @Test
     public void 게시글_수정() throws Exception{
         //given
         Posts post=getPost();
-        Long postId=postsRepository.save(post).getId();
-        postApiController.update(postId,buildPostUpdateRequest());
-
+        post.setTitle("바뀐제목");
+        post.setContent("바뀐내용");
+        given(postApiController.update(POST_ID,buildPostUpdateRequest())).willReturn(POST_ID);
+        given(postService.findById(POST_ID)).willReturn(buildPostResponseDto(post));
+        given(postRepository.findById(POST_ID)).willReturn(post);
         //when
-        PostsResponseDto postsResponseDto=postApiController.findById(postId);
+        PostsResponseDto postsResponseDto=postApiController.findById(POST_ID);
 
         //then
         assertThat(postsResponseDto.getTitle()).isEqualTo("바뀐제목");
         assertThat(postsResponseDto.getContent()).isEqualTo("바뀐내용");
     }
 
-
-     */
-/*
-    private ResultActions requestGetPost()throws Exception{
-        return mvc.perform(get("/api/post/{id}",0L)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print());
-
-    }
-
-
- */
     private PostsResponseDto buildPostResponseDto(Posts post){
         return new PostsResponseDto(post);
     }
