@@ -9,13 +9,13 @@
                 <span class="modifiedDate" th:text="${comment.modifiedDate}"></span>
                 <th:block th:if="${account.name.equals(comment.name)}">
                     <a href="javascript:;" class="btn-comment-delete" th:onclick="|javascript:comment.delete('${comment.id}')|">삭제</a>
-                    <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.update('${comment.id}')|">수정</a>
+                    <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:commentUpdateView('${comment.id}')|">수정</a>
                 </th:block>
 
             </div>
             <div class="comment-body">
                 <!-- 댓글내용 -->
-                <p th:text="${comment.content}"></p>
+                <p th:id="${'comment_content_'+comment.id}" th:text="${comment.content}"></p>
             </div>
             <div class="comment-footer">
                 <!-- 좋아요/싫어요, 답글 -->
@@ -42,7 +42,13 @@
                         <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}')|">등록</button>
                     </div>
                 </div>
-
+                <div class="comment-update-dialog" th:id="${'comment_update_'+comment.id}">
+                    <textarea th:id="${'comment_updated_content_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
+                    <div class="comment-reply-btn">
+                        <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_update_cancel('${comment.id}')|">취소</button>
+                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.update('${comment.id}')|">등록</button>
+                    </div>
+                </div>
             </div>
 
             <div th:id="${'comment_reply_list_'+comment.id}" class="comment_reply_list">

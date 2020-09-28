@@ -29,10 +29,11 @@ var comment={
        });
     },
     update:function(commentId){
-        postId:$('#postId').val()
+        postId:$('#postId').val();
+        content=$('#comment_updated_content_'+commentId).val();
         var data={
               commentId:commentId,
-              content:$('#comment-content').val()
+              content:content
         }
         $.ajax({
               type:'PUT',
@@ -41,8 +42,11 @@ var comment={
               contentType:'application/json; charset=utf-8',
               data: JSON.stringify(data)
         }).done(function(){
-                alert('댓글이 수정됬습니다.');
-                window.location.href='/post/read/'+$('#groupId').val()+'/'+$('#postId').val();
+                $('#comment_content_'+commentId).text(content);
+                $('#comment_updated_content_'+commentId).val('');
+                $('#comment_update_'+commentId).toggle('fast');
+                //alert('댓글이 수정됬습니다.');
+                //window.location.href='/post/read/'+$('#groupId').val()+'/'+$('#postId').val();
         }).fail(function(error){
                 alert('댓글 수정실패');
         });
@@ -108,6 +112,9 @@ var comment={
         });
         */
     },
+    comment_update_cancel:function(id){
+        $('#comment_update_'+id).toggle('fast');
+    },
     like:function(id){
         var likeCount=$('#likeCount_'+id).text()*1+1;
         $('#likeCount_'+id).text(likeCount);
@@ -137,5 +144,7 @@ var comment={
 function commentView(id){
     $('#comment_'+id).toggle('fast');
 }
-
+function commentUpdateView(id){
+    $('#comment_update_'+id).toggle('fast');
+}
 comment.init();

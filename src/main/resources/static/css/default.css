@@ -164,6 +164,12 @@
     padding-bottom: 25px;
     display:none;
 }
+.comment-update-dialog{
+    margin-top:10px;
+    padding-bottom: 25px;
+    display:none;
+}
+
 .comment-reply-btn{
     float: right;
     margin-top: 5px;
