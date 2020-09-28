@@ -11,6 +11,8 @@ import com.pjh.share.web.dto.PostsUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
-
+    private Logger logger= LoggerFactory.getLogger(getClass());
     private final PostService postService;
 
     @GetMapping("/api/post/{id}")
