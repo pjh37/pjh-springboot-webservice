@@ -19,8 +19,8 @@ public class CommentApiController {
     private final Integer firstPage=0;
     private final CommentService commentService;
 
-    @GetMapping("/api/comment/{id}")
-    public List<CommentListResponseDto> get(@PathVariable Long id) {
+    @GetMapping("/api/comment/{parentId}")
+    public List<CommentListResponseDto> get(@PathVariable("parentId") Long id) {
         return commentService.findAllChildByIdDesc(firstPage,id);
     }
 

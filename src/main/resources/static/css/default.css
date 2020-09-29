@@ -169,6 +169,9 @@
     padding-bottom: 25px;
     display:none;
 }
+.comment-update-spinner{
+    display:none;
+}
 
 .comment-reply-btn{
     float: right;

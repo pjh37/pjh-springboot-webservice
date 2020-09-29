@@ -16,6 +16,10 @@
             <div class="comment-body">
                 <!-- 댓글내용 -->
                 <p th:id="${'comment_content_'+comment.id}" th:text="${comment.content}"></p>
+                <!-- 수정할때 spinner -->
+                <div th:id="${'comment_content_spinner_'+comment.id}" class="spinner-border text-success comment-update-spinner" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
             <div class="comment-footer">
                 <!-- 좋아요/싫어요, 답글 -->
@@ -39,7 +43,7 @@
                     <textarea th:id="${'comment_reply_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
                     <div class="comment-reply-btn">
                         <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_reply_cancel('${comment.id}')|">취소</button>
-                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}')|">등록</button>
+                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}','${comment.id}')|">등록</button>
                     </div>
                 </div>
                 <div class="comment-update-dialog" th:id="${'comment_update_'+comment.id}">
@@ -53,7 +57,7 @@
 
             <div th:id="${'comment_reply_list_'+comment.id}" class="comment_reply_list">
 
-                <th:block th:each="child:${comment.children}">
+                 <th:block th:each="child:${comment.children}">
                     <div class="comment-item">
                         <div class="comment-header">
                             <!-- 유저 닉네임, 날짜 -->
@@ -61,7 +65,7 @@
                             <span class="modifiedDate" th:text="${child.modifiedDate}"></span>
                             <th:block th:if="${account.name.equals(child.name)}">
                                 <a href="javascript:;" class="btn-comment-delete" th:onclick="|javascript:comment.delete('${child.id}')|">삭제</a>
-                                <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.update('${child.id}')|">수정</a>
+                                <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.commentUpdateView('${child.id}')|">수정</a>
                             </th:block>
 
                         </div>
@@ -91,24 +95,32 @@
                             <span th:text="${child.dislikeCount}"></span>
                             -->
                             <a href="javascript:;" th:onclick="|javascript:commentView('${child.id}')|">답글</a>
-                            <th:block th:if="${comment.childCount > 0}">
-                                <div>
-                                    <a href="javascript:;" th:onclick="|javascript:comment.comment_reply_show('${child.id}')|">
-                                        <span th:text="${'답글 '+child.childCount+'개 보기'}"></span>
-                                    </a>
-                                </div>
-                            </th:block>
+
+<!--                            <th:block th:if="${comment.childCount > 0}">-->
+<!--                                <div>-->
+<!--                                    <a href="javascript:;" th:onclick="|javascript:comment.comment_reply_show('${child.id}')|">-->
+<!--                                        <span th:text="${'답글 '+child.childCount+'개 보기'}"></span>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </th:block>-->
                             <div class="re-comment" th:id="${'comment_'+child.id}">
                                 <textarea th:id="${'comment_reply_'+child.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
                                 <div class="comment-reply-btn">
                                     <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_reply_cancel('${child.id}')|">취소</button>
-                                    <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${child.id}')|">등록</button>
+                                    <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}','${child.id}')|">등록</button>
                                 </div>
                             </div>
-
+                            <div class="comment-update-dialog" th:id="${'comment_update_'+comment.id}">
+                                <textarea th:id="${'comment_updated_content_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
+                                <div class="comment-reply-btn">
+                                    <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_update_cancel('${comment.id}')|">취소</button>
+                                    <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.update('${comment.id}')|">수정</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </th:block>
+
             </div>
 
         </div>

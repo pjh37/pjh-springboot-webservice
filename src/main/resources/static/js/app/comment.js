@@ -31,6 +31,10 @@ var comment={
     update:function(commentId){
         postId:$('#postId').val();
         content=$('#comment_updated_content_'+commentId).val();
+        var spinner=$('#comment_content_spinner_'+commentId);
+        var originalContent=$('comment_content_'+commentId);
+        spinner.show();
+        originalContent.hide();
         var data={
               commentId:commentId,
               content:content
@@ -42,6 +46,7 @@ var comment={
               contentType:'application/json; charset=utf-8',
               data: JSON.stringify(data)
         }).done(function(){
+                spinner.hide();
                 $('#comment_content_'+commentId).text(content);
                 $('#comment_updated_content_'+commentId).val('');
                 $('#comment_update_'+commentId).toggle('fast');
@@ -69,14 +74,12 @@ var comment={
               alert('댓글 삭제실패');
         });
     },
-    comment_reply_save:function(id){
-
-        var parentId=id;
+    comment_reply_save:function(parentId,childId){
         var data={
             name:$('#comment_userName').val(),
             postId:$('#postId').val(),
-            parentId:id,
-            content:$('#comment_reply_'+id).val()
+            parentId:parentId,
+            content:$('#comment_reply_'+childId).val()
         }
         $.ajax({
             type:'POST',
@@ -97,6 +100,7 @@ var comment={
     comment_reply_show:function(id){
         $('#comment_reply_list_'+id).toggle('fast');
         /*
+        var spinner=$('#comment_content_spinner_'+commentId);
         $.ajax({
             type:'GET',
             url:'/api/comment/'+id,
