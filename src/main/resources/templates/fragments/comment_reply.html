@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="commentReplyFragment">
+    <th:block th:each="child:${comment.children}">
+        <div class="comment-item">
+            <div class="comment-header">
+                <!-- 유저 닉네임, 날짜 -->
+                <span class="userName" th:text="${child.name}"></span>
+                <span class="modifiedDate" th:text="${child.modifiedDate}"></span>
+                <th:block th:if="${account.name.equals(child.name)}">
+                    <a href="javascript:;" class="btn-comment-delete" th:onclick="|javascript:comment.delete('${child.id}')|">삭제</a>
+                    <a href="javascript:;" class="btn-comment-update" th:onclick="|javascript:comment.commentUpdateView('${child.id}')|">수정</a>
+                </th:block>
+
+            </div>
+            <div class="comment-body">
+                <!-- 댓글내용 -->
+                <p th:text="${child.content}"></p>
+            </div>
+            <div class="comment-footer">
+                <!-- 좋아요/싫어요, 답글 -->
+
+                <a href="javascript:;" class="btn-like" th:onclick="|javascript:comment.like('${child.id}')|">
+                    <img src="/images/like.png">
+                </a>
+                <span th:id="${'likeCount_'+child.id}" th:text="${child.likeCount}"></span>
+                <a href="javascript:;" class="btn-dislike" th:onclick="|javascript:comment.dislike('${child.id}')|">
+                    <img src="/images/dislike.png">
+                </a>
+                <span th:id="${'dislikeCount_'+child.id}" th:text="${child.dislikeCount}"></span>
+
+                <a href="javascript:;" th:onclick="|javascript:commentView('${child.id}')|">답글</a>
+                <div class="re-comment" th:id="${'comment_'+child.id}">
+                    <textarea th:id="${'comment_reply_'+child.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
+                    <div class="comment-reply-btn">
+                        <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_reply_cancel('${child.id}')|">취소</button>
+                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.comment_reply_save('${comment.id}','${child.id}')|">등록</button>
+                    </div>
+                </div>
+                <div class="comment-update-dialog" th:id="${'comment_update_'+comment.id}">
+                    <textarea th:id="${'comment_updated_content_'+comment.id}" class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>
+                    <div class="comment-reply-btn">
+                        <button type="button" class="btn btn-secondary" th:onclick="|javascript:comment.comment_update_cancel('${comment.id}')|">취소</button>
+                        <button type="button" class="btn btn-primary" th:onclick="|javascript:comment.update('${comment.id}')|">수정</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>
+</html>

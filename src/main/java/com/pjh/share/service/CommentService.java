@@ -44,6 +44,13 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
+    public CommentListResponseDto findById(Long postId){
+        return commentRepository.findById(postId).map(CommentListResponseDto::new)
+                .orElseThrow(()->new IllegalArgumentException("존재하는 댓글이 아닙니다."));
+    }
+
+
+    @Transactional(readOnly = true)
     public List<CommentListResponseDto> findAllDesc(Integer curPage, Long postId){
         Pageable pageable= PageRequest.of(curPage,pageSize,Sort.by("id").descending());
         return commentRepository.findAllDesc(pageable,postId)

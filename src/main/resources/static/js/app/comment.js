@@ -99,8 +99,14 @@ var comment={
     },
     comment_reply_show:function(id){
         $('#comment_reply_list_'+id).toggle('fast');
-        /*
-        var spinner=$('#comment_content_spinner_'+commentId);
+        if($('#comment_reply_list_'+id).data("isClicked")===true){
+            return;
+        }
+        $('#comment_reply_list_'+id).data("isClicked",true);
+        var list=$('#comment_reply_list_'+id);
+        var spinner=$('#comment_content_spinner_'+id);
+        spinner.show();
+
         $.ajax({
             type:'GET',
             url:'/api/comment/'+id,
@@ -109,12 +115,52 @@ var comment={
             success:function(comments){
 
                 comments.forEach(function(comment,idx){
+                    var data='<div class="comment-item">'+
+                                 '<div class="comment-header">'+
+                                      '<span class="userName">'+comment.name+'</span>'+
+                                       '<span class="modifiedDate">'+comment.modifiedDate+'</span>'+
+                                       '<th:block th:if="${account.name.equals(child.name)}">'+
+                                             '<a href="javascript:;" class="btn-comment-delete" onclick="comment.delete(\''+comment.id+'\')">삭제</a>'+
+                                             '<a href="javascript:;" class="btn-comment-update" onclick="commentUpdateView(\''+comment.id+'\')">수정</a>'+
+                                        '</th:block>'+
+                                  '</div>'+
+                                  '<div class="comment-body">'+
+                                       '<p>'+comment.content+'</p>'+
+                                  '</div>'+
+                                   '<div class="comment-footer">'+
+                                         '<a href="javascript:;" class="btn-like" onclick="comment.like(\''+comment.id+'\')">'+
+                                               '<img src="/images/like.png">'+
+                                         '</a>'+
+                                                   '<span id=likeCount_'+comment.id+'>'+comment.likeCount+'</span>'+
+                                                   '<a href="javascript:;" class="btn-dislike" onclick="comment.dislike(\''+comment.id+'\')">'+
+                                                       '<img src="/images/dislike.png">'+
+                                                   '</a>'+
+                                                   '<span id=dislikeCount_'+comment.id+'>'+comment.dislikeCount+'</span>'+
 
-                    $('#comment_reply_list_'+id).append(comment.content);
+                                                   '<a href="javascript:;" onclick="commentView(\''+comment.id+'\')">답글</a>'+
+                                                   '<div class="re-comment" id=comment_'+comment.id+'>'+
+                                                       '<textarea id=comment_reply_'+comment.id+' class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>'+
+                                                       '<div class="comment-reply-btn">'+
+                                                           '<button type="button" class="btn btn-secondary" onclick="comment.comment_reply_cancel(\''+comment.id+'\')">취소</button>'+
+                                                           '<button type="button" class="btn btn-primary" onclick="comment.comment_reply_save(\''+id+'\',\''+comment.id+'\')">등록</button>'+
+                                                       '</div>'+
+                                                   '</div>'+
+                                                   '<div class="comment-update-dialog" id=comment_update_'+comment.id+'>'+
+                                                       '<textarea id=comment_updated_content_'+comment.id+' class="form-control" placeholder="공개 답글 추가..." maxlength="10000"></textarea>'+
+                                                       '<div class="comment-reply-btn">'+
+                                                           '<button type="button" class="btn btn-secondary" onclick="comment.comment_update_cancel(\''+comment.id+'\')">취소</button>'+
+                                                           '<button type="button" class="btn btn-primary" onclick="comment.update(\''+comment.id+'\')">수정</button>'+
+                                                       '</div>'+
+                                                   '</div>'+
+                                   '</div>'+
+                               '</div>';
+
+                    $('#comment_reply_list_'+id).append(data);
                 })
+                spinner.hide();
             }
         });
-        */
+
     },
     comment_update_cancel:function(id){
         $('#comment_update_'+id).toggle('fast');
