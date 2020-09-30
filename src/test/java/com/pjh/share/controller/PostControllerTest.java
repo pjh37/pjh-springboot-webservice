@@ -2,7 +2,8 @@ package com.pjh.share.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjh.share.service.AccountService;
-import com.pjh.share.service.post.PostService;
+
+import com.pjh.share.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
