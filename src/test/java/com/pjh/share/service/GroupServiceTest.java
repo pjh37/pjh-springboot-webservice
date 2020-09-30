@@ -1,4 +1,4 @@
-package com.pjh.share.service.group;
+package com.pjh.share.service;
 
 import com.pjh.share.component.S3Uploader;
 import com.pjh.share.domain.account.Account;
