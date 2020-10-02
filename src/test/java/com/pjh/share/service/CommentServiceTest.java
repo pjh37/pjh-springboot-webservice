@@ -5,8 +5,10 @@ import com.pjh.share.domain.comment.Comment;
 import com.pjh.share.domain.comment.CommentRepository;
 import com.pjh.share.domain.post.Posts;
 import com.pjh.share.domain.post.PostsRepository;
+import com.pjh.share.web.dto.CommentDeleteRequestDto;
 import com.pjh.share.web.dto.CommentListResponseDto;
 import com.pjh.share.web.dto.CommentSaveRequestDto;
+import com.pjh.share.web.dto.CommentUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class CommentServiceTest {
     private static final Long GROUP_ID=1L;
@@ -68,6 +72,7 @@ class CommentServiceTest {
                 .build();
         comment.setPosts(post);
         comment.setModifiedDate(LocalDateTime.now());
+        comment.setId(1L);
         sessionUser= SessionUser.builder()
                 .name("user")
                 .id(USER_ID)
@@ -93,7 +98,19 @@ class CommentServiceTest {
     }
 
     @Test
-    void findAllDesc() {
+    void findAllDesc() throws Exception{
+        //given
+       List<CommentListResponseDto> comments=new ArrayList<>();
+        Pageable pageable= PageRequest.of(curPage,pageSize,Sort.by("id").descending());
+        given(commentRepository.findAllDesc(pageable,POST_ID)
+                .stream()
+                .map(CommentListResponseDto::new)
+                .collect(Collectors.toList())).willReturn(comments);
+        //when
+        commentService.findAllDesc(curPage,POST_ID);
+
+        verify(commentRepository,times(1)).findAllDesc(pageable,POST_ID);
+
     }
 
     @Test
@@ -102,10 +119,35 @@ class CommentServiceTest {
 
     @Test
     void update() {
+        //given
+        CommentUpdateRequestDto commentUpdateRequestDto=buildCommentUpdateRequestDto();
+        given(commentRepository.findById(1L)).willReturn(Optional.of(comment));
+
+        //when
+        commentService.update(commentUpdateRequestDto);
+
+        //then
+        verify(commentRepository,times(1)).findById(comment.getId());
+        assertThat(commentService.findById(comment.getId()).getContent()).isEqualTo(commentUpdateRequestDto.getContent());
     }
 
     @Test
     void delete() {
+        //given
+        CommentDeleteRequestDto commentDeleteRequestDto=new CommentDeleteRequestDto();
+        commentDeleteRequestDto.setCommentId(1L);
+        given(commentRepository.findById(1L)).willReturn(Optional.of(comment));
+        doNothing().when(commentRepository).delete(comment);
+
+        //when
+        commentService.delete(commentDeleteRequestDto);
+        verify(commentRepository,times(1)).findById(1L);
+        verify(commentRepository,times(1)).delete(comment);
+
+
+        //then
+        assertThat(commentService.findAllDesc(curPage,POST_ID).size()).isEqualTo(0);
+
     }
 
     CommentSaveRequestDto buildCommentSaveRequestDto(){
@@ -117,5 +159,22 @@ class CommentServiceTest {
         commentSaveRequestDto.setParentId(-1L);
         commentSaveRequestDto.setPostId(1L);
         return commentSaveRequestDto;
+    }
+
+    CommentUpdateRequestDto buildCommentUpdateRequestDto(){
+        CommentUpdateRequestDto commentUpdateRequestDto=new CommentUpdateRequestDto();
+        commentUpdateRequestDto.setCommentId(comment.getId());
+        commentUpdateRequestDto.setContent("수정내용용");
+        return commentUpdateRequestDto;
+    }
+
+    Comment buildCommentListResponseDto(){
+        return Comment.builder()
+                .name("작성자")
+                .content("댓글내용")
+                .likeCount(0)
+                .dislikeCount(0)
+                .childCount(0)
+                .build();
     }
 }
