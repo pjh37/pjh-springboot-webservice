@@ -12,6 +12,7 @@ var post={
             _this.delete();
         });
 
+
     },
     save:function(){
         var data={
@@ -69,3 +70,5 @@ var post={
 };
 
 post.init();
+
+
