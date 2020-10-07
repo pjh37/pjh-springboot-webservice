@@ -44,8 +44,8 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public CommentListResponseDto findById(Long postId){
-        return commentRepository.findById(postId).map(CommentListResponseDto::new)
+    public CommentListResponseDto findById(Long id){
+        return commentRepository.findById(id).map(CommentListResponseDto::new)
                 .orElseThrow(()->new IllegalArgumentException("존재하는 댓글이 아닙니다."));
     }
 

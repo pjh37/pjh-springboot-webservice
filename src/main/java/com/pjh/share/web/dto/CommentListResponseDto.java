@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -33,7 +34,7 @@ public class CommentListResponseDto {
                 .map(CommentListResponseDto::new)
                 .collect(Collectors.toList());
         this.childCount=entity.getChild().size();
-        this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.modifiedDate= entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
 
