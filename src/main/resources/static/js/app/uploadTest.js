@@ -14,6 +14,6 @@ $('#btn-save').on('click', uploadImage);
         }).done(function (data) {
             $('#result-image').attr("src", 'http://'+data);
         }).fail(function (error) {
-            alert(error);
+            alert(JSON.stringify(error));
         })
     }
