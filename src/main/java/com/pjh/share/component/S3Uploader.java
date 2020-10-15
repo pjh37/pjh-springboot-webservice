@@ -59,6 +59,10 @@ public class S3Uploader {
 
     private Optional<File> convert(MultipartFile file)throws IOException {
         File convertFile=new File(file.getOriginalFilename());
+        Runtime.getRuntime().exec("chmod 777 "+file.getOriginalFilename());
+        convertFile.setExecutable(true,false);
+        convertFile.setReadable(true,false);
+        convertFile.setWritable(true,false);
         if(convertFile.createNewFile()){
             try(FileOutputStream fos=new FileOutputStream(convertFile)){
                 fos.write(file.getBytes());
