@@ -12,7 +12,7 @@ $('#btn-save').on('click', uploadImage);
             processData: false,
             contentType: false
         }).done(function (data) {
-            $('#result-image').attr("src", data);
+            $('#result-image').attr("src", 'http://'+data);
         }).fail(function (error) {
             alert(error);
         })
