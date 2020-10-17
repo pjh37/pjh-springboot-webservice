@@ -63,7 +63,7 @@ public class S3Uploader {
          */
     }
 
-/*
+
     public String upload(MultipartFile multipartFile,String dirName)throws Exception{
         File uploadFile=convert(multipartFile)
                 .orElseThrow(()->new IllegalArgumentException("MultipartFile -> File로 전환 실패했습니다."));
@@ -71,18 +71,26 @@ public class S3Uploader {
     }
 
     private String upload(File uploadFile,String dirName){
+        /*
         String fileName=dirName+"/"+uploadFile.getName();
         String uploadUrl=putS3(uploadFile,fileName);
         logger.info("uploadedUrl in S3Uploader component : "+uploadUrl);
         logger.info("cloud front domain name : "+domainName);
         removeNewFile(uploadFile);
         return domainName+"/"+fileName;
+
+         */
+        return "";
     }
 
     private String putS3(File uploadFile, String fileName) {
+        /*
         amazonS3.putObject(new PutObjectRequest(bucket,fileName,uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3.getUrl(bucket,fileName).toString();
+
+         */
+        return "";
     }
 
     private void removeNewFile(File targetFile){
@@ -105,5 +113,5 @@ public class S3Uploader {
         return Optional.empty();
     }
 
- */
+
 }
