@@ -32,7 +32,7 @@ public class S3Uploader {
     @Value("${spring.redis.host}")
     private String redisHost;
 
-    /*
+
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
 
@@ -47,20 +47,18 @@ public class S3Uploader {
 
     @Value("${cloud.front.domainName}")
     private String domainName;
-*/
+
 
     @PostConstruct
     public void setS3Client(){
-        logger.info("value 값 읽어보자 : "+redisHost);
-        logger.debug("value 값 읽어보자 : "+redisHost);
-        /*
+        logger.info("value 값 읽어보자 : "+accessKey);
+        logger.info("value 값 읽어보자 : "+secretKey);
+
         AWSCredentials credentials=new BasicAWSCredentials(this.accessKey,this.secretKey);
         amazonS3= AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withRegion(this.region)
                 .build();
-
-         */
     }
 
 
@@ -71,26 +69,18 @@ public class S3Uploader {
     }
 
     private String upload(File uploadFile,String dirName){
-        /*
         String fileName=dirName+"/"+uploadFile.getName();
         String uploadUrl=putS3(uploadFile,fileName);
         logger.info("uploadedUrl in S3Uploader component : "+uploadUrl);
         logger.info("cloud front domain name : "+domainName);
         removeNewFile(uploadFile);
         return domainName+"/"+fileName;
-
-         */
-        return "";
     }
 
     private String putS3(File uploadFile, String fileName) {
-        /*
         amazonS3.putObject(new PutObjectRequest(bucket,fileName,uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3.getUrl(bucket,fileName).toString();
-
-         */
-        return "";
     }
 
     private void removeNewFile(File targetFile){
