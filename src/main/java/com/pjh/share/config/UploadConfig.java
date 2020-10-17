@@ -13,6 +13,7 @@ import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class UploadConfig {
+    //최대 업로드 크기
     @Value("${spring.servlet.multipart.max-file-size}")
     private DataSize maxFileSize;
 
