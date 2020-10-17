@@ -49,7 +49,6 @@ public class S3Uploader {
     @PostConstruct
     public void setS3Client(){
         AWSCredentials credentials=new BasicAWSCredentials(this.accessKey,this.secretKey);
-
         amazonS3= AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withRegion(this.region)
