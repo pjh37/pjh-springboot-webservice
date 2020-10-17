@@ -8,6 +8,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -29,10 +31,6 @@ public class S3Uploader {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     private  AmazonS3 amazonS3;
 
-    @Value("${spring.redis.host}")
-    private String redisHost;
-
-
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
 
@@ -48,12 +46,8 @@ public class S3Uploader {
     @Value("${cloud.front.domainName}")
     private String domainName;
 
-
     @PostConstruct
     public void setS3Client(){
-        logger.info("value 값 읽어보자 : "+accessKey);
-        logger.info("value 값 읽어보자 : "+secretKey);
-
         AWSCredentials credentials=new BasicAWSCredentials(this.accessKey,this.secretKey);
         amazonS3= AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -61,14 +55,13 @@ public class S3Uploader {
                 .build();
     }
 
-
     public String upload(MultipartFile multipartFile,String dirName)throws Exception{
         File uploadFile=convert(multipartFile)
                 .orElseThrow(()->new IllegalArgumentException("MultipartFile -> File로 전환 실패했습니다."));
         return upload(uploadFile,dirName);
     }
 
-    private String upload(File uploadFile,String dirName){
+    private String upload(File uploadFile,String dirName) throws Exception{
         String fileName=dirName+"/"+uploadFile.getName();
         String uploadUrl=putS3(uploadFile,fileName);
         logger.info("uploadedUrl in S3Uploader component : "+uploadUrl);
@@ -91,17 +84,20 @@ public class S3Uploader {
         }
     }
 
-    private Optional<File> convert(MultipartFile file)throws IOException {
-        File convertFile=new File(file.getOriginalFilename());
-
-        if(convertFile.createNewFile()){
-            try(FileOutputStream fos=new FileOutputStream(convertFile)){
-                fos.write(file.getBytes());
+    private Optional<File> convert(MultipartFile file) {
+        try{
+            logger.info("오리지널 파일 이름 : "+file.getOriginalFilename());
+            File convertFile=new File(file.getOriginalFilename());
+            logger.info("경로 : "+convertFile.getAbsolutePath());
+            if(convertFile.createNewFile()){
+                try(FileOutputStream fos=new FileOutputStream(convertFile)){
+                    fos.write(file.getBytes());
+                }
+                return Optional.of(convertFile);
             }
-            return Optional.of(convertFile);
+        }catch (Exception e){
+            logger.info("파일변환 error : "+e.getMessage());
         }
         return Optional.empty();
     }
-
-
 }
