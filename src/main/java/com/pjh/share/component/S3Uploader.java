@@ -32,6 +32,7 @@ public class S3Uploader {
     @Value("${spring.redis.host}")
     private String redisHost;
 
+    /*
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
 
@@ -46,11 +47,12 @@ public class S3Uploader {
 
     @Value("${cloud.front.domainName}")
     private String domainName;
-
+*/
 
     @PostConstruct
     public void setS3Client(){
         logger.info("value 값 읽어보자 : "+redisHost);
+        logger.debug("value 값 읽어보자 : "+redisHost);
         /*
         AWSCredentials credentials=new BasicAWSCredentials(this.accessKey,this.secretKey);
         amazonS3= AmazonS3ClientBuilder.standard()
@@ -61,7 +63,7 @@ public class S3Uploader {
          */
     }
 
-
+/*
     public String upload(MultipartFile multipartFile,String dirName)throws Exception{
         File uploadFile=convert(multipartFile)
                 .orElseThrow(()->new IllegalArgumentException("MultipartFile -> File로 전환 실패했습니다."));
@@ -102,4 +104,6 @@ public class S3Uploader {
         }
         return Optional.empty();
     }
+
+ */
 }
