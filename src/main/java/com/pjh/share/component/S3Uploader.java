@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 @Component
+@NoArgsConstructor
 public class S3Uploader {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     private  AmazonS3 amazonS3;
+
+    @Value("${spring.redis.host}")
+    private String redisHost;
 
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
@@ -45,11 +50,15 @@ public class S3Uploader {
 
     @PostConstruct
     public void setS3Client(){
+        logger.info("value 값 읽어보자 : "+redisHost);
+        /*
         AWSCredentials credentials=new BasicAWSCredentials(this.accessKey,this.secretKey);
         amazonS3= AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withRegion(this.region)
                 .build();
+
+         */
     }
 
 
