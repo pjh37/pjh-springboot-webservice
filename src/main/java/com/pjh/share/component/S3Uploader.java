@@ -12,6 +12,7 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
 
 
@@ -86,13 +85,18 @@ public class S3Uploader {
 
     private Optional<File> convert(MultipartFile file) {
         try{
-            logger.info("오리지널 파일 이름 : "+file.getOriginalFilename());
+
             File convertFile=new File(file.getOriginalFilename());
+
+
+            logger.info("오리지널 파일 이름 : "+file.getOriginalFilename());
             logger.info("경로 : "+convertFile.getAbsolutePath());
             if(convertFile.createNewFile()){
-                try(FileOutputStream fos=new FileOutputStream(convertFile)){
-                    fos.write(file.getBytes());
+                try(InputStream in=new BufferedInputStream(file.getInputStream())){
+                    //default byte size :4096
+                    FileUtils.copyInputStreamToFile(in,convertFile);
                 }
+
                 return Optional.of(convertFile);
             }
         }catch (Exception e){
