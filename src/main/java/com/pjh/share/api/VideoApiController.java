@@ -9,12 +9,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @RestController
 @RequiredArgsConstructor
+@MultipartConfig(
+        fileSizeThreshold=0,
+        maxFileSize=209715200,       // 200 MB
+        maxRequestSize=209715200)
 public class VideoApiController {
     private final VideoService videoService;
 

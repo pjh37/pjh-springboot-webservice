@@ -13,24 +13,10 @@ import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class UploadConfig {
-    //최대 업로드 크기
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private DataSize maxFileSize;
-
-    @Value("${spring.servlet.multipart.max-request-size}")
-    private DataSize maxRequestSize;
-
-    @Bean
-    MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize(maxFileSize);
-        factory.setMaxRequestSize(maxRequestSize);
-        return factory.createMultipartConfig();
-    }
-
     @Bean
     public MultipartResolver multipartResolver() {
-        StandardServletMultipartResolver multipartResolver = new StandardServletMultipartResolver();
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(204857600); // 1024 * 1024 * 10 = 10 MB return multipartResolver;
         return multipartResolver;
     }
 }
