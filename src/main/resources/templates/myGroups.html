@@ -20,7 +20,12 @@
                 <th:block th:each="group:${myGroups}">
                     <div class="group-item col-3" th:onclick="|javascript:group.groupIn('${group.id}','${group.isSecretRoom}')|">
                         <div class="image-container col">
-                            <img class="thumbnail" th:src="@{${'file/'+group.thumbnail}}"/>
+                            <th:block th:if="${group.thumbnail==null}">
+                                <img class="thumbnail" src="/images/default_thumbnail.jpg"/>
+                            </th:block>
+                            <th:block th:if="${group.thumbnail!=null}">
+                                <img class="thumbnail" th:src="@{${'http://'+group.thumbnail}}"/>
+                            </th:block>
                         </div>
                         <div class="group-mid col">
                             <h3 class="group-title" th:text="${group.title}"></h3>
