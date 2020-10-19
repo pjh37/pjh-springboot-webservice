@@ -16,7 +16,7 @@ public class UploadConfig {
     @Bean
     public MultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(204857600); // 1024 * 1024 * 10 = 10 MB return multipartResolver;
+        multipartResolver.setMaxUploadSize(314572800); // 300 MB return multipartResolver;
         return multipartResolver;
     }
 }

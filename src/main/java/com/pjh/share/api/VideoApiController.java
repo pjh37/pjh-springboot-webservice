@@ -18,8 +18,8 @@ import java.io.*;
 @RequiredArgsConstructor
 @MultipartConfig(
         fileSizeThreshold=0,
-        maxFileSize=209715200,       // 200 MB
-        maxRequestSize=209715200)
+        maxFileSize=314572800,       // 300 MB
+        maxRequestSize=314572800)
 public class VideoApiController {
     private final VideoService videoService;
 

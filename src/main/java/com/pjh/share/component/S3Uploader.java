@@ -85,10 +85,7 @@ public class S3Uploader {
 
     private Optional<File> convert(MultipartFile file) {
         try{
-
             File convertFile=new File(file.getOriginalFilename());
-
-
             logger.info("오리지널 파일 이름 : "+file.getOriginalFilename());
             logger.info("경로 : "+convertFile.getAbsolutePath());
             if(convertFile.createNewFile()){
@@ -96,7 +93,6 @@ public class S3Uploader {
                     //default byte size :4096
                     FileUtils.copyInputStreamToFile(in,convertFile);
                 }
-
                 return Optional.of(convertFile);
             }
         }catch (Exception e){
