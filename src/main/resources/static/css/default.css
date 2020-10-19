@@ -250,3 +250,7 @@
     display:none;
     padding-bottom: 20px;
 }
+
+.video-size{
+    max-height:130px;
+}

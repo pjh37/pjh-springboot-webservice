@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ public class VideoListResponseDto {
     private String name;
     private String title;
     private String url;
-    private LocalDateTime modifiedDate;
+    private String modifiedDate;
 
     public VideoListResponseDto(Video entity){
         this.id=entity.getId();
@@ -22,6 +23,6 @@ public class VideoListResponseDto {
         this.clickCount=entity.getClickCount();
         this.title=entity.getTitle();
         this.url=entity.getUrl();
-        this.modifiedDate=entity.getModifiedDate();
+        this.modifiedDate=entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }
