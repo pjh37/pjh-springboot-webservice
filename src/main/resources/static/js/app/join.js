@@ -3,16 +3,26 @@ var authString;
 var join={
     init:function(){
         var _this=this;
+        $('#passwordCheckHelp').hide();
         $('#btn-join').on('click',function(){
             _this.create();
         });
         $('#btn-login').on('click',function(){
              _this.login();
         });
-
+        $('#passwordCheck').on('change keyup paste',function(){
+            if($('#passwordCheck').val()===$('#pw').val()){
+                $('#passwordCheckHelp').hide();
+            }else if($('#passwordCheck').val()>2&&$('#passwordCheck').val()!=$('#pw').val()){
+                $('#passwordCheckHelp').show();
+            }
+        });
 
     },
     create:function(){
+        if($('#passwordCheck').val()!=$('#pw').val()){
+            return;
+        }
         var data={
             name:$('#nicName').val(),
             email:$('#email').val(),
