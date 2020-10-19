@@ -28,6 +28,7 @@ public class VideoController {
     @GetMapping("/watch/v/{id}")
     public String video(Model model,@PathVariable Long id,@CurrentUser SessionUser user){
         VideoResponseDto videoResponse =videoService.findById(id);
+        videoService.videoClicked(id);
         if(user!=null){
             model.addAttribute("account",user);
         }

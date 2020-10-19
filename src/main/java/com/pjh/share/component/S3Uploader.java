@@ -89,9 +89,12 @@ public class S3Uploader {
             logger.info("오리지널 파일 이름 : "+file.getOriginalFilename());
             logger.info("경로 : "+convertFile.getAbsolutePath());
             if(convertFile.createNewFile()){
+                logger.info("createNewFile : "+"임시파일 생성");
                 try(InputStream in=new BufferedInputStream(file.getInputStream())){
                     //default byte size :4096
+                    logger.info("copyInputStreamToFile : "+"임시파일 복사 시작");
                     FileUtils.copyInputStreamToFile(in,convertFile);
+                    logger.info("copyInputStreamToFile : "+"임시파일 복사 끝");
                 }catch (Exception e){
                     logger.info("inputStream error : "+e.getMessage());
                 }

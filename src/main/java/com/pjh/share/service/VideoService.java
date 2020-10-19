@@ -35,16 +35,15 @@ public class VideoService {
         video.setGroup(group);
         video.setName(name);
         video.setUrl(uploadedUrl);
-        video.clickCountUpdate();
         return video.getId();
     }
 
     @Transactional
     public VideoResponseDto findById(Long id){
-        Video video=videoRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 동영상이 없습니다"));
+        Video video=videoRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 동영상이 없습니다"));
         return new VideoResponseDto(video);
     }
-
 
     @Transactional
     public List<VideoListResponseDto> findAllDesc(Long groupId){
@@ -52,5 +51,12 @@ public class VideoService {
                 .stream()
                 .map(VideoListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void videoClicked(Long id){
+        Video video=videoRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 동영상이 없습니다"));
+        video.clickCountUpdate();
     }
 }

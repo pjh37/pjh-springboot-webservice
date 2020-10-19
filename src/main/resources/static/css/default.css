@@ -247,5 +247,6 @@
 }
 
 #video-uploadSpinner{
+    display:none;
     padding-bottom: 20px;
 }
