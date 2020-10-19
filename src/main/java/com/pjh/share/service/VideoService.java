@@ -35,6 +35,7 @@ public class VideoService {
         video.setGroup(group);
         video.setName(name);
         video.setUrl(uploadedUrl);
+        video.clickCountUpdate();
         return video.getId();
     }
 

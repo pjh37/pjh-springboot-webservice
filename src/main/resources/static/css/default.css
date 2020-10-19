@@ -245,3 +245,7 @@
 #pageList{
     display: flex;
 }
+
+#video-uploadSpinner{
+    padding-bottom: 20px;
+}

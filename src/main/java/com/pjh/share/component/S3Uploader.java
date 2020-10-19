@@ -92,6 +92,8 @@ public class S3Uploader {
                 try(InputStream in=new BufferedInputStream(file.getInputStream())){
                     //default byte size :4096
                     FileUtils.copyInputStreamToFile(in,convertFile);
+                }catch (Exception e){
+                    logger.info("inputStream error : "+e.getMessage());
                 }
                 return Optional.of(convertFile);
             }

@@ -3,7 +3,7 @@
 var video={
     init:function(){
         var _this=this;
-        $('#loading').hide();
+        $('#video-uploadSpinner').hide();
         $('#btn-video-upload').on('click',function(){
             _this.upload();
         });
@@ -15,7 +15,7 @@ var video={
         formData.append("groupId",$('#groupId').val());
         formData.append("title",$('#videoTitle').val());
         formData.append("file",$("#videoFile")[0].files[0]);
-
+        $('#video-uploadSpinner').show();
         $.ajax({
              type:'POST',
              url:'/api/video',
@@ -25,7 +25,7 @@ var video={
              cache:false,
              data: formData
              }).done(function(){
-                 $('#loading').hide();
+                 $('#video-uploadSpinner').hide();
                  alert('업로드 완료');
                  window.location.href='/';
              }).fail(function(error){
